@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
-const montserrat = Montserrat({ subsets: ["latin", "vietnamese"] });
+const inter = Inter({ subsets: ["latin", "vietnamese"] });
 
 export const metadata: Metadata = {
   title: "BAOLAM ART & LANDSCAPE",
@@ -16,9 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className={`${montserrat.className} antialiased selection:bg-baolam-primary selection:text-[#071522]`}>
-        <nav className="fixed w-full z-50 backdrop-blur-md border-b border-baolam-border" style={{ backgroundColor: 'rgba(7, 21, 34, 0.92)' }}>
-          <div className="container mx-auto px-6 h-20 flex justify-between items-center">
+      <body className={`${inter.className} antialiased selection:bg-baolam-primary selection:text-[#071522]`}>
+        <nav className="fixed w-full z-50 backdrop-blur-md border-b border-baolam-border transition-all duration-300" style={{ backgroundColor: 'rgba(7, 21, 34, 0.88)' }}>
+          <div className="max-w-[1920px] w-full mx-auto px-6 xl:px-12 h-20 flex justify-between items-center">
             
             {/* LOGO */}
             <div className="flex items-center gap-4">
@@ -36,23 +37,23 @@ export default function RootLayout({
             </div>
 
             {/* MAIN MENU */}
-            <div className="hidden lg:flex gap-8 items-center text-[0.8rem] font-bold tracking-wider">
+            <div className="hidden lg:flex gap-4 xl:gap-6 items-center text-[0.7rem] xl:text-[0.75rem] font-bold tracking-wider">
               <a href="#" className="text-baolam-primary relative flex flex-col items-center">
                 TRANG CHỦ
                 <span className="absolute -bottom-2 w-full h-[2px] bg-baolam-primary shadow-[0_0_10px_rgba(0,217,255,0.8)]"></span>
               </a>
-              <a href="#capabilities" className="hover:text-baolam-primary transition-colors">NĂNG LỰC</a>
-              <a href="#landmarks" className="hover:text-baolam-primary transition-colors">DỰ ÁN BIỂU TƯỢNG</a>
-              <a href="#artworks" className="hover:text-baolam-primary transition-colors">ARTWORK CẢNH QUAN</a>
-              <a href="#factory" className="hover:text-baolam-primary transition-colors">NHÀ MÁY</a>
-              <a href="#news" className="hover:text-baolam-primary transition-colors">TIN TỨC</a>
-              <a href="#about" className="hover:text-baolam-primary transition-colors">VỀ BẢO LÂM</a>
-              <a href="#contact" className="hover:text-baolam-primary transition-colors">LIÊN HỆ</a>
+              <a href="#capabilities" className="hover:text-baolam-primary transition-colors whitespace-nowrap">NĂNG LỰC</a>
+              <a href="#landmarks" className="hover:text-baolam-primary transition-colors whitespace-nowrap">DỰ ÁN BIỂU TƯỢNG</a>
+              <a href="#artworks" className="hover:text-baolam-primary transition-colors whitespace-nowrap">ARTWORK CẢNH QUAN</a>
+              <a href="#factory" className="hover:text-baolam-primary transition-colors whitespace-nowrap">NHÀ MÁY</a>
+              <a href="#news" className="hover:text-baolam-primary transition-colors whitespace-nowrap">TIN TỨC</a>
+              <a href="#about" className="hover:text-baolam-primary transition-colors whitespace-nowrap">VỀ BẢO LÂM</a>
+              <a href="#contact" className="hover:text-baolam-primary transition-colors whitespace-nowrap">LIÊN HỆ</a>
             </div>
 
             {/* CTA BUTTON */}
             <div className="hidden md:block">
-              <a href="#contact" className="px-6 py-3 bg-baolam-primary text-[#071522] font-bold text-sm tracking-wider flex items-center gap-2 hover:bg-baolam-primary-hover transition-colors shadow-[0_0_15px_rgba(0,229,255,0.3)]">
+              <a href="#contact" className="px-4 xl:px-6 py-2.5 xl:py-3 bg-baolam-primary text-[#071522] font-bold text-[0.7rem] xl:text-sm tracking-wider flex items-center gap-2 hover:bg-baolam-primary-hover transition-colors shadow-[0_0_15px_rgba(0,229,255,0.3)] whitespace-nowrap">
                 LIÊN HỆ TƯ VẤN <span>&rarr;</span>
               </a>
             </div>
@@ -61,13 +62,16 @@ export default function RootLayout({
         </nav>
         
         {children}
+        <Script type="module" src="https://unpkg.com/visbug" strategy="lazyOnload" />
+        <div dangerouslySetInnerHTML={{ __html: '<vis-bug></vis-bug>' }} />
         
-        <footer className="bg-baolam-surface border-t border-baolam-border py-12">
+        {/* FOOTER ẨN ĐỂ ĐẢM BẢO GIAO DIỆN CHỈ CÓ 1 MÀN HÌNH DUY NHẤT KHÔNG SCROLL */}
+        {/* <footer className="bg-baolam-surface border-t border-baolam-border py-12">
           <div className="container mx-auto px-6 text-center text-baolam-muted text-sm">
             <p className="font-bold text-white mb-2 tracking-wider">BAOLAM ART & LANDSCAPE</p>
             <p>&copy; {new Date().getFullYear()} BAOLAM Ecosystem. All rights reserved.</p>
           </div>
-        </footer>
+        </footer> */}
       </body>
     </html>
   );
