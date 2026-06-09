@@ -1,7 +1,8 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Railway Docker: bundle tối thiểu cho `node server.js`
+  output: 'standalone',
 };
 
 export default nextConfig;
