@@ -111,6 +111,15 @@ export default function DebugToggle() {
   const isDragging = useRef(false);
   const dragOff = useRef({ x: 0, y: 0 });
 
+  // Drag-to-reposition state
+  const elDragActive = useRef(false);
+  const elDragStart = useRef({ x: 0, y: 0 });
+  const elDragStartObjX = useRef(50);
+  const elDragStartObjY = useRef(50);
+  const elDragStartTransX = useRef(0);
+  const elDragStartTransY = useRef(0);
+  const elDragMoved = useRef(false);
+
   // ── Toggle body class ──
   useEffect(() => {
     debug ? document.body.classList.add("debug-layout") : document.body.classList.remove("debug-layout");
@@ -152,6 +161,99 @@ export default function DebugToggle() {
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);
   }, [debug]);
+
+  // ── Element drag-to-reposition ──
+  useEffect(() => {
+    if (!debug) return;
+
+    const onMouseDown = (e: MouseEvent) => {
+      const t = e.target as HTMLElement;
+      if (t.closest(`[${EDITOR_ATTR}]`)) return;
+      // Only drag the SELECTED element
+      if (t !== selectedEl.current) return;
+      e.preventDefault();
+      elDragActive.current = true;
+      elDragMoved.current = false;
+      elDragStart.current = { x: e.clientX, y: e.clientY };
+      if (t.tagName === "IMG") {
+        const cs = window.getComputedStyle(t);
+        const pos = (cs.objectPosition || "50% 50%").split(" ");
+        elDragStartObjX.current = parseFloat(pos[0]) || 50;
+        elDragStartObjY.current = parseFloat(pos[1]) || 50;
+      } else {
+        // Read current transform translate
+        const cs = window.getComputedStyle(t);
+        const mat = new DOMMatrix(cs.transform);
+        elDragStartTransX.current = mat.m41 || 0;
+        elDragStartTransY.current = mat.m42 || 0;
+      }
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      if (!elDragActive.current || !selectedEl.current) return;
+      const dx = e.clientX - elDragStart.current.x;
+      const dy = e.clientY - elDragStart.current.y;
+      if (!elDragMoved.current && Math.abs(dx) < 4 && Math.abs(dy) < 4) return;
+      elDragMoved.current = true;
+      setHoverTip(null);
+      const el = selectedEl.current;
+      if (el.tagName === "IMG") {
+        const rect = el.getBoundingClientRect();
+        // Sensitivity: moving mouse by rect.width pixels = 100% shift
+        const sensX = rect.width > 0 ? 100 / rect.width : 0.15;
+        const sensY = rect.height > 0 ? 100 / rect.height : 0.15;
+        const newX = Math.max(0, Math.min(100, elDragStartObjX.current - dx * sensX));
+        const newY = Math.max(0, Math.min(100, elDragStartObjY.current - dy * sensY));
+        el.style.objectPosition = `${newX.toFixed(1)}% ${newY.toFixed(1)}%`;
+        setStyles(prev => prev ? { ...prev,
+          objectPositionX: String(Math.round(newX)),
+          objectPositionY: String(Math.round(newY)),
+        } : prev);
+      } else {
+        const newX = elDragStartTransX.current + dx;
+        const newY = elDragStartTransY.current + dy;
+        el.style.transform = `translate(${newX.toFixed(0)}px, ${newY.toFixed(0)}px)`;
+        setStyles(prev => prev ? { ...prev,
+          marginTop: String(Math.round(newY > 0 ? newY : 0)),
+          marginBottom: String(Math.round(newY < 0 ? -newY : 0)),
+        } : prev);
+      }
+    };
+
+    const onMouseUp = (e: MouseEvent) => {
+      if (!elDragActive.current) return;
+      elDragActive.current = false;
+      // If mouse barely moved → it's a click, let click handler re-select
+      if (!elDragMoved.current) return;
+      e.stopPropagation();
+    };
+
+    document.addEventListener("mousedown", onMouseDown, true);
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp, true);
+    return () => {
+      document.removeEventListener("mousedown", onMouseDown, true);
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp, true);
+    };
+  }, [debug]);
+
+  // ── Dynamic cursor for selected element ──
+  useEffect(() => {
+    const el = selectedEl.current;
+    if (!el || !debug) return;
+    el.style.cursor = "grab";
+    const onMD = () => { el.style.cursor = "grabbing"; };
+    const onMU = () => { el.style.cursor = "grab"; };
+    el.addEventListener("mousedown", onMD);
+    el.addEventListener("mouseup", onMU);
+    return () => {
+      el.style.removeProperty("cursor");
+      el.removeEventListener("mousedown", onMD);
+      el.removeEventListener("mouseup", onMU);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [info, debug]);
 
   // ── Hover tooltip ──
   useEffect(() => {
