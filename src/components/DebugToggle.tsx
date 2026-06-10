@@ -178,35 +178,30 @@ export default function DebugToggle() {
     return () => document.removeEventListener("click", onClick, true);
   }, [debug]);
 
-  // ── Element drag-to-reposition ──
+  // ── Element drag-to-reposition (triggered from move handle in overlay) ──
+  const startMove = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const sel = selectedEl.current;
+    if (!sel) return;
+    elDragActive.current = true;
+    elDragMoved.current = false;
+    elDragStart.current = { x: e.clientX, y: e.clientY };
+    if (sel.tagName === "IMG") {
+      const cs = window.getComputedStyle(sel);
+      const pos = (cs.objectPosition || "50% 50%").split(" ");
+      elDragStartObjX.current = parseFloat(pos[0]) || 50;
+      elDragStartObjY.current = parseFloat(pos[1]) || 50;
+    } else {
+      const cs = window.getComputedStyle(sel);
+      const mat = new DOMMatrix(cs.transform);
+      elDragStartTransX.current = mat.m41 || 0;
+      elDragStartTransY.current = mat.m42 || 0;
+    }
+  }, []);
+
   useEffect(() => {
     if (!debug) return;
-
-    const onMouseDown = (e: MouseEvent) => {
-      const t = e.target as HTMLElement;
-      if (t.closest(`[${EDITOR_ATTR}]`)) return;      // ignore inspector UI
-      if (resizeState.current) return;                 // resize takes priority
-      const sel = selectedEl.current;
-      if (!sel) return;
-      // Allow drag if click is on the selected element OR inside it
-      if (!sel.contains(t)) return;
-      e.preventDefault();
-      elDragActive.current = true;
-      elDragMoved.current = false;
-      elDragStart.current = { x: e.clientX, y: e.clientY };
-      if (sel.tagName === "IMG") {
-        const cs = window.getComputedStyle(sel);
-        const pos = (cs.objectPosition || "50% 50%").split(" ");
-        elDragStartObjX.current = parseFloat(pos[0]) || 50;
-        elDragStartObjY.current = parseFloat(pos[1]) || 50;
-      } else {
-        const cs = window.getComputedStyle(sel);
-        const mat = new DOMMatrix(cs.transform);
-        elDragStartTransX.current = mat.m41 || 0;
-        elDragStartTransY.current = mat.m42 || 0;
-      }
-    };
-
     const onMouseMove = (e: MouseEvent) => {
       if (!elDragActive.current || !selectedEl.current) return;
       const dx = e.clientX - elDragStart.current.x;
@@ -217,8 +212,7 @@ export default function DebugToggle() {
       const el = selectedEl.current;
       if (el.tagName === "IMG") {
         const rect = el.getBoundingClientRect();
-        // Sensitivity: moving mouse by rect.width pixels = 100% shift
-        const sensX = rect.width > 0 ? 100 / rect.width : 0.15;
+        const sensX = rect.width  > 0 ? 100 / rect.width  : 0.15;
         const sensY = rect.height > 0 ? 100 / rect.height : 0.15;
         const newX = Math.max(0, Math.min(100, elDragStartObjX.current - dx * sensX));
         const newY = Math.max(0, Math.min(100, elDragStartObjY.current - dy * sensY));
@@ -232,27 +226,18 @@ export default function DebugToggle() {
         const newY = elDragStartTransY.current + dy;
         el.style.transform = `translate(${newX.toFixed(0)}px, ${newY.toFixed(0)}px)`;
         setStyles(prev => prev ? { ...prev,
-          marginTop: String(Math.round(newY > 0 ? newY : 0)),
+          marginTop:    String(Math.round(newY > 0 ?  newY : 0)),
           marginBottom: String(Math.round(newY < 0 ? -newY : 0)),
         } : prev);
       }
+      setTick(t => t + 1);
     };
-
-    const onMouseUp = (e: MouseEvent) => {
-      if (!elDragActive.current) return;
-      elDragActive.current = false;
-      // If mouse barely moved → it's a click, let click handler re-select
-      if (!elDragMoved.current) return;
-      e.stopPropagation();
-    };
-
-    document.addEventListener("mousedown", onMouseDown, true);
+    const onMouseUp = () => { elDragActive.current = false; };
     document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseup", onMouseUp, true);
+    document.addEventListener("mouseup",   onMouseUp);
     return () => {
-      document.removeEventListener("mousedown", onMouseDown, true);
       document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseup", onMouseUp, true);
+      document.removeEventListener("mouseup",   onMouseUp);
     };
   }, [debug]);
 
@@ -290,22 +275,8 @@ export default function DebugToggle() {
     return () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); };
   }, [debug]);
 
-  // ── Dynamic cursor for selected element ──
-  useEffect(() => {
-    const el = selectedEl.current;
-    if (!el || !debug) return;
-    el.style.cursor = "grab";
-    const onMD = () => { el.style.cursor = "grabbing"; };
-    const onMU = () => { el.style.cursor = "grab"; };
-    el.addEventListener("mousedown", onMD);
-    el.addEventListener("mouseup", onMU);
-    return () => {
-      el.style.removeProperty("cursor");
-      el.removeEventListener("mousedown", onMD);
-      el.removeEventListener("mouseup", onMU);
-    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [info, debug]);
+  }, [debug]);
 
   // ── Hover tooltip ──
   useEffect(() => {
@@ -466,6 +437,23 @@ export default function DebugToggle() {
             <div data-layout-editor-ui style={hStyle('nesw-resize', { top: -5, right: -5 })} onMouseDown={e => { startResize(e, 'top'); startResize(e, 'right'); }} />
             <div data-layout-editor-ui style={hStyle('nesw-resize', { bottom: -5, left: -5 })} onMouseDown={e => { startResize(e, 'bottom'); startResize(e, 'left'); }} />
             <div data-layout-editor-ui style={hStyle('nwse-resize', { bottom: -5, right: -5 })} onMouseDown={e => { startResize(e, 'bottom'); startResize(e, 'right'); }} />
+            {/* ✦ MOVE HANDLE - drag this to move the element */}
+            <div
+              data-layout-editor-ui
+              onMouseDown={startMove}
+              style={{
+                position: 'absolute', top: -30, left: '50%',
+                transform: 'translateX(-50%)',
+                pointerEvents: 'all', cursor: 'move', zIndex: 9992,
+                background: 'rgba(0,229,255,0.95)', color: '#071324',
+                borderRadius: 6, padding: '3px 10px',
+                fontSize: 10, fontWeight: 800, userSelect: 'none',
+                whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 4,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
+              }}
+            >
+              ✦ KÉO ĐỂ DI CHUYỂN
+            </div>
             {/* Size label */}
             <div data-layout-editor-ui style={{ position: 'absolute', bottom: -24, left: '50%', transform: 'translateX(-50%)', pointerEvents: 'none', background: 'rgba(0,229,255,0.9)', color: '#071324', fontSize: 9, fontWeight: 700, padding: '1px 6px', borderRadius: 4, whiteSpace: 'nowrap' }}>
               {Math.round(r.width)} × {Math.round(r.height)} px
