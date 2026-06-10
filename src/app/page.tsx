@@ -67,7 +67,7 @@ export default function Home() {
               <a href="#landmarks" className="w-full sm:w-auto px-6 py-3 bg-[#00E5FF] text-[#071522] font-bold rounded hover:bg-[#2EF2FF] transition-colors text-[11px] flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(0,229,255,0.3)] whitespace-nowrap">
                 KHÁM PHÁ DỰ ÁN &rarr;
               </a>
-              <a href="#capabilities" className="w-full sm:w-auto px-6 py-3 bg-transparent border border-white/20 text-white font-bold rounded hover:border-[#00E5FF] hover:text-[#00E5FF] transition-all text-[11px] flex items-center justify-center gap-2 whitespace-nowrap">
+              <a href="#capabilities" className="w-full sm:w-auto px-6 py-3 border border-white/20 font-bold rounded hover:border-[#00E5FF] hover: transition-all text-[11px] flex items-center justify-center gap-2 whitespace-nowrap text-[#000000] bg-[#00e5ff]">
                 NĂNG LỰC CỦA CHÚNG TÔI &rarr;
               </a>
             </div>
@@ -138,7 +138,7 @@ export default function Home() {
         <div className="w-full h-full mx-auto px-6 xl:px-8 flex flex-col justify-end">
           
           {/* FEATURES BAR */}
-          <div className="w-full grid grid-cols-2 gap-y-6 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-8 lg:mb-4 px-2">
+          <div className="w-full grid grid-cols-2 gap-y-6 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-8 lg:mb-4 px-2 pt-[12px] pb-[-5px]">
             
             <div className="flex items-center gap-2.5">
               <div className="text-[#00E5FF]">
