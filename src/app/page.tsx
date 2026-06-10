@@ -12,7 +12,7 @@ export default function Home() {
       <DebugToggle />
       
       {/* ---------------- KHỐI TRÊN: HERO & THỐNG KÊ (78%) ---------------- */}
-      <div className="relative min-h-[90vh] lg:min-h-0 lg:h-[78%] w-full shrink-0 bg-[#030914] overflow-hidden flex flex-col justify-center">
+      <div className="relative min-h-[90vh] lg:min-h-0 lg:h-[75%] w-full shrink-0 bg-[#030914] overflow-hidden flex flex-col justify-center">
         
         {/* Lớp nền Blur lấp đầy các khoảng trống khi thu nhỏ ảnh chính */}
         <img 
@@ -132,10 +132,10 @@ export default function Home() {
       </div>
 
       {/* ---------------- KHỐI DƯỚI: TÍNH NĂNG & DỰ ÁN ---------------- */}
-      <div className="flex-1 w-full bg-[#030914] relative z-20 flex flex-col justify-center overflow-hidden pt-4 lg:pt-0 pb-6 lg:pb-0">
+      <div className="flex-1 w-full bg-[#030914] relative z-20 flex flex-col justify-start overflow-hidden pt-3 lg:pt-2 pb-4 lg:pb-2">
         
         {/* NỘI DUNG */}
-        <div className="w-full h-full mx-auto px-6 xl:px-8 flex flex-col justify-center gap-4">
+        <div className="w-full h-full mx-auto px-6 xl:px-8 flex flex-col justify-start gap-3">
           
           {/* FEATURES BAR */}
           <div className="w-full grid grid-cols-2 gap-y-4 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-3 lg:mb-3 px-2">
