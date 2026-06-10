@@ -75,7 +75,7 @@ export default function Home() {
 
           {/* Phải: Thống kê Panel */}
           <div className="w-[240px] hidden lg:block shrink-0 mb-8">
-            <div className="rounded-xl backdrop-blur-md border border-white/10 bg-[#071324]/50 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden p-6 space-y-5 pr-[32px] pl-[50px] w-[250px] h-[314px] mt-[77px]">
+            <div className="rounded-xl backdrop-blur-md border border-white/10 bg-[#071324]/50 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden p-6 space-y-5 pr-[32px] pl-[50px] w-[250px] h-[314px]">
               
               {/* Stat 1 */}
               <div className="flex items-start gap-3">
