@@ -12,7 +12,7 @@ export default function Home() {
       <DebugToggle />
       
       {/* ---------------- KHỐI TRÊN: HERO & THỐNG KÊ (78%) ---------------- */}
-      <div id="hero-section" className="relative min-h-[90vh] lg:min-h-0 lg:h-[75%] w-full shrink-0 bg-[#030914] overflow-hidden flex flex-col justify-center">
+      <div id="hero-section" className="relative min-h-[90vh] lg:min-h-0 lg:h-[68%] w-full shrink-0 bg-[#030914] overflow-hidden flex flex-col justify-center">
         
         {/* Lớp nền Blur lấp đầy các khoảng trống khi thu nhỏ ảnh chính */}
         <img 

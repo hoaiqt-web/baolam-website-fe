@@ -807,17 +807,19 @@ export default function DebugToggle() {
         </div>
       )}
 
-      {/* Toggle button */}
-      <button data-layout-editor-ui onClick={() => setDebug(!debug)}
-        className={`fixed bottom-6 right-6 z-[9999] px-5 py-3 rounded-xl font-bold text-[13px] flex items-center gap-2 cursor-pointer transition-all shadow-[0_4px_25px_rgba(0,229,255,0.4)] border-2 ${
-          debug ? "bg-[#071324] border-[#00E5FF] text-[#00E5FF] hover:bg-[#00E5FF] hover:text-[#071324]"
-                : "bg-[#00E5FF] border-[#00E5FF] text-[#071324] hover:bg-white hover:border-white"}`}>
-        {debug ? (
-          <><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>TẮT INSPECTOR</>
-        ) : (
-          <><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>BẬT KHUNG BỐ CỤC</>
-        )}
-      </button>
+      {/* Toggle button - chỉ hiện trong môi trường development */}
+      {process.env.NODE_ENV === 'development' && (
+        <button data-layout-editor-ui onClick={() => setDebug(!debug)}
+          className={`fixed bottom-6 right-6 z-[9999] px-5 py-3 rounded-xl font-bold text-[13px] flex items-center gap-2 cursor-pointer transition-all shadow-[0_4px_25px_rgba(0,229,255,0.4)] border-2 ${
+            debug ? "bg-[#071324] border-[#00E5FF] text-[#00E5FF] hover:bg-[#00E5FF] hover:text-[#071324]"
+                  : "bg-[#00E5FF] border-[#00E5FF] text-[#071324] hover:bg-white hover:border-white"}`}>
+          {debug ? (
+            <><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>TẮT INSPECTOR</>
+          ) : (
+            <><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>BẬT KHUNG BỐ CỤC</>
+          )}
+        </button>
+      )}
     </>
   );
 }
