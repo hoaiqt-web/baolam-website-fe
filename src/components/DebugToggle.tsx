@@ -319,6 +319,67 @@ export default function DebugToggle() {
               </div>
             ) : styles ? (
               <>
+                {/* Quick jump: if selected element has an img child, show button to select it */}
+                {info.tagName !== "img" && selectedEl.current && selectedEl.current.querySelector("img") && (
+                  <div className="flex items-center gap-2 bg-yellow-500/10 border border-yellow-400/30 rounded-xl px-3 py-2.5">
+                    <span className="text-yellow-300 text-[10px] flex-1">📷 Có ảnh bên trong</span>
+                    <button
+                      onClick={() => {
+                        const img = selectedEl.current?.querySelector("img") as HTMLElement;
+                        if (!img) return;
+                        selectedEl.current = img;
+                        const cs = window.getComputedStyle(img);
+                        const rect = img.getBoundingClientRect();
+                        const pos = cs.objectPosition?.split(" ") || ["50%", "50%"];
+                        setInfo({ tagName: "img", width: Math.round(rect.width), height: Math.round(rect.height), className: img.className || "" });
+                        setStyles(prev => prev ? { ...prev,
+                          objectPositionX: pos[0]?.replace("%","") || "50",
+                          objectPositionY: pos[1]?.replace("%","") || "50",
+                        } : prev);
+                        setOriginalStyles(prev => prev ? { ...prev,
+                          objectPositionX: pos[0]?.replace("%","") || "50",
+                          objectPositionY: pos[1]?.replace("%","") || "50",
+                        } : prev);
+                      }}
+                      className="px-2 py-1 bg-yellow-400 text-[#071324] text-[10px] font-bold rounded-lg hover:bg-yellow-300 transition-colors whitespace-nowrap"
+                    >
+                      Chọn ảnh →
+                    </button>
+                  </div>
+                )}
+
+                {/* Quick jump to parent */}
+                {selectedEl.current?.parentElement && (
+                  <button
+                    onClick={() => {
+                      const parent = selectedEl.current?.parentElement as HTMLElement;
+                      if (!parent || parent.closest(`[${EDITOR_ATTR}]`)) return;
+                      selectedEl.current = parent;
+                      const cs = window.getComputedStyle(parent);
+                      const rect = parent.getBoundingClientRect();
+                      const s = {
+                        fontSize: String(Math.round(parseFloat(cs.fontSize)||0)),
+                        color: toHex(cs.color), backgroundColor: toHex(cs.backgroundColor),
+                        paddingTop: String(Math.round(parseFloat(cs.paddingTop)||0)),
+                        paddingRight: String(Math.round(parseFloat(cs.paddingRight)||0)),
+                        paddingBottom: String(Math.round(parseFloat(cs.paddingBottom)||0)),
+                        paddingLeft: String(Math.round(parseFloat(cs.paddingLeft)||0)),
+                        marginTop: String(Math.round(parseFloat(cs.marginTop)||0)),
+                        marginBottom: String(Math.round(parseFloat(cs.marginBottom)||0)),
+                        opacity: String(Math.round(parseFloat(cs.opacity||"1")*100)),
+                        letterSpacing: String(Math.round(parseFloat(cs.letterSpacing)||0)),
+                        lineHeight: String(Math.round(parseFloat(cs.lineHeight)||0)),
+                        objectPositionX: "50", objectPositionY: "50",
+                      };
+                      setInfo({ tagName: parent.tagName.toLowerCase(), width: Math.round(rect.width), height: Math.round(rect.height), className: parent.className || "" });
+                      setStyles(s); setOriginalStyles(s); setSaveResult(null);
+                    }}
+                    className="w-full py-1.5 text-[9px] font-bold rounded-lg border border-white/10 text-[#A5B4C7]/50 hover:text-white hover:border-white/30 transition-all"
+                  >
+                    ↑ Lên phần tử cha
+                  </button>
+                )}
+
                 {/* Typography */}
                 <Section label="Chữ" icon="T">
                   <div className="grid grid-cols-2 gap-2">
