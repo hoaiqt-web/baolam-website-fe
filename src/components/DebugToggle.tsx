@@ -17,6 +17,8 @@ interface StyleState {
   opacity: string;
   letterSpacing: string;
   lineHeight: string;
+  objectPositionX: string;  // for <img>: 0-100%
+  objectPositionY: string;  // for <img>: 0-100%
 }
 
 interface ElementInfo {
@@ -61,6 +63,8 @@ const TW_GENERATORS: Record<keyof StyleState, (v: string) => string> = {
   opacity:         (v) => (v === "100" ? "" : `opacity-[${(parseFloat(v) / 100).toFixed(2)}]`),
   letterSpacing:   (v) => `tracking-[${v}px]`,
   lineHeight:      (v) => (v === "0" ? "" : `leading-[${v}px]`),
+  objectPositionX: (_v) => "", // applied as inline style, not Tailwind
+  objectPositionY: (_v) => "", // applied as inline style, not Tailwind
 };
 
 // ── Patterns to remove old Tailwind classes before adding new ones ──
@@ -77,6 +81,8 @@ const TW_REMOVE_PATTERNS: Record<keyof StyleState, RegExp> = {
   opacity:         /\bopacity-\d+\b|\bopacity-\[[^\]]+\]/g,
   letterSpacing:   /\btracking-\[\d+px\]|\btracking-tighter\b|\btracking-tight\b|\btracking-normal\b|\btracking-wide\b|\btracking-wider\b|\btracking-widest\b/g,
   lineHeight:      /\bleading-\[\d+px\]|\bleading-none\b|\bleading-tight\b|\bleading-snug\b|\bleading-normal\b|\bleading-relaxed\b|\bleading-loose\b/g,
+  objectPositionX: /(?!)/g, // no Tailwind class to remove
+  objectPositionY: /(?!)/g,
 };
 
 function buildNewClassName(original: string, orig: StyleState, curr: StyleState): string {
@@ -135,6 +141,8 @@ export default function DebugToggle() {
         opacity: Math.round(parseFloat(cs.opacity || "1") * 100) + "",
         letterSpacing: parsePx(cs.letterSpacing) + "",
         lineHeight: parsePx(cs.lineHeight) + "",
+        objectPositionX: t.tagName === "IMG" ? (cs.objectPosition?.split(" ")[0]?.replace("%","") || "50") : "50",
+        objectPositionY: t.tagName === "IMG" ? (cs.objectPosition?.split(" ")[1]?.replace("%","") || "50") : "50",
       };
       setInfo({ tagName: t.tagName.toLowerCase(), width: Math.round(rect.width), height: Math.round(rect.height), className: t.className || "" });
       setStyles(s);
@@ -168,10 +176,18 @@ export default function DebugToggle() {
       paddingTop: "padding-top", paddingRight: "padding-right", paddingBottom: "padding-bottom", paddingLeft: "padding-left",
       marginTop: "margin-top", marginBottom: "margin-bottom",
       opacity: "opacity", letterSpacing: "letter-spacing", lineHeight: "line-height",
+      objectPositionX: "object-position", objectPositionY: "object-position",
     };
     const cssProp = cssPropMap[key];
     if (key === "color" || key === "backgroundColor") el.style.setProperty(cssProp, val);
     else if (key === "opacity") el.style.setProperty(cssProp, (parseFloat(val) / 100) + "");
+    else if (key === "objectPositionX") {
+      const y = (selectedEl.current ? window.getComputedStyle(selectedEl.current).objectPosition?.split(" ")[1] : "50%") || "50%";
+      el.style.setProperty("object-position", `${val}% ${y}`);
+    } else if (key === "objectPositionY") {
+      const x = (selectedEl.current ? window.getComputedStyle(selectedEl.current).objectPosition?.split(" ")[0] : "50%") || "50%";
+      el.style.setProperty("object-position", `${x} ${val}%`);
+    }
     else el.style.setProperty(cssProp, val + "px");
   }, []);
 
@@ -344,6 +360,33 @@ export default function DebugToggle() {
                     <NumInput label="Dưới" stateKey="marginBottom" />
                   </div>
                 </Section>
+
+                {/* Image Position — only for <img> */}
+                {info.tagName === "img" && (
+                  <Section label="Vị trí ảnh (object-position)" icon="🖼">
+                    <div className="space-y-3">
+                      <div className="flex flex-col gap-1">
+                        <div className="flex justify-between">
+                          <label className="text-[9px] text-[#A5B4C7]/60 uppercase tracking-wider">← Trái / Phải →</label>
+                          <span className="text-[10px] font-mono text-[#00E5FF]">{styles.objectPositionX}%</span>
+                        </div>
+                        <input type="range" min="0" max="100" value={styles.objectPositionX}
+                          onChange={e => applyStyle("objectPositionX", e.target.value)}
+                          className="w-full accent-[#00E5FF] cursor-pointer" />
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <div className="flex justify-between">
+                          <label className="text-[9px] text-[#A5B4C7]/60 uppercase tracking-wider">↑ Trên / Dưới ↓</label>
+                          <span className="text-[10px] font-mono text-[#00E5FF]">{styles.objectPositionY}%</span>
+                        </div>
+                        <input type="range" min="0" max="100" value={styles.objectPositionY}
+                          onChange={e => applyStyle("objectPositionY", e.target.value)}
+                          className="w-full accent-[#00E5FF] cursor-pointer" />
+                      </div>
+                      <p className="text-[9px] text-[#A5B4C7]/40">Kéo thanh để dịch chuyển ảnh nền</p>
+                    </div>
+                  </Section>
+                )}
 
                 {/* ClassName preview */}
                 <Section label="ClassName gốc" icon="<>">

@@ -132,13 +132,13 @@ export default function Home() {
       </div>
 
       {/* ---------------- KHỐI DƯỚI: TÍNH NĂNG & DỰ ÁN ---------------- */}
-      <div className="flex-1 w-full bg-[#030914] relative z-20 flex items-center justify-center pt-10 lg:pt-2 pb-12 lg:pb-6">
+      <div className="flex-1 w-full bg-[#030914] relative z-20 flex flex-col justify-center overflow-hidden pt-4 lg:pt-0 pb-6 lg:pb-0">
         
-        {/* NỘI DUNG TRẢI ĐỀU 100% CHIỀU RỘNG CỰC ĐẠI */}
-        <div className="w-full h-full mx-auto px-6 xl:px-8 flex flex-col justify-end">
+        {/* NỘI DUNG */}
+        <div className="w-full h-full mx-auto px-6 xl:px-8 flex flex-col justify-center gap-4">
           
           {/* FEATURES BAR */}
-          <div className="w-full grid grid-cols-2 gap-y-6 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-8 lg:mb-4 px-2 pt-[12px] pb-[-5px]">
+          <div className="w-full grid grid-cols-2 gap-y-4 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-3 lg:mb-3 px-2">
             
             <div className="flex items-center gap-2.5">
               <div className="text-[#00E5FF]">
@@ -196,7 +196,7 @@ export default function Home() {
             </div>
 
             {/* Cột 1: Tiêu đề */}
-            <div className="flex flex-col justify-end h-[200px] lg:h-[160px] pb-1 pr-2 min-w-[75vw] sm:min-w-[45vw] lg:min-w-0 snap-center lg:snap-align-none shrink-0">
+            <div className="flex flex-col justify-end h-[180px] lg:h-[140px] pb-1 pr-2 min-w-[75vw] sm:min-w-[45vw] lg:min-w-0 snap-center lg:snap-align-none shrink-0">
               <span className="text-[#00E5FF] font-bold tracking-widest text-[9px] uppercase mb-1.5 block">
                 DỰ ÁN NỔI BẬT
               </span>
@@ -213,7 +213,7 @@ export default function Home() {
 
             {/* Cột 2-5: Thẻ Dự Án (Hiển thị 4 dự án lấp đầy màn hình) */}
             {allProjects.slice(0, 4).map((p) => (
-              <div key={p.id} className="group rounded-[8px] overflow-hidden cursor-pointer bg-gradient-to-b from-[#071324] to-[#040D19] flex flex-col hover:shadow-[0_4px_20px_rgba(0,229,255,0.15)] transition-all h-[200px] lg:h-[160px] min-w-[75vw] sm:min-w-[45vw] lg:min-w-0 snap-center lg:snap-align-none shrink-0">
+              <div key={p.id} className="group rounded-[8px] overflow-hidden cursor-pointer bg-gradient-to-b from-[#071324] to-[#040D19] flex flex-col hover:shadow-[0_4px_20px_rgba(0,229,255,0.15)] transition-all h-[180px] lg:h-[140px] min-w-[75vw] sm:min-w-[45vw] lg:min-w-0 snap-center lg:snap-align-none shrink-0">
                 
                 {/* Top Image Box */}
                 <div className="relative h-[65%] w-full shrink-0 overflow-hidden">
