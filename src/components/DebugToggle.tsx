@@ -108,6 +108,26 @@ export default function DebugToggle() {
   const [styles, setStyles] = useState<StyleState | null>(null);
   const [originalStyles, setOriginalStyles] = useState<StyleState | null>(null);
   const [panelPos, setPanelPos] = useState({ x: 12, y: 72 });
+  const [heroRatio, setHeroRatio] = useState(75);
+  const dividerDragging = useRef(false);
+  const dividerStartY = useRef(0);
+  const dividerStartRatio = useRef(75);
+
+  // Apply heroRatio live to the hero section
+  useEffect(() => {
+    if (!debug) return;
+    const hero = document.getElementById('hero-section');
+    if (hero) hero.style.height = `${heroRatio}vh`;
+  }, [heroRatio, debug]);
+
+  // Reset hero height on debug off
+  useEffect(() => {
+    if (!debug) {
+      const hero = document.getElementById('hero-section');
+      if (hero) hero.style.removeProperty('height');
+    }
+  }, [debug]);
+
   const [hoverTip, setHoverTip] = useState<{ x: number; y: number; w: number; h: number; tag: string } | null>(null);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [saveResult, setSaveResult] = useState<SaveResult | null>(null);
@@ -400,6 +420,59 @@ export default function DebugToggle() {
           style={{ position: "fixed", top: hoverTip.y, left: hoverTip.x, pointerEvents: "none", zIndex: 9995 }}
           className="bg-[#071324]/95 border border-[#00E5FF]/40 rounded-md px-2 py-1 text-[10px] font-mono text-[#00E5FF] whitespace-nowrap shadow-lg">
           &lt;{hoverTip.tag}&gt; {hoverTip.w} × {hoverTip.h}px
+        </div>
+      )}
+
+      {/* ── SECTION DIVIDER (drag to resize hero/bottom split) ── */}
+      {debug && (
+        <div data-layout-editor-ui
+          style={{ position: 'fixed', top: `${heroRatio}vh`, left: 0, width: '100%', height: 6, zIndex: 9993, cursor: 'ns-resize', userSelect: 'none' }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            dividerDragging.current = true;
+            dividerStartY.current = e.clientY;
+            dividerStartRatio.current = heroRatio;
+            const onMove = (ev: MouseEvent) => {
+              if (!dividerDragging.current) return;
+              const dy = ev.clientY - dividerStartY.current;
+              const delta = (dy / window.innerHeight) * 100;
+              const next = Math.max(40, Math.min(88, dividerStartRatio.current + delta));
+              setHeroRatio(Math.round(next));
+            };
+            const onUp = () => {
+              dividerDragging.current = false;
+              window.removeEventListener('mousemove', onMove);
+              window.removeEventListener('mouseup', onUp);
+            };
+            window.addEventListener('mousemove', onMove);
+            window.addEventListener('mouseup', onUp);
+          }}
+        >
+          {/* The visible line */}
+          <div data-layout-editor-ui style={{ position: 'absolute', top: 2, left: 0, right: 0, height: 2, background: 'rgba(0,229,255,0.6)' }} />
+          {/* Center label */}
+          <div data-layout-editor-ui style={{
+            position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)',
+            background: '#00E5FF', color: '#071324', fontSize: 10, fontWeight: 800,
+            padding: '2px 12px', borderRadius: 4, whiteSpace: 'nowrap', display: 'flex', gap: 8, alignItems: 'center',
+          }}>
+            ↕ KÉO ĐỂ ĐIỀU CHỈNH TỈ LỆ — Hero: {heroRatio}%
+            <button data-layout-editor-ui
+              style={{ background: '#071324', color: '#00E5FF', border: 'none', borderRadius: 3, padding: '1px 8px', cursor: 'pointer', fontSize: 10, fontWeight: 700 }}
+              onClick={async (e) => {
+                e.stopPropagation();
+                await fetch('/api/inspector/save', {
+                  method: 'POST', headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    oldClassName: `lg:h-[${dividerStartRatio.current}%]`,
+                    newClassName: `lg:h-[${heroRatio}%]`,
+                  }),
+                });
+                dividerStartRatio.current = heroRatio;
+                alert(`✅ Đã lưu: Hero height = ${heroRatio}%`);
+              }}
+            >💾 Lưu tỉ lệ</button>
+          </div>
         </div>
       )}
 

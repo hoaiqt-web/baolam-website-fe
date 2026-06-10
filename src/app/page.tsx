@@ -12,7 +12,7 @@ export default function Home() {
       <DebugToggle />
       
       {/* ---------------- KHỐI TRÊN: HERO & THỐNG KÊ (78%) ---------------- */}
-      <div className="relative min-h-[90vh] lg:min-h-0 lg:h-[75%] w-full shrink-0 bg-[#030914] overflow-hidden flex flex-col justify-center">
+      <div id="hero-section" className="relative min-h-[90vh] lg:min-h-0 lg:h-[75%] w-full shrink-0 bg-[#030914] overflow-hidden flex flex-col justify-center">
         
         {/* Lớp nền Blur lấp đầy các khoảng trống khi thu nhỏ ảnh chính */}
         <img 
@@ -43,7 +43,7 @@ export default function Home() {
         />
         
         {/* Gradient nối mượt xuống khối dưới */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#030914] via-[#030914]/80 to-transparent z-10" />
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#030914] via-[#030914]/80 to-transparent z-10 w-[1432px] h-[29px]" />
 
         {/* Content Container - FULL WIDTH CỰC ĐẠI */}
         <div className="relative z-20 h-full w-full mx-auto px-5 sm:px-6 xl:px-8 flex flex-col lg:flex-row justify-center lg:justify-between items-start lg:items-center pt-[90px] sm:pt-[88px] lg:pt-[60px]">
@@ -75,7 +75,7 @@ export default function Home() {
 
           {/* Phải: Thống kê Panel */}
           <div className="w-[240px] hidden lg:block shrink-0 mb-8">
-            <div className="rounded-xl backdrop-blur-md border border-white/10 bg-[#071324]/50 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden p-6 space-y-5">
+            <div className="rounded-xl backdrop-blur-md border border-white/10 bg-[#071324]/50 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden p-6 space-y-5 pr-[32px] pl-[50px] w-[250px] h-[314px]">
               
               {/* Stat 1 */}
               <div className="flex items-start gap-3">
