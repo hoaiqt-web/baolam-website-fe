@@ -1,7 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-import { glob } from 'glob';
+
+// Recursively find all .tsx/.ts/.jsx/.js files under a directory
+function findFiles(dir: string, exts: string[]): string[] {
+  const result: string[] = [];
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory() && !['node_modules', '.next', '.git'].includes(entry.name)) {
+      result.push(...findFiles(full, exts));
+    } else if (entry.isFile() && exts.some(ext => entry.name.endsWith(ext))) {
+      result.push(full);
+    }
+  }
+  return result;
+}
 
 export async function POST(req: NextRequest) {
   if (process.env.NODE_ENV !== 'development') {
@@ -22,16 +36,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, filesChanged: [], message: 'Không có thay đổi nào' });
     }
 
-    // Find all TSX/TS files in src/
     const srcDir = path.join(process.cwd(), 'src');
-    const files = await glob('**/*.{tsx,ts,jsx,js}', { cwd: srcDir, absolute: true });
-
+    const files = findFiles(srcDir, ['.tsx', '.ts', '.jsx', '.js']);
     const filesChanged: string[] = [];
 
     for (const file of files) {
       const content = fs.readFileSync(file, 'utf-8');
       if (content.includes(oldClassName)) {
-        // Replace ALL occurrences of the old className string
         const updated = content.split(oldClassName).join(newClassName);
         fs.writeFileSync(file, updated, 'utf-8');
         filesChanged.push(path.relative(process.cwd(), file));
@@ -43,7 +54,7 @@ export async function POST(req: NextRequest) {
       filesChanged,
       message: filesChanged.length > 0
         ? `Đã lưu vào ${filesChanged.length} file`
-        : 'Không tìm thấy className trong code'
+        : 'Không tìm thấy className trong code',
     });
   } catch (err) {
     console.error('[Inspector Save]', err);
