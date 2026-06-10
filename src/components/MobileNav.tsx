@@ -32,7 +32,7 @@ export default function MobileNav({ links }: { links: NavLink[] }) {
       <button
         onClick={() => setOpen(!open)}
         aria-label="Toggle menu"
-        className="md:hidden flex flex-col gap-[5px] justify-center items-center w-10 h-10 rounded-lg border border-white/10 hover:border-[#00E5FF]/50 hover:bg-[#00E5FF]/10 transition-all"
+        className="md:hidden flex flex-col gap-[5px] justify-center items-center w-10 h-10 rounded-lg border border-white/20 hover:border-[#00E5FF]/60 hover:bg-[#00E5FF]/10 transition-all"
       >
         <span
           className={`block w-5 h-[2px] bg-white transition-all duration-300 ${
@@ -54,26 +54,39 @@ export default function MobileNav({ links }: { links: NavLink[] }) {
       {/* Overlay backdrop */}
       {open && (
         <div
-          className="md:hidden fixed inset-0 z-[48] bg-black/60 backdrop-blur-sm"
+          className="md:hidden fixed inset-0 z-[9980] bg-black/70"
           onClick={() => setOpen(false)}
         />
       )}
 
-      {/* Slide-in drawer */}
+      {/* Slide-in drawer — fully opaque, above everything */}
       <div
-        className={`md:hidden fixed top-0 right-0 h-full w-[75vw] max-w-[300px] z-[49] transition-transform duration-300 ease-in-out ${
+        className={`md:hidden fixed top-0 right-0 h-full w-[78vw] max-w-[320px] z-[9990] transition-transform duration-300 ease-in-out flex flex-col ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
-        style={{ background: "rgba(7, 18, 34, 0.98)", backdropFilter: "blur(20px)", borderLeft: "1px solid rgba(0,229,255,0.15)" }}
+        style={{
+          backgroundColor: "#060f1e",
+          borderLeft: "1px solid rgba(0,229,255,0.2)",
+        }}
       >
         {/* Drawer header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
-          <span className="text-[#00E5FF] font-bold text-[11px] uppercase tracking-[3px]">Menu</span>
+        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 shrink-0">
+          <span className="text-[#00E5FF] font-bold text-[12px] uppercase tracking-[3px]">
+            Menu
+          </span>
           <button
             onClick={() => setOpen(false)}
-            className="w-8 h-8 rounded-lg flex items-center justify-center border border-white/10 hover:border-[#00E5FF]/50 transition-colors"
+            className="w-8 h-8 rounded-lg flex items-center justify-center border border-white/20 hover:border-[#00E5FF]/60 transition-colors"
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            >
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -81,32 +94,32 @@ export default function MobileNav({ links }: { links: NavLink[] }) {
         </div>
 
         {/* Nav links */}
-        <nav className="flex flex-col px-4 py-6 gap-1">
+        <nav className="flex flex-col px-4 py-5 gap-1 flex-1 overflow-y-auto">
           {links.map((link) => (
             <a
               key={link.href + link.label}
               href={link.href}
               onClick={() => setOpen(false)}
-              className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-[12px] font-bold tracking-wider transition-all ${
+              className={`flex items-center gap-3 px-4 py-4 rounded-xl text-[13px] font-bold tracking-wider transition-all ${
                 link.active
-                  ? "bg-[#00E5FF]/10 text-[#00E5FF] border border-[#00E5FF]/25"
-                  : "text-white/80 hover:bg-white/5 hover:text-white border border-transparent"
+                  ? "bg-[#00E5FF]/15 text-[#00E5FF] border border-[#00E5FF]/30"
+                  : "text-white border border-transparent hover:bg-white/8 hover:text-white"
               }`}
             >
               {link.active && (
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] shrink-0" />
+                <span className="w-2 h-2 rounded-full bg-[#00E5FF] shrink-0" />
               )}
               {link.label}
             </a>
           ))}
         </nav>
 
-        {/* CTA at bottom of drawer */}
-        <div className="px-4 mt-2">
+        {/* CTA at bottom */}
+        <div className="px-4 pb-8 pt-3 shrink-0 border-t border-white/10">
           <a
             href="#contact"
             onClick={() => setOpen(false)}
-            className="w-full py-4 bg-[#00E5FF] text-[#071324] font-bold text-[12px] tracking-wider flex items-center justify-center gap-2 rounded-xl hover:bg-[#2EF2FF] transition-colors shadow-[0_4px_20px_rgba(0,229,255,0.4)]"
+            className="w-full py-4 bg-[#00E5FF] text-[#071324] font-bold text-[13px] tracking-wider flex items-center justify-center gap-2 rounded-xl hover:bg-[#2EF2FF] transition-colors shadow-[0_4px_20px_rgba(0,229,255,0.4)]"
           >
             LIÊN HỆ TƯ VẤN &rarr;
           </a>

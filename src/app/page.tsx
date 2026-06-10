@@ -54,7 +54,7 @@ export default function Home() {
               NHÀ THẦU ARTWORK & KIẾN TRÚC ĐIỂM NHẤN CẢNH QUAN HÀNG ĐẦU VIỆT NAM
             </span>
             
-            <h1 className="text-[clamp(28px,8vw,48px)] sm:text-[clamp(32px,6vw,48px)] lg:text-[48px] font-black mb-4 leading-[1.1] tracking-tight">
+            <h1 className="text-[20px] sm:text-[28px] md:text-[38px] lg:text-[48px] font-black mb-4 leading-[1.15] tracking-tight">
               <span className="text-white block">SÁNG TẠO</span>
               <span className="text-[#00E5FF] block drop-shadow-[0_0_15px_rgba(0,229,255,0.3)]">GIÁ TRỊ ĐÍCH THỰC</span>
             </h1>
