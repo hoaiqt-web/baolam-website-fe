@@ -46,20 +46,20 @@ export default function Home() {
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#030914] via-[#030914]/80 to-transparent z-10" />
 
         {/* Content Container - FULL WIDTH CỰC ĐẠI */}
-        <div className="relative z-20 h-full w-full mx-auto px-6 xl:px-8 flex flex-col lg:flex-row justify-center lg:justify-between items-center pt-[80px] lg:pt-[60px]">
+        <div className="relative z-20 h-full w-full mx-auto px-5 sm:px-6 xl:px-8 flex flex-col lg:flex-row justify-center lg:justify-between items-start lg:items-center pt-[90px] sm:pt-[88px] lg:pt-[60px]">
           
           {/* Trái: Nội dung Text */}
-          <div className="w-full lg:w-[45%] max-w-[600px] mb-8 mt-auto lg:mt-0">
-            <span className="text-[#A5B4C7] font-medium tracking-[1px] text-[10px] uppercase mb-4 block drop-shadow-md">
+          <div className="w-full lg:w-[45%] max-w-[600px] mb-8 mt-6 sm:mt-8 lg:mt-0">
+            <span className="text-[#A5B4C7] font-medium tracking-[1px] text-[9px] sm:text-[10px] uppercase mb-3 block drop-shadow-md leading-relaxed">
               NHÀ THẦU ARTWORK & KIẾN TRÚC ĐIỂM NHẤN CẢNH QUAN HÀNG ĐẦU VIỆT NAM
             </span>
             
-            <h1 className="text-[36px] md:text-[42px] lg:text-[48px] font-black mb-4 leading-[1.1] tracking-tight">
-              <span className="text-white block whitespace-nowrap">SÁNG TẠO</span>
-              <span className="text-[#00E5FF] block whitespace-nowrap drop-shadow-[0_0_15px_rgba(0,229,255,0.3)]">GIÁ TRỊ ĐÍCH THỰC</span>
+            <h1 className="text-[clamp(28px,8vw,48px)] sm:text-[clamp(32px,6vw,48px)] lg:text-[48px] font-black mb-4 leading-[1.1] tracking-tight">
+              <span className="text-white block">SÁNG TẠO</span>
+              <span className="text-[#00E5FF] block drop-shadow-[0_0_15px_rgba(0,229,255,0.3)]">GIÁ TRỊ ĐÍCH THỰC</span>
             </h1>
             
-            <p className="text-[#A5B4C7] text-[13px] md:text-[14px] mb-8 leading-[1.6] max-w-[480px]">
+            <p className="text-[#A5B4C7] text-[13px] sm:text-[14px] mb-6 sm:mb-8 leading-[1.6] max-w-[480px]">
               Từ ý tưởng đến biểu tượng. Bảo Lâm kiến tạo những công trình nghệ thuật có giá trị bền vững, nâng tầm không gian và tạo dấu ấn cho mọi công trình trên khắp Việt Nam.
             </p>
             
