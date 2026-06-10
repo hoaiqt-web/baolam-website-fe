@@ -184,21 +184,23 @@ export default function DebugToggle() {
 
     const onMouseDown = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
-      if (t.closest(`[${EDITOR_ATTR}]`)) return;
-      // Only drag the SELECTED element
-      if (t !== selectedEl.current) return;
+      if (t.closest(`[${EDITOR_ATTR}]`)) return;      // ignore inspector UI
+      if (resizeState.current) return;                 // resize takes priority
+      const sel = selectedEl.current;
+      if (!sel) return;
+      // Allow drag if click is on the selected element OR inside it
+      if (!sel.contains(t)) return;
       e.preventDefault();
       elDragActive.current = true;
       elDragMoved.current = false;
       elDragStart.current = { x: e.clientX, y: e.clientY };
-      if (t.tagName === "IMG") {
-        const cs = window.getComputedStyle(t);
+      if (sel.tagName === "IMG") {
+        const cs = window.getComputedStyle(sel);
         const pos = (cs.objectPosition || "50% 50%").split(" ");
         elDragStartObjX.current = parseFloat(pos[0]) || 50;
         elDragStartObjY.current = parseFloat(pos[1]) || 50;
       } else {
-        // Read current transform translate
-        const cs = window.getComputedStyle(t);
+        const cs = window.getComputedStyle(sel);
         const mat = new DOMMatrix(cs.transform);
         elDragStartTransX.current = mat.m41 || 0;
         elDragStartTransY.current = mat.m42 || 0;
