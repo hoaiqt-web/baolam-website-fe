@@ -12,7 +12,7 @@ export default function Home() {
       <DebugToggle />
       
       {/* ---------------- KHỐI TRÊN: HERO & THỐNG KÊ (78%) ---------------- */}
-      <div className="relative min-h-[90vh] lg:min-h-0 lg:h-[78%] w-full shrink-0 bg-[#030914] overflow-hidden flex flex-col justify-center">
+      <div id="hero-section" className="relative min-h-[90vh] lg:min-h-0 lg:h-[75%] w-full shrink-0 bg-[#030914] overflow-hidden flex flex-col justify-center">
         
         {/* Lớp nền Blur lấp đầy các khoảng trống khi thu nhỏ ảnh chính */}
         <img 
@@ -43,7 +43,7 @@ export default function Home() {
         />
         
         {/* Gradient nối mượt xuống khối dưới */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#030914] via-[#030914]/80 to-transparent z-10" />
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#030914] via-[#030914]/80 to-transparent z-10 w-[1432px] h-[29px]" />
 
         {/* Content Container - FULL WIDTH CỰC ĐẠI */}
         <div className="relative z-20 h-full w-full mx-auto px-5 sm:px-6 xl:px-8 flex flex-col lg:flex-row justify-center lg:justify-between items-start lg:items-center pt-[90px] sm:pt-[88px] lg:pt-[60px]">
@@ -75,7 +75,7 @@ export default function Home() {
 
           {/* Phải: Thống kê Panel */}
           <div className="w-[240px] hidden lg:block shrink-0 mb-8">
-            <div className="rounded-xl backdrop-blur-md border border-white/10 bg-[#071324]/50 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden p-6 space-y-5">
+            <div className="rounded-xl backdrop-blur-md border border-white/10 bg-[#071324]/50 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden p-6 space-y-5 pr-[32px] pl-[50px] w-[250px] h-[314px] mt-[77px]">
               
               {/* Stat 1 */}
               <div className="flex items-start gap-3">
@@ -132,10 +132,10 @@ export default function Home() {
       </div>
 
       {/* ---------------- KHỐI DƯỚI: TÍNH NĂNG & DỰ ÁN ---------------- */}
-      <div className="flex-1 w-full bg-[#030914] relative z-20 flex flex-col justify-center overflow-hidden pt-4 lg:pt-0 pb-6 lg:pb-0">
+      <div className="flex-1 w-full bg-[#030914] relative z-20 flex flex-col justify-start overflow-hidden pt-3 lg:pt-2 pb-4 lg:pb-2">
         
         {/* NỘI DUNG */}
-        <div className="w-full h-full mx-auto px-6 xl:px-8 flex flex-col justify-center gap-4">
+        <div className="w-full h-full mx-auto px-6 xl:px-8 flex flex-col justify-start gap-3">
           
           {/* FEATURES BAR */}
           <div className="w-full grid grid-cols-2 gap-y-4 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-3 lg:mb-3 px-2">

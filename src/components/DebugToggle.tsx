@@ -17,8 +17,10 @@ interface StyleState {
   opacity: string;
   letterSpacing: string;
   lineHeight: string;
-  objectPositionX: string;  // for <img>: 0-100%
-  objectPositionY: string;  // for <img>: 0-100%
+  objectPositionX: string;
+  objectPositionY: string;
+  width: string;   // px - 0 = auto
+  height: string;  // px - 0 = auto
 }
 
 interface ElementInfo {
@@ -63,8 +65,10 @@ const TW_GENERATORS: Record<keyof StyleState, (v: string) => string> = {
   opacity:         (v) => (v === "100" ? "" : `opacity-[${(parseFloat(v) / 100).toFixed(2)}]`),
   letterSpacing:   (v) => `tracking-[${v}px]`,
   lineHeight:      (v) => (v === "0" ? "" : `leading-[${v}px]`),
-  objectPositionX: (_v) => "", // applied as inline style, not Tailwind
-  objectPositionY: (_v) => "", // applied as inline style, not Tailwind
+  objectPositionX: (_v) => "",
+  objectPositionY: (_v) => "",
+  width:           (v) => (v === "0" ? "" : `w-[${v}px]`),
+  height:          (v) => (v === "0" ? "" : `h-[${v}px]`),
 };
 
 // ── Patterns to remove old Tailwind classes before adding new ones ──
@@ -81,8 +85,10 @@ const TW_REMOVE_PATTERNS: Record<keyof StyleState, RegExp> = {
   opacity:         /\bopacity-\d+\b|\bopacity-\[[^\]]+\]/g,
   letterSpacing:   /\btracking-\[\d+px\]|\btracking-tighter\b|\btracking-tight\b|\btracking-normal\b|\btracking-wide\b|\btracking-wider\b|\btracking-widest\b/g,
   lineHeight:      /\bleading-\[\d+px\]|\bleading-none\b|\bleading-tight\b|\bleading-snug\b|\bleading-normal\b|\bleading-relaxed\b|\bleading-loose\b/g,
-  objectPositionX: /(?!)/g, // no Tailwind class to remove
+  objectPositionX: /(?!)/g,
   objectPositionY: /(?!)/g,
+  width:           /\bw-\[\d+px\]|\bw-\d+\b|\bw-full\b|\bw-auto\b/g,
+  height:          /\bh-\[\d+px\]|\bh-\d+\b|\bh-full\b|\bh-auto\b/g,
 };
 
 function buildNewClassName(original: string, orig: StyleState, curr: StyleState): string {
@@ -102,6 +108,26 @@ export default function DebugToggle() {
   const [styles, setStyles] = useState<StyleState | null>(null);
   const [originalStyles, setOriginalStyles] = useState<StyleState | null>(null);
   const [panelPos, setPanelPos] = useState({ x: 12, y: 72 });
+  const [heroRatio, setHeroRatio] = useState(75);
+  const dividerDragging = useRef(false);
+  const dividerStartY = useRef(0);
+  const dividerStartRatio = useRef(75);
+
+  // Apply heroRatio live to the hero section
+  useEffect(() => {
+    if (!debug) return;
+    const hero = document.getElementById('hero-section');
+    if (hero) hero.style.height = `${heroRatio}vh`;
+  }, [heroRatio, debug]);
+
+  // Reset hero height on debug off
+  useEffect(() => {
+    if (!debug) {
+      const hero = document.getElementById('hero-section');
+      if (hero) hero.style.removeProperty('height');
+    }
+  }, [debug]);
+
   const [hoverTip, setHoverTip] = useState<{ x: number; y: number; w: number; h: number; tag: string } | null>(null);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [saveResult, setSaveResult] = useState<SaveResult | null>(null);
@@ -110,6 +136,23 @@ export default function DebugToggle() {
   const selectedEl = useRef<HTMLElement | null>(null);
   const isDragging = useRef(false);
   const dragOff = useRef({ x: 0, y: 0 });
+  const [tick, setTick] = useState(0); // force re-render of handles on resize
+
+  // Drag-to-reposition state
+  const elDragActive = useRef(false);
+  const elDragStart = useRef({ x: 0, y: 0 });
+  const elDragStartObjX = useRef(50);
+  const elDragStartObjY = useRef(50);
+  const elDragStartTransX = useRef(0);
+  const elDragStartTransY = useRef(0);
+  const elDragMoved = useRef(false);
+
+  // Resize state
+  const resizeState = useRef<{
+    handle: 'left'|'right'|'top'|'bottom';
+    startX: number; startY: number;
+    startW: number; startH: number;
+  } | null>(null);
 
   // ── Toggle body class ──
   useEffect(() => {
@@ -143,6 +186,8 @@ export default function DebugToggle() {
         lineHeight: parsePx(cs.lineHeight) + "",
         objectPositionX: t.tagName === "IMG" ? (cs.objectPosition?.split(" ")[0]?.replace("%","") || "50") : "50",
         objectPositionY: t.tagName === "IMG" ? (cs.objectPosition?.split(" ")[1]?.replace("%","") || "50") : "50",
+        width: "0",
+        height: "0",
       };
       setInfo({ tagName: t.tagName.toLowerCase(), width: Math.round(rect.width), height: Math.round(rect.height), className: t.className || "" });
       setStyles(s);
@@ -151,6 +196,103 @@ export default function DebugToggle() {
     };
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);
+  }, [debug]);
+
+  // ── Element drag-to-reposition (triggered from move handle in overlay) ──
+  const startMove = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const sel = selectedEl.current;
+    if (!sel) return;
+    elDragActive.current = true;
+    elDragMoved.current = false;
+    elDragStart.current = { x: e.clientX, y: e.clientY };
+    if (sel.tagName === "IMG") {
+      const cs = window.getComputedStyle(sel);
+      const pos = (cs.objectPosition || "50% 50%").split(" ");
+      elDragStartObjX.current = parseFloat(pos[0]) || 50;
+      elDragStartObjY.current = parseFloat(pos[1]) || 50;
+    } else {
+      const cs = window.getComputedStyle(sel);
+      const mat = new DOMMatrix(cs.transform);
+      elDragStartTransX.current = mat.m41 || 0;
+      elDragStartTransY.current = mat.m42 || 0;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!debug) return;
+    const onMouseMove = (e: MouseEvent) => {
+      if (!elDragActive.current || !selectedEl.current) return;
+      const dx = e.clientX - elDragStart.current.x;
+      const dy = e.clientY - elDragStart.current.y;
+      if (!elDragMoved.current && Math.abs(dx) < 4 && Math.abs(dy) < 4) return;
+      elDragMoved.current = true;
+      setHoverTip(null);
+      const el = selectedEl.current;
+      if (el.tagName === "IMG") {
+        const rect = el.getBoundingClientRect();
+        const sensX = rect.width  > 0 ? 100 / rect.width  : 0.15;
+        const sensY = rect.height > 0 ? 100 / rect.height : 0.15;
+        const newX = Math.max(0, Math.min(100, elDragStartObjX.current - dx * sensX));
+        const newY = Math.max(0, Math.min(100, elDragStartObjY.current - dy * sensY));
+        el.style.objectPosition = `${newX.toFixed(1)}% ${newY.toFixed(1)}%`;
+        setStyles(prev => prev ? { ...prev,
+          objectPositionX: String(Math.round(newX)),
+          objectPositionY: String(Math.round(newY)),
+        } : prev);
+      } else {
+        const newX = elDragStartTransX.current + dx;
+        const newY = elDragStartTransY.current + dy;
+        el.style.transform = `translate(${newX.toFixed(0)}px, ${newY.toFixed(0)}px)`;
+        setStyles(prev => prev ? { ...prev,
+          marginTop:    String(Math.round(newY > 0 ?  newY : 0)),
+          marginBottom: String(Math.round(newY < 0 ? -newY : 0)),
+        } : prev);
+      }
+      setTick(t => t + 1);
+    };
+    const onMouseUp = () => { elDragActive.current = false; };
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup",   onMouseUp);
+    return () => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup",   onMouseUp);
+    };
+  }, [debug]);
+
+  // ── Resize handler ──
+  const startResize = useCallback((e: React.MouseEvent, handle: 'left'|'right'|'top'|'bottom') => {
+    e.stopPropagation();
+    e.preventDefault();
+    const el = selectedEl.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    resizeState.current = { handle, startX: e.clientX, startY: e.clientY, startW: rect.width, startH: rect.height };
+  }, []);
+
+  useEffect(() => {
+    if (!debug) return;
+    const onMove = (e: MouseEvent) => {
+      if (!resizeState.current || !selectedEl.current) return;
+      const el = selectedEl.current;
+      const { handle, startX, startY, startW, startH } = resizeState.current;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      let newW = startW, newH = startH;
+      if (handle === 'right')  newW = Math.max(40, startW + dx);
+      if (handle === 'left')   newW = Math.max(40, startW - dx);
+      if (handle === 'bottom') newH = Math.max(20, startH + dy);
+      if (handle === 'top')    newH = Math.max(20, startH - dy);
+      el.style.width  = `${Math.round(newW)}px`;
+      el.style.height = `${Math.round(newH)}px`;
+      setStyles(prev => prev ? { ...prev, width: String(Math.round(newW)), height: String(Math.round(newH)) } : prev);
+      setTick(t => t + 1);
+    };
+    const onUp = () => { if (resizeState.current) { resizeState.current = null; } };
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+    return () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); };
   }, [debug]);
 
   // ── Hover tooltip ──
@@ -281,13 +423,112 @@ export default function DebugToggle() {
         </div>
       )}
 
-      {/* Highlight selected */}
+      {/* ── SECTION DIVIDER (drag to resize hero/bottom split) ── */}
+      {debug && (
+        <div data-layout-editor-ui
+          style={{ position: 'fixed', top: `${heroRatio}vh`, left: 0, width: '100%', height: 6, zIndex: 9993, cursor: 'ns-resize', userSelect: 'none' }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            dividerDragging.current = true;
+            dividerStartY.current = e.clientY;
+            dividerStartRatio.current = heroRatio;
+            const onMove = (ev: MouseEvent) => {
+              if (!dividerDragging.current) return;
+              const dy = ev.clientY - dividerStartY.current;
+              const delta = (dy / window.innerHeight) * 100;
+              const next = Math.max(40, Math.min(88, dividerStartRatio.current + delta));
+              setHeroRatio(Math.round(next));
+            };
+            const onUp = () => {
+              dividerDragging.current = false;
+              window.removeEventListener('mousemove', onMove);
+              window.removeEventListener('mouseup', onUp);
+            };
+            window.addEventListener('mousemove', onMove);
+            window.addEventListener('mouseup', onUp);
+          }}
+        >
+          {/* The visible line */}
+          <div data-layout-editor-ui style={{ position: 'absolute', top: 2, left: 0, right: 0, height: 2, background: 'rgba(0,229,255,0.6)' }} />
+          {/* Center label */}
+          <div data-layout-editor-ui style={{
+            position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)',
+            background: '#00E5FF', color: '#071324', fontSize: 10, fontWeight: 800,
+            padding: '2px 12px', borderRadius: 4, whiteSpace: 'nowrap', display: 'flex', gap: 8, alignItems: 'center',
+          }}>
+            ↕ KÉO ĐỂ ĐIỀU CHỈNH TỈ LỆ — Hero: {heroRatio}%
+            <button data-layout-editor-ui
+              style={{ background: '#071324', color: '#00E5FF', border: 'none', borderRadius: 3, padding: '1px 8px', cursor: 'pointer', fontSize: 10, fontWeight: 700 }}
+              onClick={async (e) => {
+                e.stopPropagation();
+                await fetch('/api/inspector/save', {
+                  method: 'POST', headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    oldClassName: `lg:h-[${dividerStartRatio.current}%]`,
+                    newClassName: `lg:h-[${heroRatio}%]`,
+                  }),
+                });
+                dividerStartRatio.current = heroRatio;
+                alert(`✅ Đã lưu: Hero height = ${heroRatio}%`);
+              }}
+            >💾 Lưu tỉ lệ</button>
+          </div>
+        </div>
+      )}
+
+      {/* Resize handles + selection highlight */}
       {debug && info && selectedEl.current && (() => {
         const r = selectedEl.current.getBoundingClientRect();
+        void tick; // consume tick to re-render on resize
+        const H = 10; // handle size px
+        const hStyle = (cursor: string, style: React.CSSProperties): React.CSSProperties => ({
+          position: 'absolute', width: H, height: H,
+          background: '#00E5FF', border: '2px solid white',
+          borderRadius: 2, cursor, pointerEvents: 'all',
+          zIndex: 9990, ...style,
+        });
+        const edgeH: React.CSSProperties = { width: 10, height: 28 };
+        const edgeV: React.CSSProperties = { width: 28, height: 10 };
         return (
           <div data-layout-editor-ui
-            style={{ position: "fixed", top: r.top, left: r.left, width: r.width, height: r.height, pointerEvents: "none", zIndex: 9985 }}
-            className="outline outline-2 outline-[#00E5FF] shadow-[0_0_0_4px_rgba(0,229,255,0.12)]" />
+            style={{ position: 'fixed', top: r.top, left: r.left, width: r.width, height: r.height, pointerEvents: 'none', zIndex: 9986 }}
+            className="outline outline-2 outline-[#00E5FF] shadow-[0_0_0_4px_rgba(0,229,255,0.12)]"
+          >
+            {/* Right edge */}
+            <div data-layout-editor-ui style={hStyle('ew-resize', { ...edgeH, right: -5, top: '50%', transform: 'translateY(-50%)' })} onMouseDown={e => startResize(e, 'right')} />
+            {/* Left edge */}
+            <div data-layout-editor-ui style={hStyle('ew-resize', { ...edgeH, left: -5, top: '50%', transform: 'translateY(-50%)' })} onMouseDown={e => startResize(e, 'left')} />
+            {/* Bottom edge */}
+            <div data-layout-editor-ui style={hStyle('ns-resize', { ...edgeV, bottom: -5, left: '50%', transform: 'translateX(-50%)' })} onMouseDown={e => startResize(e, 'bottom')} />
+            {/* Top edge */}
+            <div data-layout-editor-ui style={hStyle('ns-resize', { ...edgeV, top: -5, left: '50%', transform: 'translateX(-50%)' })} onMouseDown={e => startResize(e, 'top')} />
+            {/* Corners */}
+            <div data-layout-editor-ui style={hStyle('nwse-resize', { top: -5, left: -5 })} onMouseDown={e => { startResize(e, 'top'); startResize(e, 'left'); }} />
+            <div data-layout-editor-ui style={hStyle('nesw-resize', { top: -5, right: -5 })} onMouseDown={e => { startResize(e, 'top'); startResize(e, 'right'); }} />
+            <div data-layout-editor-ui style={hStyle('nesw-resize', { bottom: -5, left: -5 })} onMouseDown={e => { startResize(e, 'bottom'); startResize(e, 'left'); }} />
+            <div data-layout-editor-ui style={hStyle('nwse-resize', { bottom: -5, right: -5 })} onMouseDown={e => { startResize(e, 'bottom'); startResize(e, 'right'); }} />
+            {/* ✦ MOVE HANDLE - drag this to move the element */}
+            <div
+              data-layout-editor-ui
+              onMouseDown={startMove}
+              style={{
+                position: 'absolute', top: -30, left: '50%',
+                transform: 'translateX(-50%)',
+                pointerEvents: 'all', cursor: 'move', zIndex: 9992,
+                background: 'rgba(0,229,255,0.95)', color: '#071324',
+                borderRadius: 6, padding: '3px 10px',
+                fontSize: 10, fontWeight: 800, userSelect: 'none',
+                whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 4,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
+              }}
+            >
+              ✦ KÉO ĐỂ DI CHUYỂN
+            </div>
+            {/* Size label */}
+            <div data-layout-editor-ui style={{ position: 'absolute', bottom: -24, left: '50%', transform: 'translateX(-50%)', pointerEvents: 'none', background: 'rgba(0,229,255,0.9)', color: '#071324', fontSize: 9, fontWeight: 700, padding: '1px 6px', borderRadius: 4, whiteSpace: 'nowrap' }}>
+              {Math.round(r.width)} × {Math.round(r.height)} px
+            </div>
+          </div>
         );
       })()}
 
@@ -319,6 +560,91 @@ export default function DebugToggle() {
               </div>
             ) : styles ? (
               <>
+                {/* ── PHÍM TẮT NHANH ── */}
+                <div className="space-y-1.5">
+                  {/* Nút chọn ảnh nền: tìm trong chính nó VÀ trong parent */}
+                  {info.tagName !== "img" && (() => {
+                    // Tìm img trong con, hoặc trong anh/chị em của phần tử cha
+                    const findNearestImg = (el: HTMLElement | null): HTMLElement | null => {
+                      if (!el) return null;
+                      // 1. Tìm trong các con trực tiếp
+                      const child = el.querySelector("img");
+                      if (child) return child as HTMLElement;
+                      // 2. Tìm trong anh chị em của phần tử cha
+                      const parent = el.parentElement;
+                      if (!parent) return null;
+                      const siblingImg = parent.querySelector("img");
+                      if (siblingImg && siblingImg !== el) return siblingImg as HTMLElement;
+                      // 3. Thử ông nội
+                      const grand = parent.parentElement;
+                      if (grand) {
+                        const grandImg = grand.querySelector("img");
+                        if (grandImg) return grandImg as HTMLElement;
+                      }
+                      return null;
+                    };
+                    const nearImg = findNearestImg(selectedEl.current);
+                    if (!nearImg) return null;
+                    return (
+                      <button
+                        onClick={() => {
+                          const img = nearImg;
+                          selectedEl.current = img;
+                          const cs = window.getComputedStyle(img);
+                          const rect = img.getBoundingClientRect();
+                          const pos = (cs.objectPosition || "50% 50%").split(" ");
+                          setInfo({ tagName: "img", width: Math.round(rect.width), height: Math.round(rect.height), className: img.className || "" });
+                          const s = {
+                            fontSize: String(Math.round(parseFloat(cs.fontSize)||0)),
+                            color: toHex(cs.color), backgroundColor: toHex(cs.backgroundColor),
+                            paddingTop: "0", paddingRight: "0", paddingBottom: "0", paddingLeft: "0",
+                            marginTop: "0", marginBottom: "0",
+                            opacity: "100", letterSpacing: "0", lineHeight: "0",
+                            objectPositionX: pos[0]?.replace("%","") || "50",
+                            objectPositionY: pos[1]?.replace("%","") || "50",
+                          };
+                          setStyles(s); setOriginalStyles(s); setSaveResult(null);
+                        }}
+                        className="w-full py-2.5 text-[11px] font-bold rounded-xl bg-yellow-400/15 border border-yellow-400/40 text-yellow-300 hover:bg-yellow-400/25 transition-all flex items-center justify-center gap-2"
+                      >
+                        🖼 Chọn ảnh nền gần nhất → chỉnh vị trí
+                      </button>
+                    );
+                  })()}
+
+                  {/* Nút lên phần tử cha */}
+                  {selectedEl.current?.parentElement && !selectedEl.current.parentElement.closest(`[${EDITOR_ATTR}]`) && (
+                    <button
+                      onClick={() => {
+                        const parent = selectedEl.current?.parentElement as HTMLElement;
+                        if (!parent || parent.closest(`[${EDITOR_ATTR}]`)) return;
+                        selectedEl.current = parent;
+                        const cs = window.getComputedStyle(parent);
+                        const rect = parent.getBoundingClientRect();
+                        const s = {
+                          fontSize: String(Math.round(parseFloat(cs.fontSize)||0)),
+                          color: toHex(cs.color), backgroundColor: toHex(cs.backgroundColor),
+                          paddingTop: String(Math.round(parseFloat(cs.paddingTop)||0)),
+                          paddingRight: String(Math.round(parseFloat(cs.paddingRight)||0)),
+                          paddingBottom: String(Math.round(parseFloat(cs.paddingBottom)||0)),
+                          paddingLeft: String(Math.round(parseFloat(cs.paddingLeft)||0)),
+                          marginTop: String(Math.round(parseFloat(cs.marginTop)||0)),
+                          marginBottom: String(Math.round(parseFloat(cs.marginBottom)||0)),
+                          opacity: String(Math.round(parseFloat(cs.opacity||"1")*100)),
+                          letterSpacing: String(Math.round(parseFloat(cs.letterSpacing)||0)),
+                          lineHeight: String(Math.round(parseFloat(cs.lineHeight)||0)),
+                          objectPositionX: "50", objectPositionY: "50",
+                        };
+                        setInfo({ tagName: parent.tagName.toLowerCase(), width: Math.round(rect.width), height: Math.round(rect.height), className: parent.className || "" });
+                        setStyles(s); setOriginalStyles(s); setSaveResult(null);
+                      }}
+                      className="w-full py-1.5 text-[9px] font-bold rounded-lg border border-white/10 text-[#A5B4C7]/50 hover:text-white hover:border-white/30 transition-all"
+                    >
+                      ↑ Lên phần tử cha ({selectedEl.current?.parentElement?.tagName?.toLowerCase()})
+                    </button>
+                  )}
+                </div>
+
                 {/* Typography */}
                 <Section label="Chữ" icon="T">
                   <div className="grid grid-cols-2 gap-2">
