@@ -135,7 +135,7 @@ export default function Home() {
       <div className="flex-1 w-full bg-[#030914] relative z-20 flex flex-col justify-start overflow-hidden pt-3 lg:pt-2 pb-4 lg:pb-2">
         
         {/* NỘI DUNG */}
-        <div className="w-full h-full mx-auto px-6 xl:px-8 flex flex-col justify-start gap-3">
+        <div className="w-full mx-auto px-6 xl:px-8 flex flex-col justify-start gap-3">
           
           {/* FEATURES BAR */}
           <div className="w-full grid grid-cols-2 gap-y-4 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-3 lg:mb-3 px-2">
@@ -183,7 +183,7 @@ export default function Home() {
           </div>
 
           {/* DỰ ÁN NỔI BẬT - 5 CỘT (1 Tiêu đề + 4 Dự án dàn đều 100% chiều ngang) */}
-          <div className="w-full flex lg:grid lg:grid-cols-5 gap-4 items-end relative flex-1 overflow-x-auto snap-x snap-mandatory lg:overflow-visible pb-6 lg:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] -mx-6 px-6 xl:mx-0 xl:px-0">
+          <div className="w-full flex lg:grid lg:grid-cols-5 gap-4 items-start relative overflow-x-auto snap-x snap-mandatory lg:overflow-visible pb-6 lg:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] -mx-6 px-6 xl:mx-0 xl:px-0">
             
             {/* Nav Arrows */}
             <div className="absolute -top-10 right-6 xl:right-0 flex gap-1.5 z-30">
