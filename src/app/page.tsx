@@ -7,12 +7,12 @@ export default function Home() {
   const allProjects = [...LANDMARK_PROJECTS, ...ARTWORK_PROJECTS].slice(0, 4);
 
   return (
-    <main className="h-screen w-full bg-[#030914] flex flex-col font-sans overflow-hidden">
+    <main className="min-h-screen lg:h-screen w-full bg-[#030914] flex flex-col font-sans overflow-y-auto overflow-x-hidden lg:overflow-hidden">
       
       <DebugToggle />
       
       {/* ---------------- KHỐI TRÊN: HERO & THỐNG KÊ (78%) ---------------- */}
-      <div className="relative h-[78%] w-full shrink-0 bg-[#030914] overflow-hidden">
+      <div className="relative min-h-[90vh] lg:min-h-0 lg:h-[78%] w-full shrink-0 bg-[#030914] overflow-hidden flex flex-col justify-center">
         
         {/* Lớp nền Blur lấp đầy các khoảng trống khi thu nhỏ ảnh chính */}
         <img 
@@ -46,10 +46,10 @@ export default function Home() {
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#030914] via-[#030914]/80 to-transparent z-10" />
 
         {/* Content Container - FULL WIDTH CỰC ĐẠI */}
-        <div className="relative z-20 h-full w-full mx-auto px-6 xl:px-8 flex justify-between items-center pt-[60px]">
+        <div className="relative z-20 h-full w-full mx-auto px-6 xl:px-8 flex flex-col lg:flex-row justify-center lg:justify-between items-center pt-[80px] lg:pt-[60px]">
           
           {/* Trái: Nội dung Text */}
-          <div className="w-full lg:w-[45%] max-w-[600px] mb-8">
+          <div className="w-full lg:w-[45%] max-w-[600px] mb-8 mt-auto lg:mt-0">
             <span className="text-[#A5B4C7] font-medium tracking-[1px] text-[10px] uppercase mb-4 block drop-shadow-md">
               NHÀ THẦU ARTWORK & KIẾN TRÚC ĐIỂM NHẤN CẢNH QUAN HÀNG ĐẦU VIỆT NAM
             </span>
@@ -63,11 +63,11 @@ export default function Home() {
               Từ ý tưởng đến biểu tượng. Bảo Lâm kiến tạo những công trình nghệ thuật có giá trị bền vững, nâng tầm không gian và tạo dấu ấn cho mọi công trình trên khắp Việt Nam.
             </p>
             
-            <div className="flex gap-4">
-              <a href="#landmarks" className="px-6 py-3 bg-[#00E5FF] text-[#071522] font-bold rounded hover:bg-[#2EF2FF] transition-colors text-[11px] flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(0,229,255,0.3)] whitespace-nowrap">
+            <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 w-full sm:w-auto">
+              <a href="#landmarks" className="w-full sm:w-auto px-6 py-3 bg-[#00E5FF] text-[#071522] font-bold rounded hover:bg-[#2EF2FF] transition-colors text-[11px] flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(0,229,255,0.3)] whitespace-nowrap">
                 KHÁM PHÁ DỰ ÁN &rarr;
               </a>
-              <a href="#capabilities" className="px-6 py-3 bg-transparent border border-white/20 text-white font-bold rounded hover:border-[#00E5FF] hover:text-[#00E5FF] transition-all text-[11px] flex items-center justify-center gap-2 whitespace-nowrap">
+              <a href="#capabilities" className="w-full sm:w-auto px-6 py-3 bg-transparent border border-white/20 text-white font-bold rounded hover:border-[#00E5FF] hover:text-[#00E5FF] transition-all text-[11px] flex items-center justify-center gap-2 whitespace-nowrap">
                 NĂNG LỰC CỦA CHÚNG TÔI &rarr;
               </a>
             </div>
@@ -132,13 +132,13 @@ export default function Home() {
       </div>
 
       {/* ---------------- KHỐI DƯỚI: TÍNH NĂNG & DỰ ÁN ---------------- */}
-      <div className="flex-1 w-full bg-[#030914] relative z-20 flex items-center justify-center pt-2 pb-6">
+      <div className="flex-1 w-full bg-[#030914] relative z-20 flex items-center justify-center pt-10 lg:pt-2 pb-12 lg:pb-6">
         
         {/* NỘI DUNG TRẢI ĐỀU 100% CHIỀU RỘNG CỰC ĐẠI */}
         <div className="w-full h-full mx-auto px-6 xl:px-8 flex flex-col justify-end">
           
           {/* FEATURES BAR */}
-          <div className="w-full flex items-center justify-between shrink-0 mb-4 px-2">
+          <div className="w-full grid grid-cols-2 gap-y-6 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-8 lg:mb-4 px-2">
             
             <div className="flex items-center gap-2.5">
               <div className="text-[#00E5FF]">
@@ -183,10 +183,10 @@ export default function Home() {
           </div>
 
           {/* DỰ ÁN NỔI BẬT - 5 CỘT (1 Tiêu đề + 4 Dự án dàn đều 100% chiều ngang) */}
-          <div className="w-full grid grid-cols-1 md:grid-cols-5 gap-3 lg:gap-4 items-end relative flex-1">
+          <div className="w-full flex lg:grid lg:grid-cols-5 gap-4 items-end relative flex-1 overflow-x-auto snap-x snap-mandatory lg:overflow-visible pb-6 lg:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] -mx-6 px-6 xl:mx-0 xl:px-0">
             
             {/* Nav Arrows */}
-            <div className="absolute -top-10 right-0 flex gap-1.5 z-30">
+            <div className="absolute -top-10 right-6 xl:right-0 flex gap-1.5 z-30">
               <button className="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-[#00E5FF] hover:text-[#00E5FF] transition-all bg-[#030914]">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
               </button>
@@ -196,7 +196,7 @@ export default function Home() {
             </div>
 
             {/* Cột 1: Tiêu đề */}
-            <div className="flex flex-col justify-end h-[160px] pb-1 pr-2">
+            <div className="flex flex-col justify-end h-[200px] lg:h-[160px] pb-1 pr-2 min-w-[75vw] sm:min-w-[45vw] lg:min-w-0 snap-center lg:snap-align-none shrink-0">
               <span className="text-[#00E5FF] font-bold tracking-widest text-[9px] uppercase mb-1.5 block">
                 DỰ ÁN NỔI BẬT
               </span>
@@ -213,7 +213,7 @@ export default function Home() {
 
             {/* Cột 2-5: Thẻ Dự Án (Hiển thị 4 dự án lấp đầy màn hình) */}
             {allProjects.slice(0, 4).map((p) => (
-              <div key={p.id} className="group rounded-[8px] overflow-hidden cursor-pointer bg-gradient-to-b from-[#071324] to-[#040D19] flex flex-col hover:shadow-[0_4px_20px_rgba(0,229,255,0.15)] transition-all h-[160px]">
+              <div key={p.id} className="group rounded-[8px] overflow-hidden cursor-pointer bg-gradient-to-b from-[#071324] to-[#040D19] flex flex-col hover:shadow-[0_4px_20px_rgba(0,229,255,0.15)] transition-all h-[200px] lg:h-[160px] min-w-[75vw] sm:min-w-[45vw] lg:min-w-0 snap-center lg:snap-align-none shrink-0">
                 
                 {/* Top Image Box */}
                 <div className="relative h-[65%] w-full shrink-0 overflow-hidden">
