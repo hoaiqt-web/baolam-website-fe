@@ -319,10 +319,12 @@ export default function DebugToggle() {
       marginTop: "margin-top", marginBottom: "margin-bottom",
       opacity: "opacity", letterSpacing: "letter-spacing", lineHeight: "line-height",
       objectPositionX: "object-position", objectPositionY: "object-position",
+      width: "width", height: "height",
     };
     const cssProp = cssPropMap[key];
     if (key === "color" || key === "backgroundColor") el.style.setProperty(cssProp, val);
     else if (key === "opacity") el.style.setProperty(cssProp, (parseFloat(val) / 100) + "");
+    else if (key === "width" || key === "height") el.style.setProperty(cssProp, val === "0" ? "" : val + "px");
     else if (key === "objectPositionX") {
       const y = (selectedEl.current ? window.getComputedStyle(selectedEl.current).objectPosition?.split(" ")[1] : "50%") || "50%";
       el.style.setProperty("object-position", `${val}% ${y}`);
@@ -602,6 +604,7 @@ export default function DebugToggle() {
                             opacity: "100", letterSpacing: "0", lineHeight: "0",
                             objectPositionX: pos[0]?.replace("%","") || "50",
                             objectPositionY: pos[1]?.replace("%","") || "50",
+                            width: "0", height: "0",
                           };
                           setStyles(s); setOriginalStyles(s); setSaveResult(null);
                         }}
@@ -634,6 +637,7 @@ export default function DebugToggle() {
                           letterSpacing: String(Math.round(parseFloat(cs.letterSpacing)||0)),
                           lineHeight: String(Math.round(parseFloat(cs.lineHeight)||0)),
                           objectPositionX: "50", objectPositionY: "50",
+                          width: "0", height: "0",
                         };
                         setInfo({ tagName: parent.tagName.toLowerCase(), width: Math.round(rect.width), height: Math.round(rect.height), className: parent.className || "" });
                         setStyles(s); setOriginalStyles(s); setSaveResult(null);
