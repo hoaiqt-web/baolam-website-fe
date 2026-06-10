@@ -12,7 +12,7 @@ export default function Home() {
       <DebugToggle />
       
       {/* ---------------- KHỐI TRÊN: HERO & THỐNG KÊ (78%) ---------------- */}
-      <div id="hero-section" className="relative min-h-[90vh] lg:min-h-0 lg:h-[68%] w-full shrink-0 bg-[#030914] overflow-hidden flex flex-col justify-center">
+      <div id="hero-section" className="relative lg:min-h-0 lg:h-[68%] w-full shrink-0 bg-[#030914] overflow-hidden flex flex-col">
         
         {/* Lớp nền Blur lấp đầy các khoảng trống khi thu nhỏ ảnh chính */}
         <img 
@@ -46,10 +46,10 @@ export default function Home() {
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#030914] via-[#030914]/80 to-transparent z-10 w-[1432px] h-[29px]" />
 
         {/* Content Container - FULL WIDTH CỰC ĐẠI */}
-        <div className="relative z-20 h-full w-full mx-auto px-5 sm:px-6 xl:px-8 flex flex-col lg:flex-row justify-center lg:justify-between items-start lg:items-center pt-[90px] sm:pt-[88px] lg:pt-[60px]">
+        <div className="relative z-20 w-full mx-auto px-5 sm:px-6 xl:px-8 flex flex-col lg:flex-row justify-start lg:justify-between items-start lg:items-center pt-[80px] sm:pt-[88px] lg:pt-[60px] pb-10 lg:pb-0 lg:h-full">
           
           {/* Trái: Nội dung Text */}
-          <div className="w-full lg:w-[45%] max-w-[600px] mb-8 mt-6 sm:mt-8 lg:mt-0">
+          <div className="w-full lg:w-[45%] max-w-[600px] mb-4 mt-4 sm:mt-6 lg:mt-0">
             <span className="text-[#A5B4C7] font-medium tracking-[1px] text-[9px] sm:text-[10px] uppercase mb-3 block drop-shadow-md leading-relaxed">
               NHÀ THẦU ARTWORK & KIẾN TRÚC ĐIỂM NHẤN CẢNH QUAN HÀNG ĐẦU VIỆT NAM
             </span>
@@ -59,7 +59,7 @@ export default function Home() {
               <span className="text-[#00E5FF] block drop-shadow-[0_0_15px_rgba(0,229,255,0.3)]">GIÁ TRỊ ĐÍCH THỰC</span>
             </h1>
             
-            <p className="text-[#A5B4C7] text-[13px] sm:text-[14px] mb-6 sm:mb-8 leading-[1.6] max-w-[480px]">
+            <p className="text-[#A5B4C7] text-[11px] sm:text-[13px] lg:text-[14px] mb-4 sm:mb-6 leading-[1.6] max-w-[480px]">
               Từ ý tưởng đến biểu tượng. Bảo Lâm kiến tạo những công trình nghệ thuật có giá trị bền vững, nâng tầm không gian và tạo dấu ấn cho mọi công trình trên khắp Việt Nam.
             </p>
             
@@ -132,13 +132,13 @@ export default function Home() {
       </div>
 
       {/* ---------------- KHỐI DƯỚI: TÍNH NĂNG & DỰ ÁN ---------------- */}
-      <div className="flex-1 w-full bg-[#030914] relative z-20 flex flex-col justify-start overflow-hidden pt-3 lg:pt-2 pb-4 lg:pb-2">
+      <div className="flex-1 w-full bg-[#030914] relative z-20 flex flex-col justify-start overflow-hidden pt-4 lg:pt-2 pb-6 lg:pb-2">
         
         {/* NỘI DUNG */}
         <div className="w-full mx-auto px-6 xl:px-8 flex flex-col justify-start gap-3">
           
           {/* FEATURES BAR */}
-          <div className="w-full grid grid-cols-2 gap-y-4 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-3 lg:mb-3 px-2">
+          <div className="w-full grid grid-cols-2 gap-y-3 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-2 lg:mb-3 px-2">
             
             <div className="flex items-center gap-2.5">
               <div className="text-[#00E5FF]">
