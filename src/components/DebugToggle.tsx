@@ -275,9 +275,6 @@ export default function DebugToggle() {
     return () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); };
   }, [debug]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debug]);
-
   // ── Hover tooltip ──
   useEffect(() => {
     if (!debug) return;
