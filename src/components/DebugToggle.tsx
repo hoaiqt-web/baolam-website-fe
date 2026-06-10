@@ -65,8 +65,10 @@ const TW_GENERATORS: Record<keyof StyleState, (v: string) => string> = {
   opacity:         (v) => (v === "100" ? "" : `opacity-[${(parseFloat(v) / 100).toFixed(2)}]`),
   letterSpacing:   (v) => `tracking-[${v}px]`,
   lineHeight:      (v) => (v === "0" ? "" : `leading-[${v}px]`),
-  objectPositionX: (_v) => "", // applied as inline style, not Tailwind
-  objectPositionY: (_v) => "", // applied as inline style, not Tailwind
+  objectPositionX: (_v) => "",
+  objectPositionY: (_v) => "",
+  width:           (v) => (v === "0" ? "" : `w-[${v}px]`),
+  height:          (v) => (v === "0" ? "" : `h-[${v}px]`),
 };
 
 // ── Patterns to remove old Tailwind classes before adding new ones ──
@@ -83,8 +85,10 @@ const TW_REMOVE_PATTERNS: Record<keyof StyleState, RegExp> = {
   opacity:         /\bopacity-\d+\b|\bopacity-\[[^\]]+\]/g,
   letterSpacing:   /\btracking-\[\d+px\]|\btracking-tighter\b|\btracking-tight\b|\btracking-normal\b|\btracking-wide\b|\btracking-wider\b|\btracking-widest\b/g,
   lineHeight:      /\bleading-\[\d+px\]|\bleading-none\b|\bleading-tight\b|\bleading-snug\b|\bleading-normal\b|\bleading-relaxed\b|\bleading-loose\b/g,
-  objectPositionX: /(?!)/g, // no Tailwind class to remove
+  objectPositionX: /(?!)/g,
   objectPositionY: /(?!)/g,
+  width:           /\bw-\[\d+px\]|\bw-\d+\b|\bw-full\b|\bw-auto\b/g,
+  height:          /\bh-\[\d+px\]|\bh-\d+\b|\bh-full\b|\bh-auto\b/g,
 };
 
 function buildNewClassName(original: string, orig: StyleState, curr: StyleState): string {
