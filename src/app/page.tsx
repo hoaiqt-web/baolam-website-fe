@@ -183,7 +183,7 @@ export default function Home() {
           </div>
 
           {/* DỰ ÁN NỔI BẬT - 5 CỘT (1 Tiêu đề + 4 Dự án dàn đều 100% chiều ngang) */}
-          <div className="w-full flex lg:grid lg:grid-cols-5 gap-4 items-start relative overflow-x-auto snap-x snap-mandatory lg:overflow-visible pb-6 lg:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] -mx-6 px-6 xl:mx-0 xl:px-0">
+          <div className="w-full flex lg:grid lg:grid-cols-5 gap-3 lg:gap-4 items-start relative overflow-x-auto snap-x snap-mandatory lg:overflow-visible pb-6 lg:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-pl-4 pl-4 pr-2 lg:pl-0 lg:pr-0 lg:scroll-pl-0 -mx-4 lg:mx-0">
             
             {/* Nav Arrows */}
             <div className="absolute -top-10 right-6 xl:right-0 flex gap-1.5 z-30">
@@ -196,7 +196,7 @@ export default function Home() {
             </div>
 
             {/* Cột 1: Tiêu đề */}
-            <div className="flex flex-col justify-end h-[180px] lg:h-[140px] pb-1 pr-2 min-w-[75vw] sm:min-w-[45vw] lg:min-w-0 snap-center lg:snap-align-none shrink-0">
+            <div className="flex flex-col justify-end h-[200px] lg:h-[140px] pb-1 pr-2 min-w-[calc(100vw-2rem)] sm:min-w-[45vw] lg:min-w-0 snap-start lg:snap-align-none shrink-0">
               <span className="text-[#00E5FF] font-bold tracking-widest text-[9px] uppercase mb-1.5 block">
                 DỰ ÁN NỔI BẬT
               </span>
@@ -213,7 +213,7 @@ export default function Home() {
 
             {/* Cột 2-5: Thẻ Dự Án (Hiển thị 4 dự án lấp đầy màn hình) */}
             {allProjects.slice(0, 4).map((p) => (
-              <div key={p.id} className="group rounded-[8px] overflow-hidden cursor-pointer bg-gradient-to-b from-[#071324] to-[#040D19] flex flex-col hover:shadow-[0_4px_20px_rgba(0,229,255,0.15)] transition-all h-[180px] lg:h-[140px] min-w-[75vw] sm:min-w-[45vw] lg:min-w-0 snap-center lg:snap-align-none shrink-0">
+              <div key={p.id} className="group rounded-[8px] overflow-hidden cursor-pointer bg-gradient-to-b from-[#071324] to-[#040D19] flex flex-col hover:shadow-[0_4px_20px_rgba(0,229,255,0.15)] transition-all h-[200px] lg:h-[140px] min-w-[calc(100vw-2rem)] sm:min-w-[45vw] lg:min-w-0 snap-start lg:snap-align-none shrink-0">
                 
                 {/* Top Image Box */}
                 <div className="relative h-[65%] w-full shrink-0 overflow-hidden">
