@@ -21,24 +21,31 @@ export default function Home() {
           className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-40 scale-110"
         />
         
-        {/* Background Image - XÓA VIỀN BẰNG MASK TRỘN VÀO NỀN BLUR */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center">
+        {/* Background Image - Mobile: tự điều chỉnh theo chiều rộng, Desktop: cover */}
+        <div className="absolute inset-0 z-0 overflow-hidden flex items-start lg:items-center justify-center">
           <img 
             src="/hero/c0d0a44c-ab54-4601-9b6e-ac81907b850c.png" 
             alt="Baolam Hero - Cổng Thời Gian" 
-            className="w-full h-full object-cover object-top"
+            className="w-full h-auto lg:h-full lg:w-full lg:object-cover lg:object-top"
             style={{
-              WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at center, black 60%, transparent 100%)',
-              maskImage: 'radial-gradient(ellipse 90% 90% at center, black 60%, transparent 100%)'
+              WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
+              maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)'
             }}
           />
         </div>
         
-        {/* Lớp phủ Overlay Gradient */}
+        {/* Lớp phủ Overlay Gradient - mạnh hơn ở mobile để đọc chữ */}
         <div 
           className="absolute inset-0 z-10" 
           style={{ 
-            background: 'linear-gradient(to right, rgba(3,9,20,0.8) 0%, rgba(3,9,20,0.4) 40%, rgba(3,9,20,0.1) 100%)' 
+            background: 'linear-gradient(to bottom, rgba(3,9,20,0.55) 0%, rgba(3,9,20,0.7) 70%, rgba(3,9,20,1) 100%)'
+          }} 
+        />
+        {/* Desktop overlay - từ trái sang phải */}
+        <div 
+          className="absolute inset-0 z-10 hidden lg:block" 
+          style={{ 
+            background: 'linear-gradient(to right, rgba(3,9,20,0.8) 0%, rgba(3,9,20,0.4) 40%, rgba(3,9,20,0.1) 100%)'
           }} 
         />
         
