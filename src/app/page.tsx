@@ -220,7 +220,7 @@ export default function Home() {
 
             {/* Cột 2-5: Thẻ Dự Án (Hiển thị 4 dự án lấp đầy màn hình) */}
             {allProjects.slice(0, 4).map((p) => (
-              <div key={p.id} className="group rounded-[8px] overflow-hidden cursor-pointer bg-gradient-to-b from-[#071324] to-[#040D19] flex flex-col hover:shadow-[0_4px_20px_rgba(0,229,255,0.15)] transition-all h-[200px] lg:h-[140px] min-w-[calc(100vw-2rem)] sm:min-w-[45vw] lg:min-w-0 snap-start lg:snap-align-none shrink-0">
+              <div key={p.id} className="group rounded-[8px] overflow-hidden cursor-pointer bg-gradient-to-b from-[#071324] to-[#040D19] flex flex-col hover:shadow-[0_4px_20px_rgba(0,229,255,0.15)] transition-all h-[200px] lg:h-[140px] min-w-[calc(100vw-2rem)] sm:min-w-[45vw] lg:min-w-0 snap-start lg:snap-align-none shrink-0 border border-white/20 hover:border-[#00E5FF]/50">
                 
                 {/* Top Image Box */}
                 <div className="relative h-[65%] w-full shrink-0 overflow-hidden">
