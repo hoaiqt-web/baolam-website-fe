@@ -21,8 +21,8 @@ export default function Home() {
           className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-40 scale-110"
         />
         
-        {/* Background Image - HẠ XUỐNG VÀ XÓA VIỀN BẰNG MASK TRỘN VÀO NỀN BLUR */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center scale-[0.85] translate-y-[90px]">
+        {/* Background Image - XÓA VIỀN BẰNG MASK TRỘN VÀO NỀN BLUR */}
+        <div className="absolute inset-0 z-0 flex items-center justify-center">
           <img 
             src="/hero/c0d0a44c-ab54-4601-9b6e-ac81907b850c.png" 
             alt="Baolam Hero - Cổng Thời Gian" 
@@ -54,7 +54,7 @@ export default function Home() {
               NHÀ THẦU ARTWORK & KIẾN TRÚC ĐIỂM NHẤN CẢNH QUAN HÀNG ĐẦU VIỆT NAM
             </span>
             
-            <h1 className="text-[20px] sm:text-[28px] md:text-[38px] lg:text-[48px] font-black mb-4 leading-[1.15] tracking-tight">
+            <h1 className="text-[14px] sm:text-[20px] md:text-[27px] lg:text-[48px] font-black mb-4 leading-[1.15] tracking-tight">
               <span className="text-white block">SÁNG TẠO</span>
               <span className="text-[#00E5FF] block drop-shadow-[0_0_15px_rgba(0,229,255,0.3)]">GIÁ TRỊ ĐÍCH THỰC</span>
             </h1>
