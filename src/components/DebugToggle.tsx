@@ -17,8 +17,10 @@ interface StyleState {
   opacity: string;
   letterSpacing: string;
   lineHeight: string;
-  objectPositionX: string;  // for <img>: 0-100%
-  objectPositionY: string;  // for <img>: 0-100%
+  objectPositionX: string;
+  objectPositionY: string;
+  width: string;   // px - 0 = auto
+  height: string;  // px - 0 = auto
 }
 
 interface ElementInfo {
@@ -110,6 +112,7 @@ export default function DebugToggle() {
   const selectedEl = useRef<HTMLElement | null>(null);
   const isDragging = useRef(false);
   const dragOff = useRef({ x: 0, y: 0 });
+  const [tick, setTick] = useState(0); // force re-render of handles on resize
 
   // Drag-to-reposition state
   const elDragActive = useRef(false);
@@ -119,6 +122,13 @@ export default function DebugToggle() {
   const elDragStartTransX = useRef(0);
   const elDragStartTransY = useRef(0);
   const elDragMoved = useRef(false);
+
+  // Resize state
+  const resizeState = useRef<{
+    handle: 'left'|'right'|'top'|'bottom';
+    startX: number; startY: number;
+    startW: number; startH: number;
+  } | null>(null);
 
   // ── Toggle body class ──
   useEffect(() => {
@@ -152,6 +162,8 @@ export default function DebugToggle() {
         lineHeight: parsePx(cs.lineHeight) + "",
         objectPositionX: t.tagName === "IMG" ? (cs.objectPosition?.split(" ")[0]?.replace("%","") || "50") : "50",
         objectPositionY: t.tagName === "IMG" ? (cs.objectPosition?.split(" ")[1]?.replace("%","") || "50") : "50",
+        width: "0",
+        height: "0",
       };
       setInfo({ tagName: t.tagName.toLowerCase(), width: Math.round(rect.width), height: Math.round(rect.height), className: t.className || "" });
       setStyles(s);
@@ -236,6 +248,40 @@ export default function DebugToggle() {
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", onMouseUp, true);
     };
+  }, [debug]);
+
+  // ── Resize handler ──
+  const startResize = useCallback((e: React.MouseEvent, handle: 'left'|'right'|'top'|'bottom') => {
+    e.stopPropagation();
+    e.preventDefault();
+    const el = selectedEl.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    resizeState.current = { handle, startX: e.clientX, startY: e.clientY, startW: rect.width, startH: rect.height };
+  }, []);
+
+  useEffect(() => {
+    if (!debug) return;
+    const onMove = (e: MouseEvent) => {
+      if (!resizeState.current || !selectedEl.current) return;
+      const el = selectedEl.current;
+      const { handle, startX, startY, startW, startH } = resizeState.current;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      let newW = startW, newH = startH;
+      if (handle === 'right')  newW = Math.max(40, startW + dx);
+      if (handle === 'left')   newW = Math.max(40, startW - dx);
+      if (handle === 'bottom') newH = Math.max(20, startH + dy);
+      if (handle === 'top')    newH = Math.max(20, startH - dy);
+      el.style.width  = `${Math.round(newW)}px`;
+      el.style.height = `${Math.round(newH)}px`;
+      setStyles(prev => prev ? { ...prev, width: String(Math.round(newW)), height: String(Math.round(newH)) } : prev);
+      setTick(t => t + 1);
+    };
+    const onUp = () => { if (resizeState.current) { resizeState.current = null; } };
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+    return () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); };
   }, [debug]);
 
   // ── Dynamic cursor for selected element ──
@@ -383,13 +429,42 @@ export default function DebugToggle() {
         </div>
       )}
 
-      {/* Highlight selected */}
+      {/* Resize handles + selection highlight */}
       {debug && info && selectedEl.current && (() => {
         const r = selectedEl.current.getBoundingClientRect();
+        void tick; // consume tick to re-render on resize
+        const H = 10; // handle size px
+        const hStyle = (cursor: string, style: React.CSSProperties): React.CSSProperties => ({
+          position: 'absolute', width: H, height: H,
+          background: '#00E5FF', border: '2px solid white',
+          borderRadius: 2, cursor, pointerEvents: 'all',
+          zIndex: 9990, ...style,
+        });
+        const edgeH: React.CSSProperties = { width: 10, height: 28 };
+        const edgeV: React.CSSProperties = { width: 28, height: 10 };
         return (
           <div data-layout-editor-ui
-            style={{ position: "fixed", top: r.top, left: r.left, width: r.width, height: r.height, pointerEvents: "none", zIndex: 9985 }}
-            className="outline outline-2 outline-[#00E5FF] shadow-[0_0_0_4px_rgba(0,229,255,0.12)]" />
+            style={{ position: 'fixed', top: r.top, left: r.left, width: r.width, height: r.height, pointerEvents: 'none', zIndex: 9986 }}
+            className="outline outline-2 outline-[#00E5FF] shadow-[0_0_0_4px_rgba(0,229,255,0.12)]"
+          >
+            {/* Right edge */}
+            <div data-layout-editor-ui style={hStyle('ew-resize', { ...edgeH, right: -5, top: '50%', transform: 'translateY(-50%)' })} onMouseDown={e => startResize(e, 'right')} />
+            {/* Left edge */}
+            <div data-layout-editor-ui style={hStyle('ew-resize', { ...edgeH, left: -5, top: '50%', transform: 'translateY(-50%)' })} onMouseDown={e => startResize(e, 'left')} />
+            {/* Bottom edge */}
+            <div data-layout-editor-ui style={hStyle('ns-resize', { ...edgeV, bottom: -5, left: '50%', transform: 'translateX(-50%)' })} onMouseDown={e => startResize(e, 'bottom')} />
+            {/* Top edge */}
+            <div data-layout-editor-ui style={hStyle('ns-resize', { ...edgeV, top: -5, left: '50%', transform: 'translateX(-50%)' })} onMouseDown={e => startResize(e, 'top')} />
+            {/* Corners */}
+            <div data-layout-editor-ui style={hStyle('nwse-resize', { top: -5, left: -5 })} onMouseDown={e => { startResize(e, 'top'); startResize(e, 'left'); }} />
+            <div data-layout-editor-ui style={hStyle('nesw-resize', { top: -5, right: -5 })} onMouseDown={e => { startResize(e, 'top'); startResize(e, 'right'); }} />
+            <div data-layout-editor-ui style={hStyle('nesw-resize', { bottom: -5, left: -5 })} onMouseDown={e => { startResize(e, 'bottom'); startResize(e, 'left'); }} />
+            <div data-layout-editor-ui style={hStyle('nwse-resize', { bottom: -5, right: -5 })} onMouseDown={e => { startResize(e, 'bottom'); startResize(e, 'right'); }} />
+            {/* Size label */}
+            <div data-layout-editor-ui style={{ position: 'absolute', bottom: -24, left: '50%', transform: 'translateX(-50%)', pointerEvents: 'none', background: 'rgba(0,229,255,0.9)', color: '#071324', fontSize: 9, fontWeight: 700, padding: '1px 6px', borderRadius: 4, whiteSpace: 'nowrap' }}>
+              {Math.round(r.width)} × {Math.round(r.height)} px
+            </div>
+          </div>
         );
       })()}
 
