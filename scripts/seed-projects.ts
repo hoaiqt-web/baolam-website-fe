@@ -2,13 +2,12 @@ import "dotenv/config";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
+import { getPostgresConfig } from "../src/db/connection";
 import { projectBlocks, projects } from "../src/db/schema";
 import { LANDMARK_PROJECTS } from "../src/data/projects";
 import { ARTWORK_PROJECTS } from "../src/data/artworks";
 
-if (!process.env.DATABASE_URL) throw new Error("Cần DATABASE_URL");
-
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool(getPostgresConfig());
 const db = drizzle(pool);
 const source = [...LANDMARK_PROJECTS, ...ARTWORK_PROJECTS];
 
