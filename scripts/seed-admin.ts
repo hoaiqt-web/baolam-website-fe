@@ -3,18 +3,19 @@ import { hash } from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
+import { getPostgresConfig } from "../src/db/connection";
 import { adminUsers } from "../src/db/schema";
 
-const { DATABASE_URL, ADMIN_USERNAME, ADMIN_PASSWORD } = process.env;
+const { ADMIN_USERNAME, ADMIN_PASSWORD } = process.env;
 
-if (!DATABASE_URL || !ADMIN_USERNAME || !ADMIN_PASSWORD) {
-  throw new Error("Cần DATABASE_URL, ADMIN_USERNAME và ADMIN_PASSWORD");
+if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
+  throw new Error("Cần ADMIN_USERNAME và ADMIN_PASSWORD");
 }
 if (ADMIN_PASSWORD.length < 12) {
   throw new Error("ADMIN_PASSWORD phải có ít nhất 12 ký tự");
 }
 
-const pool = new Pool({ connectionString: DATABASE_URL });
+const pool = new Pool(getPostgresConfig());
 const db = drizzle(pool);
 const passwordHash = await hash(ADMIN_PASSWORD, 12);
 const existing = await db.select({ id: adminUsers.id }).from(adminUsers).where(eq(adminUsers.username, ADMIN_USERNAME)).limit(1);

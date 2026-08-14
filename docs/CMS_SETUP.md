@@ -10,7 +10,12 @@
 Copy `.env.example` to `.env`, then configure:
 
 ```env
-DATABASE_URL=postgresql://...
+DB_HOST=your-postgres-host
+DB_PORT=5432
+DB_NAME=baolam_website
+DB_USER=postgres
+DB_PASSWORD=your-database-password
+DB_SSL=true
 AUTH_SECRET=at-least-32-random-characters
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=a-strong-password-with-at-least-12-characters
@@ -19,6 +24,8 @@ MEDIA_ALLOWED_HOSTS=
 ```
 
 Generate a suitable auth secret with `openssl rand -base64 32`.
+
+Use `DB_SSL=true` for Railway's public PostgreSQL endpoint. For a local PostgreSQL server without TLS, use `DB_SSL=false`. `DB_PORT` defaults to `5432` when omitted; the other database variables are required.
 
 ## Initialize the database
 
