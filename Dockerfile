@@ -11,6 +11,19 @@ ENV NPM_CONFIG_CACHE=/tmp/.npm \
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
 
+FROM base AS production-deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+
+ENV NPM_CONFIG_CACHE=/tmp/.npm \
+    NPM_CONFIG_FUND=false \
+    NPM_CONFIG_AUDIT=false
+
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev --no-audit --no-fund \
+    && rm -rf /tmp/.npm /root/.npm \
+    && npm cache clean --force
+
 FROM base AS builder
 WORKDIR /app
 
@@ -36,6 +49,12 @@ RUN addgroup --system --gid 1001 nodejs \
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Keep migration/seed tooling available to Railway pre-deploy commands and Console.
+COPY --from=production-deps --chown=nextjs:nodejs /app/node_modules ./node_modules
+COPY --chown=nextjs:nodejs package.json package-lock.json drizzle.config.ts tsconfig.json ./
+COPY --chown=nextjs:nodejs drizzle ./drizzle
+COPY --chown=nextjs:nodejs scripts ./scripts
+COPY --chown=nextjs:nodejs src ./src
 
 USER nextjs
 
