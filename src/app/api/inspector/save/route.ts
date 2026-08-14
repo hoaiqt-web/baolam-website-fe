@@ -18,6 +18,9 @@ function findFiles(dir: string, exts: string[]): string[] {
 }
 
 export async function POST(req: NextRequest) {
+  if (process.env.NODE_ENV !== 'development') {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
   try {
     const { oldClassName, newClassName } = await req.json();
 
