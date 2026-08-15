@@ -8,6 +8,8 @@ const additionalMediaHosts = (process.env.MEDIA_ALLOWED_HOSTS ?? '')
 const nextConfig: NextConfig = {
   // Railway Docker: bundle tối thiểu cho `node server.js`
   output: 'standalone',
+  // Let Next.js detect clients left open across Railway rolling deployments.
+  deploymentId: process.env.NEXT_DEPLOYMENT_ID ?? process.env.RAILWAY_GIT_COMMIT_SHA,
   images: {
     remotePatterns: [
       {
