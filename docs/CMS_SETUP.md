@@ -21,9 +21,7 @@ NEXT_SERVER_ACTIONS_ENCRYPTION_KEY=base64-encoded-32-byte-key
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=a-strong-password-with-at-least-12-characters
 GCS_BUCKET_NAME=baolam-website-media
-GCS_PROJECT_ID=your-google-cloud-project-id
-GCS_CLIENT_EMAIL=baolam-website-uploader@your-project.iam.gserviceaccount.com
-GCS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n"
+GCP_SERVICE_ACCOUNT_JSON={"type":"service_account","project_id":"...","private_key":"...","client_email":"..."}
 MEDIA_ALLOWED_HOSTS=
 ```
 
@@ -63,7 +61,7 @@ The first version supports highlights, image with text, gallery, production proc
 
 Admins upload images directly in the project editor. The API only creates a five-minute signed POST policy; the browser sends the image directly to GCS, so image bytes do not pass through the Next.js server. JPG, PNG, WebP, and AVIF are accepted up to 10MB per image.
 
-Create a dedicated Google Cloud service account with permission to create objects in this bucket (for example, a bucket-scoped `Storage Object Creator` role), then put its project ID, email, and private key in the variables above. Do not expose these variables with a `NEXT_PUBLIC_` prefix.
+Create a dedicated Google Cloud service account with permission to create objects in this bucket (for example, a bucket-scoped `Storage Object Creator` role), download its key JSON, and paste the complete JSON into `GCP_SERVICE_ACCOUNT_JSON`. Do not wrap it in extra quote characters and do not expose it with a `NEXT_PUBLIC_` prefix.
 
 The bucket must allow browser POST requests from the admin origins. Apply a CORS configuration equivalent to:
 
