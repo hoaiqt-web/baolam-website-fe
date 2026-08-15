@@ -17,6 +17,7 @@ DB_USER=postgres
 DB_PASSWORD=your-database-password
 DB_SSL=true
 AUTH_SECRET=at-least-32-random-characters
+NEXT_SERVER_ACTIONS_ENCRYPTION_KEY=base64-encoded-32-byte-key
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=a-strong-password-with-at-least-12-characters
 GCS_BUCKET_NAME=baolam-website-media
@@ -24,6 +25,8 @@ MEDIA_ALLOWED_HOSTS=
 ```
 
 Generate a suitable auth secret with `openssl rand -base64 32`.
+
+Generate `NEXT_SERVER_ACTIONS_ENCRYPTION_KEY` separately with `openssl rand -base64 32`, store it as a stable Railway variable, and do not rotate it on every deployment. Railway's commit SHA is used automatically as Next.js's deployment ID to protect open browser tabs from rolling-deployment version skew.
 
 Use `DB_SSL=true` for Railway's public PostgreSQL endpoint. For a local PostgreSQL server without TLS, use `DB_SSL=false`. `DB_PORT` defaults to `5432` when omitted; the other database variables are required.
 
