@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { ImageUpload } from "@/components/admin/image-upload";
 import type { Project, ProjectBlock } from "@/db/schema";
 import type { ProjectBlockInput, ProjectBlockType } from "@/features/projects/types";
 import { saveProjectAction, type SaveProjectState } from "@/app/admin/(dashboard)/projects/actions";
@@ -44,6 +45,7 @@ function parseLines(value: string) {
 export function ProjectEditor({ project }: { project: EditorProject | null }) {
   const action = useMemo(() => saveProjectAction.bind(null, project?.id ?? null), [project?.id]);
   const [state, formAction, pending] = useActionState(action, initialState);
+  const [coverImage, setCoverImage] = useState(project?.coverImage ?? "");
   const [blocks, setBlocks] = useState<EditableBlock[]>(() => (project?.blocks ?? []).map((block) => ({
     id: block.id,
     editorId: block.id,
@@ -74,6 +76,7 @@ export function ProjectEditor({ project }: { project: EditorProject | null }) {
   return (
     <form action={formAction} className="space-y-6">
       <input type="hidden" name="blocks" value={JSON.stringify(blocks.map((block) => ({ id: block.id, type: block.type, variant: block.variant, isVisible: block.isVisible, data: block.data })))} />
+      <input type="hidden" name="coverImage" value={coverImage} />
 
       <Card className="border-baolam-border bg-baolam-surface/65 text-white">
         <CardHeader><CardTitle>Thông tin dự án</CardTitle></CardHeader>
@@ -97,7 +100,7 @@ export function ProjectEditor({ project }: { project: EditorProject | null }) {
             <Label htmlFor="excerpt">Mô tả ngắn</Label>
             <Textarea id="excerpt" name="excerpt" defaultValue={project?.excerpt ?? ""} rows={3} />
           </div>
-          <div className="md:col-span-2"><Field label="URL ảnh cover" name="coverImage" type="url" defaultValue={project?.coverImage} required /></div>
+          <ImageUpload label="Ảnh cover" values={coverImage ? [coverImage] : []} onChange={(values) => setCoverImage(values[0] ?? "")} required />
           <div className="md:col-span-2"><Field label="Alt text ảnh cover" name="coverAlt" defaultValue={project?.coverAlt ?? ""} /></div>
         </CardContent>
       </Card>
@@ -161,12 +164,21 @@ function BlockFields({ block, onData, onVariant }: { block: EditableBlock; onDat
   if (block.type === "gallery") return <>
     <BlockText label="Tiêu đề" value={data.heading} onChange={(heading) => onData({ heading })} />
     <div className="space-y-2"><Label>Kiểu gallery</Label><select value={block.variant} onChange={(event) => onVariant(event.target.value)} className="h-10 w-full rounded-lg border border-white/15 bg-baolam-bg px-3"><option value="mosaic">Mosaic</option><option value="grid">Grid</option><option value="cinematic">Cinematic</option></select></div>
-    <div className="space-y-2 md:col-span-2"><Label>Danh sách URL ảnh — mỗi dòng một URL</Label><Textarea rows={6} value={(data.images ?? []).map((image) => image.url).join("\n")} onChange={(event) => onData({ images: parseLines(event.target.value).map((url) => ({ url })) })} /></div>
+    <ImageUpload label="Ảnh gallery" values={(data.images ?? []).map((image) => image.url)} multiple onChange={(values) => onData({ images: values.map((url) => data.images?.find((image) => image.url === url) ?? { url }) })} />
   </>;
 
   if (block.type === "process") return <>
     <BlockText label="Tiêu đề" value={data.heading} onChange={(heading) => onData({ heading })} />
-    <div className="space-y-2 md:col-span-2"><Label>Các bước — định dạng: Tiêu đề | Mô tả | URL ảnh</Label><Textarea rows={7} value={(data.steps ?? []).map((step) => [step.title, step.description, step.image].filter(Boolean).join(" | ")).join("\n")} onChange={(event) => onData({ steps: parseLines(event.target.value).map((line) => { const [title, description, image] = line.split("|").map((value) => value.trim()); return { title, description, image }; }) })} /></div>
+    <div className="space-y-4 md:col-span-2">
+      <Label>Các bước thực hiện</Label>
+      {(data.steps ?? []).map((step, stepIndex) => <div key={stepIndex} className="grid gap-4 rounded-lg border border-white/10 bg-black/15 p-4 md:grid-cols-2">
+        <BlockText label={`Bước ${stepIndex + 1}`} value={step.title} onChange={(title) => onData({ steps: data.steps?.map((item, index) => index === stepIndex ? { ...item, title } : item) })} />
+        <div className="flex items-end justify-end"><Button type="button" variant="destructive" onClick={() => onData({ steps: data.steps?.filter((_, index) => index !== stepIndex) })}><Trash2 /> Xóa bước</Button></div>
+        <div className="space-y-2 md:col-span-2"><Label>Mô tả</Label><Textarea rows={3} value={step.description ?? ""} onChange={(event) => onData({ steps: data.steps?.map((item, index) => index === stepIndex ? { ...item, description: event.target.value } : item) })} /></div>
+        <ImageUpload label="Ảnh của bước" values={step.image ? [step.image] : []} onChange={(values) => onData({ steps: data.steps?.map((item, index) => index === stepIndex ? { ...item, image: values[0] } : item) })} />
+      </div>)}
+      <Button type="button" variant="outline" className="border-white/15 bg-transparent text-white" onClick={() => onData({ steps: [...(data.steps ?? []), { title: `Bước ${(data.steps?.length ?? 0) + 1}` }] })}><Plus /> Thêm bước</Button>
+    </div>
   </>;
 
   if (block.type === "testimonial") return <>
@@ -176,7 +188,7 @@ function BlockFields({ block, onData, onVariant }: { block: EditableBlock; onDat
 
   return <>
     <BlockText label="Tiêu đề" value={data.heading} onChange={(heading) => onData({ heading })} />
-    {(block.type === "imageText" || block.type === "technical") && <BlockText label="URL ảnh" value={data.image} onChange={(image) => onData({ image })} />}
+    {(block.type === "imageText" || block.type === "technical") && <ImageUpload label="Ảnh" values={data.image ? [data.image] : []} onChange={(values) => onData({ image: values[0] })} />}
     <div className="space-y-2 md:col-span-2"><Label>Nội dung</Label><Textarea rows={5} value={data.body ?? ""} onChange={(event) => onData({ body: event.target.value })} /></div>
     {(block.type === "highlights" || block.type === "technical") && <div className="space-y-2 md:col-span-2"><Label>Các ý nổi bật — mỗi dòng một ý</Label><Textarea rows={5} value={(data.items ?? []).join("\n")} onChange={(event) => onData({ items: parseLines(event.target.value) })} /></div>}
   </>;
