@@ -50,14 +50,19 @@ export async function getSession(): Promise<SessionPayload | null> {
   }
 }
 
-export async function requireAdmin() {
+export async function getAdminSession() {
   const session = await getSession();
-  if (!session) redirect("/admin/login");
+  if (!session) return null;
   const user = await getDb().query.adminUsers.findFirst({
     columns: { id: true },
     where: and(eq(adminUsers.id, session.userId), eq(adminUsers.isActive, true)),
   });
-  if (!user) redirect("/admin/login");
+  return user ? session : null;
+}
+
+export async function requireAdmin() {
+  const session = await getAdminSession();
+  if (!session) redirect("/admin/login");
   return session;
 }
 

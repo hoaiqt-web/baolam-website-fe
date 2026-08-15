@@ -21,6 +21,9 @@ NEXT_SERVER_ACTIONS_ENCRYPTION_KEY=base64-encoded-32-byte-key
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=a-strong-password-with-at-least-12-characters
 GCS_BUCKET_NAME=baolam-website-media
+GCS_PROJECT_ID=your-google-cloud-project-id
+GCS_CLIENT_EMAIL=baolam-website-uploader@your-project.iam.gserviceaccount.com
+GCS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n"
 MEDIA_ALLOWED_HOSTS=
 ```
 
@@ -56,7 +59,26 @@ Project detail pages are generated on demand, cached for up to one hour, and inv
 
 ## Content blocks
 
-The first version supports highlights, image with text, gallery, production process, technical solution, and testimonial blocks. Images are entered as URLs. Object storage upload can be added later without changing the project or block schema.
+The first version supports highlights, image with text, gallery, production process, technical solution, and testimonial blocks.
+
+Admins upload images directly in the project editor. The API only creates a five-minute signed POST policy; the browser sends the image directly to GCS, so image bytes do not pass through the Next.js server. JPG, PNG, WebP, and AVIF are accepted up to 10MB per image.
+
+Create a dedicated Google Cloud service account with permission to create objects in this bucket (for example, a bucket-scoped `Storage Object Creator` role), then put its project ID, email, and private key in the variables above. Do not expose these variables with a `NEXT_PUBLIC_` prefix.
+
+The bucket must allow browser POST requests from the admin origins. Apply a CORS configuration equivalent to:
+
+```json
+[
+  {
+    "origin": ["https://noithatbaolam.com", "http://localhost:3001"],
+    "method": ["POST"],
+    "responseHeader": ["Content-Type"],
+    "maxAgeSeconds": 3600
+  }
+]
+```
+
+With gcloud, save that JSON as `cors.json` and run `gcloud storage buckets update gs://YOUR_BUCKET --cors-file=cors.json`.
 
 Image URLs are restricted to HTTPS URLs from `storage.googleapis.com` and the configured `GCS_BUCKET_NAME`. `images.unsplash.com` remains allowed for the bundled demo data. Add custom CDN hostnames to the comma-separated `MEDIA_ALLOWED_HOSTS` variable before building and deploying.
 
