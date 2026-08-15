@@ -18,13 +18,33 @@ const requestSchema = z.object({
   size: z.number().int().min(1).max(MAX_IMAGE_SIZE),
 });
 
+function firstForwardedValue(value: string | null) {
+  return value?.split(",")[0]?.trim();
+}
+
+function hasValidRequestOrigin(request: Request) {
+  const fetchSite = request.headers.get("sec-fetch-site");
+  if (fetchSite && fetchSite !== "same-origin") return false;
+
+  const origin = request.headers.get("origin");
+  if (!origin) return true;
+
+  const requestUrl = new URL(request.url);
+  const host = firstForwardedValue(request.headers.get("x-forwarded-host"))
+    ?? request.headers.get("host")
+    ?? requestUrl.host;
+  const protocol = firstForwardedValue(request.headers.get("x-forwarded-proto"))
+    ?? requestUrl.protocol.replace(":", "");
+
+  return origin === `${protocol}://${host}`;
+}
+
 export async function POST(request: Request) {
   if (!(await getAdminSession())) {
     return Response.json({ error: "Phiên đăng nhập đã hết hạn." }, { status: 401 });
   }
 
-  const origin = request.headers.get("origin");
-  if (origin && origin !== new URL(request.url).origin) {
+  if (!hasValidRequestOrigin(request)) {
     return Response.json({ error: "Origin không hợp lệ." }, { status: 403 });
   }
 
