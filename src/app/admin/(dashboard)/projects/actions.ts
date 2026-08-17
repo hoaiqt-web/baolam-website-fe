@@ -99,7 +99,7 @@ export async function saveProjectAction(id: string | null, _: SaveProjectState, 
     revalidatePath(`/projects/${existingProject.slug}`);
   }
   revalidatePath(`/projects/${parsed.data.slug}`);
-  if (!id) redirect(`/admin/projects/${projectId}/edit`);
+  if (!id) redirect(`/admin/projects/${projectId}/edit?created=1`);
   return { success: true, message: "Đã lưu dự án." };
 }
 

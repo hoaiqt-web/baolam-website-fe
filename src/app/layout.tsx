@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
+import { ToastProvider } from "@/components/ui/toast-provider";
 
 const inter = Inter({ subsets: ["latin", "vietnamese"] });
 
@@ -19,8 +20,10 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body className={`${inter.className} antialiased selection:bg-baolam-primary selection:text-[#071522]`}>
-        <SiteHeader />
-        {children}
+        <ToastProvider>
+          <SiteHeader />
+          {children}
+        </ToastProvider>
       </body>
     </html>
   );

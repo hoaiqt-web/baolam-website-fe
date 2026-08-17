@@ -1,12 +1,13 @@
 "use client";
 
-import { useActionState, useMemo, useState } from "react";
+import { useActionState, useEffect, useMemo, useState } from "react";
 import { ArrowDown, ArrowUp, Eye, EyeOff, LoaderCircle, Plus, Save, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/toast-provider";
 import { ImageUpload } from "@/components/admin/image-upload";
 import type { Project, ProjectBlock } from "@/db/schema";
 import type { ProjectBlockInput, ProjectBlockType } from "@/features/projects/types";
@@ -42,7 +43,8 @@ function parseLines(value: string) {
   return value.split("\n");
 }
 
-export function ProjectEditor({ project }: { project: EditorProject | null }) {
+export function ProjectEditor({ project, initialSuccessMessage }: { project: EditorProject | null; initialSuccessMessage?: string }) {
+  const { toast } = useToast();
   const action = useMemo(() => saveProjectAction.bind(null, project?.id ?? null), [project?.id]);
   const [state, formAction, pending] = useActionState(action, initialState);
   const [coverImage, setCoverImage] = useState(project?.coverImage ?? "");
@@ -54,6 +56,19 @@ export function ProjectEditor({ project }: { project: EditorProject | null }) {
     isVisible: block.isVisible,
     data: block.data,
   })));
+
+  useEffect(() => {
+    if (!initialSuccessMessage) return;
+    toast({ title: initialSuccessMessage, variant: "success" });
+    const url = new URL(window.location.href);
+    url.searchParams.delete("created");
+    window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+  }, [initialSuccessMessage, toast]);
+
+  useEffect(() => {
+    if (state.success) toast({ title: state.message || "Đã lưu dự án.", variant: "success" });
+    if (state.errors?.length) toast({ title: "Không thể lưu dự án", description: state.errors.join(" · "), variant: "error" });
+  }, [state, toast]);
 
   function updateBlock(index: number, patch: Partial<EditableBlock>) {
     setBlocks((current) => current.map((block, blockIndex) => blockIndex === index ? { ...block, ...patch } : block));
@@ -139,9 +154,6 @@ export function ProjectEditor({ project }: { project: EditorProject | null }) {
           <div className="space-y-2"><Label htmlFor="seoDescription">SEO description</Label><Textarea id="seoDescription" name="seoDescription" defaultValue={project?.seoDescription ?? ""} rows={3} /></div>
         </CardContent>
       </Card>
-
-      {state.errors?.length ? <div className="rounded-lg border border-red-400/30 bg-red-500/10 p-4 text-sm text-red-200"><ul className="list-disc space-y-1 pl-5">{state.errors.map((error) => <li key={error}>{error}</li>)}</ul></div> : null}
-      {state.success && <p className="rounded-lg border border-green-400/30 bg-green-500/10 p-4 text-sm text-green-200">{state.message}</p>}
 
       <div className="sticky bottom-4 flex justify-end rounded-xl border border-baolam-border bg-[#06111e]/95 p-3 shadow-2xl backdrop-blur">
         <Button type="submit" size="lg" disabled={pending} className="bg-baolam-primary text-baolam-bg hover:bg-baolam-primary-hover">
