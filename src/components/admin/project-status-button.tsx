@@ -4,17 +4,16 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoaderCircle, Send, Undo2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/toast-provider";
 
 export function ProjectStatusButton({ projectId, status }: { projectId: string; status: "draft" | "published" | "archived" }) {
   const router = useRouter();
+  const { toast } = useToast();
   const [pending, setPending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const isPublished = status === "published";
 
   async function changeStatus() {
     setPending(true);
-    setError(null);
-
     try {
       const response = await fetch(`/admin/projects/${projectId}/status`, {
         method: "POST",
@@ -27,19 +26,19 @@ export function ProjectStatusButton({ projectId, status }: { projectId: string; 
       const result = await response.json().catch(() => null) as { error?: string } | null;
       if (!response.ok) throw new Error(result?.error || "Không thể cập nhật trạng thái dự án.");
 
+      toast({ title: isPublished ? "Đã gỡ xuất bản dự án." : "Đã xuất bản dự án.", variant: "success" });
       router.refresh();
     } catch (caughtError) {
-      setError(caughtError instanceof Error ? caughtError.message : "Không thể cập nhật trạng thái dự án.");
+      toast({ title: "Không thể cập nhật trạng thái", description: caughtError instanceof Error ? caughtError.message : "Không thể cập nhật trạng thái dự án.", variant: "error" });
     } finally {
       setPending(false);
     }
   }
 
-  return <div className="relative">
+  return <div>
     <Button type="button" onClick={changeStatus} disabled={pending} variant={isPublished ? "outline" : "default"} className={isPublished ? "border-white/15 bg-transparent text-white" : "bg-baolam-primary text-baolam-bg hover:bg-baolam-primary-hover"}>
       {pending ? <LoaderCircle className="animate-spin"/> : isPublished ? <Undo2/> : <Send/>}
       {pending ? "Đang cập nhật" : isPublished ? "Gỡ xuất bản" : "Xuất bản"}
     </Button>
-    {error && <button type="button" onClick={() => setError(null)} className="absolute right-0 top-full z-20 mt-2 w-64 rounded-lg border border-red-400/30 bg-[#2a1015] p-3 text-left text-xs leading-5 text-red-200 shadow-xl" title="Bấm để đóng">{error}</button>}
   </div>;
 }
