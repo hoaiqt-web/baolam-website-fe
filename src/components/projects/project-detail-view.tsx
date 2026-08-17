@@ -7,11 +7,6 @@ import { ProjectHeroMedia } from "./project-hero-media";
 type ProjectDetail = Project & { blocks: ProjectBlock[] };
 
 export function ProjectDetailView({ project, preview = false }: { project: ProjectDetail; preview?: boolean }) {
-  const facts = [
-    ["Địa điểm", project.location],
-    ["Hoàn thành", project.completionYear],
-  ].filter(([, value]) => value);
-
   const headerSpacing = preview
     ? "pt-12"
     : "pt-16 sm:pt-20";
@@ -19,7 +14,7 @@ export function ProjectDetailView({ project, preview = false }: { project: Proje
     ? "h-[calc(100dvh-3rem)] min-h-[32rem]"
     : "h-[calc(100dvh-4rem)] min-h-[32rem] sm:h-[calc(100dvh-5rem)]";
 
-  return <main className={`min-h-screen bg-baolam-bg text-white ${headerSpacing}`}>
+  return <main className={`min-h-screen max-w-full overflow-x-clip bg-baolam-bg text-white ${headerSpacing}`}>
     <section className={`relative overflow-hidden ${heroHeight}`}>
       <ProjectHeroMedia src={project.coverImage} alt={project.coverAlt || project.title}/>
       <div className="absolute inset-0 bg-gradient-to-t from-baolam-bg via-baolam-bg/20 to-black/15"/>
@@ -33,15 +28,6 @@ export function ProjectDetailView({ project, preview = false }: { project: Proje
       </div>
       <div className="motion-scroll-cue absolute bottom-5 right-6 hidden items-center gap-3 text-[10px] font-bold uppercase tracking-[0.22em] text-white/55 sm:flex lg:right-12"><span>Cuộn để khám phá</span><span className="relative h-10 w-px overflow-hidden bg-white/20"><span className="absolute inset-x-0 top-0 h-1/2 bg-baolam-primary"/></span></div>
     </section>
-
-    {facts.length > 0 && <ScrollReveal><section className="border-y border-baolam-border bg-baolam-surface/45">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 py-8 lg:px-12">
-        {facts.map(([label, value]) => <div key={String(label)} className="border-l border-baolam-border px-4 py-3">
-          <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-baolam-primary">{label}</span>
-          <strong className="mt-2 block text-sm font-medium">{value}</strong>
-        </div>)}
-      </div>
-    </section></ScrollReveal>}
 
     {project.excerpt && <ScrollReveal direction="scale"><section className="mx-auto max-w-5xl px-6 py-20 text-center lg:py-28">
       <p className="text-2xl font-light leading-relaxed text-white/90 lg:text-4xl">{project.excerpt}</p>
