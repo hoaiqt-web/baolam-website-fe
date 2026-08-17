@@ -1,7 +1,9 @@
 import Image from "next/image";
+import { ZoomIn } from "lucide-react";
 import { isProjectMediaUrl } from "@/features/projects/media-path";
 import type { ProjectBlock } from "@/db/schema";
 import { ProjectGallery } from "./project-gallery";
+import { ProjectImageViewer } from "./project-image-viewer";
 
 export function ProjectBlockRenderer({ block }: { block: ProjectBlock }) {
   const data = block.data;
@@ -11,15 +13,29 @@ export function ProjectBlockRenderer({ block }: { block: ProjectBlock }) {
     <div><p className="max-w-3xl text-lg leading-8 text-baolam-muted">{data.body}</p>{data.items?.length ? <ul className="mt-8 grid gap-4 sm:grid-cols-2">{data.items.map((item, index) => <li key={item} className="border-l border-baolam-primary/50 pl-4"><span className="mb-2 block text-xs font-bold text-baolam-primary">0{index + 1}</span>{item}</li>)}</ul> : null}</div>
   </section>;
 
-  if (block.type === "imageText" || block.type === "technical") return <section className="bg-baolam-surface/45 py-20 lg:py-28"><div className="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-2 lg:px-12">{data.image && <Image src={data.image} alt={data.imageAlt || data.heading || "Ảnh dự án"} width={1200} height={900} sizes="(min-width: 1024px) 50vw, 100vw" unoptimized={isProjectMediaUrl(data.image)} className="aspect-[4/3] h-full w-full object-cover"/>}<div><SectionHeading eyebrow={block.type === "technical" ? "Giải pháp kỹ thuật" : "Câu chuyện dự án"} title={data.heading}/><p className="mt-6 whitespace-pre-line leading-7 text-baolam-muted">{data.body}</p>{data.items?.length ? <ul className="mt-7 space-y-3">{data.items.map((item) => <li key={item} className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 bg-baolam-primary"/>{item}</li>)}</ul> : null}</div></div></section>;
+  if (block.type === "imageText" || block.type === "technical") return <section className="bg-baolam-surface/45 py-20 lg:py-28"><div className="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-2 lg:px-12">{data.image && <ProjectImageViewer images={[{ src: data.image, alt: data.imageAlt || data.heading || "Ảnh dự án" }]}><ZoomableImage src={data.image} alt={data.imageAlt || data.heading || "Ảnh dự án"} sizes="(min-width: 1024px) 50vw, 100vw"/></ProjectImageViewer>}<div><SectionHeading eyebrow={block.type === "technical" ? "Giải pháp kỹ thuật" : "Câu chuyện dự án"} title={data.heading}/><p className="mt-6 whitespace-pre-line leading-7 text-baolam-muted">{data.body}</p>{data.items?.length ? <ul className="mt-7 space-y-3">{data.items.map((item) => <li key={item} className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 bg-baolam-primary"/>{item}</li>)}</ul> : null}</div></div></section>;
 
   if (block.type === "gallery") return <section className="mx-auto max-w-[1600px] px-4 py-16 lg:px-8 lg:py-24"><SectionHeading eyebrow="Gallery" title={data.heading}/><ProjectGallery images={data.images ?? []} heading={data.heading} variant={block.variant}/></section>;
 
-  if (block.type === "process") return <section className="bg-[#030914] py-20 lg:py-28"><div className="mx-auto max-w-7xl px-6 lg:px-12"><SectionHeading eyebrow="Từ ý tưởng đến công trình" title={data.heading}/><div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">{data.steps?.map((step, index) => <article key={`${step.title}-${index}`}><span className="text-3xl font-light text-baolam-primary">{String(index + 1).padStart(2, "0")}</span>{step.image && <Image src={step.image} alt={step.title} width={800} height={600} sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw" unoptimized={isProjectMediaUrl(step.image)} className="mt-5 aspect-[4/3] w-full object-cover"/>}<h3 className="mt-5 font-bold uppercase tracking-wide">{step.title}</h3><p className="mt-2 text-sm leading-6 text-baolam-muted">{step.description}</p></article>)}</div></div></section>;
+  if (block.type === "process") {
+    const processImages = (data.steps ?? []).flatMap((step) => step.image ? [{ src: step.image, alt: step.title, caption: step.description }] : []);
+    let imageIndex = -1;
+    return <section className="bg-[#030914] py-20 lg:py-28"><div className="mx-auto max-w-7xl px-6 lg:px-12"><SectionHeading eyebrow="Từ ý tưởng đến công trình" title={data.heading}/><ProjectImageViewer images={processImages} className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">{data.steps?.map((step, index) => {
+      if (step.image) imageIndex += 1;
+      return <article key={`${step.title}-${index}`}><span className="text-3xl font-light text-baolam-primary">{String(index + 1).padStart(2, "0")}</span>{step.image && <ZoomableImage src={step.image} alt={step.title} index={imageIndex} sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw" className="mt-5"/>}<h3 className="mt-5 font-bold uppercase tracking-wide">{step.title}</h3><p className="mt-2 text-sm leading-6 text-baolam-muted">{step.description}</p></article>;
+    })}</ProjectImageViewer></div></section>;
+  }
 
-  if (block.type === "testimonial") return <section className="mx-auto max-w-5xl px-6 py-24 text-center lg:py-32"><span className="text-6xl leading-none text-baolam-primary">“</span><blockquote className="mt-4 text-2xl font-light leading-relaxed lg:text-4xl">{data.quote}</blockquote>{data.author && <p className="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-baolam-primary">{data.author}</p>}</section>;
+  if (block.type === "testimonial") return <section className="mx-auto max-w-7xl px-6 py-24 text-left lg:px-12 lg:py-32"><span className="block text-6xl leading-none text-baolam-primary">“</span><blockquote className="mt-4 text-xl font-light leading-[1.6] sm:text-2xl lg:text-3xl">{data.quote}</blockquote>{data.author && <p className="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-baolam-primary">{data.author}</p>}</section>;
 
   return null;
+}
+
+function ZoomableImage({ src, alt, sizes, index = 0, className = "" }: { src: string; alt: string; sizes: string; index?: number; className?: string }) {
+  return <button type="button" data-project-image-index={index} aria-label={`Xem ảnh ${alt} ở kích thước lớn`} className={`group relative block w-full cursor-zoom-in overflow-hidden text-left ${className}`}>
+    <Image src={src} alt={alt} width={1200} height={900} sizes={sizes} unoptimized={isProjectMediaUrl(src)} className="aspect-[4/3] h-full w-full object-cover transition duration-500 group-hover:scale-[1.02] group-hover:brightness-75"/>
+    <span className="pointer-events-none absolute bottom-3 right-3 grid size-10 place-items-center rounded-full bg-black/65 opacity-0 backdrop-blur transition group-hover:opacity-100 group-focus-visible:opacity-100"><ZoomIn className="size-4"/></span>
+  </button>;
 }
 
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title?: string }) {
