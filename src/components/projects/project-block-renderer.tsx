@@ -26,7 +26,7 @@ export function ProjectBlockRenderer({ block }: { block: ProjectBlock }) {
     })}</ProjectImageViewer></div></section>;
   }
 
-  if (block.type === "testimonial") return <section className="mx-auto max-w-5xl px-6 py-24 text-center lg:py-32"><span className="text-6xl leading-none text-baolam-primary">“</span><blockquote className="mt-4 text-2xl font-light leading-relaxed lg:text-4xl">{data.quote}</blockquote>{data.author && <p className="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-baolam-primary">{data.author}</p>}</section>;
+  if (block.type === "testimonial") return <section className="mx-auto max-w-7xl px-6 py-24 text-left lg:px-12 lg:py-32"><span className="block text-6xl leading-none text-baolam-primary">“</span><blockquote className="mt-4 text-xl font-light leading-[1.6] sm:text-2xl lg:text-3xl">{data.quote}</blockquote>{data.author && <p className="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-baolam-primary">{data.author}</p>}</section>;
 
   return null;
 }
