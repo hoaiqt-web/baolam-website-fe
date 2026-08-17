@@ -29,6 +29,6 @@ export default async function ProjectPreviewPage({ params }: { params: Promise<{
         {project.status === "published" && <Link href={`/projects/${project.slug}`} target="_blank" className="flex items-center gap-2 text-baolam-primary">Trang public <ExternalLink className="size-4"/></Link>}
       </div>
     </div>
-    <div className="pt-12"><ProjectDetailView project={project}/></div>
+    <ProjectDetailView project={project} preview/>
   </>;
 }
