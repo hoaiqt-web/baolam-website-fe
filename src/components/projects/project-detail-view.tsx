@@ -33,7 +33,7 @@ export function ProjectDetailView({ project, preview = false }: { project: Proje
       <p className="text-xl font-light leading-[1.6] text-white/90 sm:text-2xl lg:text-3xl">{project.excerpt}</p>
     </section></ScrollReveal>}
 
-    {project.blocks.filter((block) => block.isVisible).map((block, index) => <ScrollReveal key={block.id} direction={index % 2 ? "right" : "left"} delay={100}><ProjectBlockRenderer block={block}/></ScrollReveal>)}
+    {project.blocks.filter((block) => block.isVisible).map((block) => <ScrollReveal key={block.id} direction="up" delay={100}><ProjectBlockRenderer block={block}/></ScrollReveal>)}
 
     <ScrollReveal direction="scale" delay={100}><section className="border-t border-baolam-border bg-[#030914] px-6 py-24 text-center">
       <p className="text-xs font-bold uppercase tracking-[0.3em] text-baolam-primary">Bắt đầu một dự án mới</p>
