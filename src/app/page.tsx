@@ -1,21 +1,22 @@
 import Link from "next/link";
-import { HERO_DATA } from "@/data/hero";
 import { LANDMARK_PROJECTS } from "@/data/projects";
 import { ARTWORK_PROJECTS } from '@/data/artworks';
 import DebugToggle from '@/components/DebugToggle';
+import { FeaturedProjectSlider } from '@/components/home/featured-project-slider';
 
 export default function Home() {
-  const allProjects = [...LANDMARK_PROJECTS, ...ARTWORK_PROJECTS].slice(0, 4);
+  const allProjects = [...LANDMARK_PROJECTS, ...ARTWORK_PROJECTS];
 
   return (
-    <main className="min-h-screen lg:h-screen w-full bg-[#030914] flex flex-col font-sans overflow-y-auto overflow-x-hidden lg:overflow-hidden">
+    <main className="min-h-screen w-full bg-[#030914] flex flex-col font-sans overflow-x-hidden">
       
       <DebugToggle />
       
       {/* ---------------- KHỐI TRÊN: HERO & THỐNG KÊ (78%) ---------------- */}
-      <div id="hero-section" className="relative lg:min-h-0 lg:h-[68%] w-full shrink-0 bg-[#030914] overflow-hidden flex flex-col">
+      <div id="hero-section" className="relative min-h-[680px] lg:h-[68vh] lg:min-h-[620px] w-full shrink-0 bg-[#030914] overflow-hidden flex flex-col">
         
         {/* Lớp nền Blur lấp đầy các khoảng trống khi thu nhỏ ảnh chính */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img 
           src="/hero/c0d0a44c-ab54-4601-9b6e-ac81907b850c.png" 
           alt="" 
@@ -24,6 +25,7 @@ export default function Home() {
         
         {/* Background Image - Mobile: tự điều chỉnh theo chiều rộng, Desktop: cover */}
         <div className="absolute inset-0 z-0 overflow-hidden flex items-start lg:items-center justify-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img 
             src="/hero/c0d0a44c-ab54-4601-9b6e-ac81907b850c.png" 
             alt="Baolam Hero - Cổng Thời Gian" 
@@ -140,15 +142,15 @@ export default function Home() {
       </div>
 
       {/* ---------------- KHỐI DƯỚI: TÍNH NĂNG & DỰ ÁN ---------------- */}
-      <div className="flex-1 w-full bg-[#030914] relative z-20 flex flex-col justify-start overflow-hidden pt-4 lg:pt-2 pb-6 lg:pb-2">
+      <div className="w-full bg-[#030914] relative z-20 flex flex-col justify-start overflow-hidden pt-4 lg:pt-5 pb-12">
         
         {/* NỘI DUNG */}
         <div className="w-full mx-auto px-6 xl:px-8 flex flex-col justify-start gap-3">
           
           {/* FEATURES BAR */}
-          <div className="w-full grid grid-cols-2 gap-y-3 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-2 lg:mb-3 px-2">
+          <div id="capabilities" className="w-full scroll-mt-24 grid grid-cols-2 gap-y-3 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-2 lg:mb-5 px-2">
             
-            <div className="flex items-center gap-2.5">
+            <Link href="#creative-design" className="group flex items-center gap-2.5 rounded-lg p-2 transition hover:bg-white/5">
               <div className="text-[#00E5FF]">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
               </div>
@@ -156,9 +158,9 @@ export default function Home() {
                 <h4 className="text-white font-bold text-[10px] mb-0.5 uppercase tracking-wider">THIẾT KẾ SÁNG TẠO</h4>
                 <p className="text-[9px] text-[#A5B4C7]">Ý tưởng độc bản, khác biệt</p>
               </div>
-            </div>
+            </Link>
             
-            <div className="flex items-center gap-2.5">
+            <Link href="#modern-production" className="group flex items-center gap-2.5 rounded-lg p-2 transition hover:bg-white/5">
               <div className="text-[#00E5FF]">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
               </div>
@@ -166,9 +168,9 @@ export default function Home() {
                 <h4 className="text-white font-bold text-[10px] mb-0.5 uppercase tracking-wider">SẢN XUẤT HIỆN ĐẠI</h4>
                 <p className="text-[9px] text-[#A5B4C7]">Công nghệ tiên tiến, chất lượng</p>
               </div>
-            </div>
+            </Link>
             
-            <div className="flex items-center gap-2.5">
+            <Link href="#professional-construction" className="group flex items-center gap-2.5 rounded-lg p-2 transition hover:bg-white/5">
               <div className="text-[#00E5FF]">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v18"></path><path d="M3 12h18"></path><path d="M3 21h18"></path><path d="M16 3l-4 4-4-4"></path><path d="M3 7l9 5 9-5"></path></svg>
               </div>
@@ -176,9 +178,9 @@ export default function Home() {
                 <h4 className="text-white font-bold text-[10px] mb-0.5 uppercase tracking-wider">THI CÔNG CHUYÊN NGHIỆP</h4>
                 <p className="text-[9px] text-[#A5B4C7]">Đúng tiến độ, an toàn</p>
               </div>
-            </div>
+            </Link>
             
-            <div className="flex items-center gap-2.5">
+            <Link href="#sustainable-warranty" className="group flex items-center gap-2.5 rounded-lg p-2 transition hover:bg-white/5">
               <div className="text-[#00E5FF]">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg>
               </div>
@@ -186,25 +188,12 @@ export default function Home() {
                 <h4 className="text-white font-bold text-[10px] mb-0.5 uppercase tracking-wider">BẢO HÀNH BỀN VỮNG</h4>
                 <p className="text-[9px] text-[#A5B4C7]">Đồng hành dài lâu</p>
               </div>
-            </div>
+            </Link>
 
           </div>
 
-          {/* DỰ ÁN NỔI BẬT - 5 CỘT (1 Tiêu đề + 4 Dự án dàn đều 100% chiều ngang) */}
-          <div className="w-full flex lg:grid lg:grid-cols-5 gap-3 lg:gap-4 items-start relative overflow-x-auto snap-x snap-mandatory lg:overflow-visible pb-6 lg:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-pl-4 pl-4 pr-2 lg:pl-0 lg:pr-0 lg:scroll-pl-0 -mx-4 lg:mx-0">
-            
-            {/* Nav Arrows */}
-            <div className="absolute -top-10 right-6 xl:right-0 flex gap-1.5 z-30">
-              <button className="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-[#00E5FF] hover:text-[#00E5FF] transition-all bg-[#030914]">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-              </button>
-              <button className="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center text-white hover:border-[#00E5FF] hover:text-[#00E5FF] transition-all bg-[#030914]">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-              </button>
-            </div>
-
-            {/* Cột 1: Tiêu đề */}
-            <div className="flex flex-col justify-end h-[200px] lg:h-[140px] pb-1 pr-2 min-w-[calc(100vw-2rem)] sm:min-w-[45vw] lg:min-w-0 snap-start lg:snap-align-none shrink-0">
+          <div id="landmarks" className="flex w-full scroll-mt-24 flex-col gap-6 lg:flex-row lg:items-end lg:gap-5">
+            <div className="flex h-[150px] w-full shrink-0 flex-col justify-end pb-1 pr-2 lg:w-[220px] xl:w-[250px]">
               <span className="text-[#00E5FF] font-bold tracking-widest text-[9px] uppercase mb-1.5 block">
                 DỰ ÁN NỔI BẬT
               </span>
@@ -214,44 +203,44 @@ export default function Home() {
               <p className="text-[#A5B4C7] mb-3 text-[10px] leading-[1.5]">
                 Mỗi công trình là một tác phẩm nghệ thuật.
               </p>
-              <a href="#" className="text-[#00E5FF] font-bold text-[10px] uppercase tracking-wider flex items-center gap-1 hover:text-white transition-colors w-fit">
+              <Link href="#landmarks" className="text-[#00E5FF] font-bold text-[10px] uppercase tracking-wider flex items-center gap-1 hover:text-white transition-colors w-fit">
                 XEM TẤT CẢ <span className="text-[12px]">&rarr;</span>
-              </a>
-            </div>
-
-            {/* Cột 2-5: Thẻ Dự Án (Hiển thị 4 dự án lấp đầy màn hình) */}
-            {allProjects.slice(0, 4).map((p) => (
-              <Link href={`/projects/${p.slug}`} key={p.id} className="group rounded-[8px] overflow-hidden cursor-pointer bg-gradient-to-b from-[#071324] to-[#040D19] flex flex-col hover:shadow-[0_4px_20px_rgba(0,229,255,0.15)] transition-all h-[200px] lg:h-[140px] min-w-[calc(100vw-2rem)] sm:min-w-[45vw] lg:min-w-0 snap-start lg:snap-align-none shrink-0 border border-white/20 hover:border-[#00E5FF]/50">
-                
-                {/* Top Image Box */}
-                <div className="relative h-[65%] w-full shrink-0 overflow-hidden">
-                  <img 
-                    src={p.thumbnail} 
-                    alt={p.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                  />
-                  
-                  {/* Badge */}
-                  <div className="absolute bottom-0 left-0 bg-[#00E5FF] text-[#071522] text-[8px] font-bold px-2 py-1 uppercase tracking-wider rounded-tr-[6px]">
-                    {p.category}
-                  </div>
-                </div>
-                
-                {/* Bottom Content Box */}
-                <div className="flex-1 flex flex-col justify-center px-2.5 py-1.5">
-                  <h3 className="text-[11px] font-bold mb-1 text-white leading-tight line-clamp-1 group-hover:text-[#00E5FF] transition-colors">{p.title}</h3>
-                  <div className="flex items-center gap-1 text-[#A5B4C7] text-[9px]">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    <span className="truncate">{p.location || 'Bảo Lâm'}</span>
-                  </div>
-                </div>
-
               </Link>
-            ))}
-
+            </div>
+            <FeaturedProjectSlider projects={allProjects}/>
           </div>
         </div>
       </div>
+
+      <CapabilitySections projects={allProjects}/>
     </main>
   );
+}
+
+const CAPABILITY_SECTIONS = [
+  { id: "creative-design", eyebrow: "01 / Thiết kế", title: "THIẾT KẾ SÁNG TẠO", subtitle: "Ý tưởng độc bản, khác biệt", body: "Mỗi công trình bắt đầu từ việc thấu hiểu không gian, văn hóa và mục tiêu của chủ đầu tư. Đội ngũ Bảo Lâm phát triển ý tưởng, hình khối và giải pháp vật liệu để tạo nên dấu ấn riêng cho từng dự án." },
+  { id: "modern-production", eyebrow: "02 / Sản xuất", title: "SẢN XUẤT HIỆN ĐẠI", subtitle: "Công nghệ tiên tiến, chất lượng", body: "Quy trình sản xuất được kiểm soát từ tạo mẫu, kết cấu đến hoàn thiện bề mặt. Công nghệ hiện đại giúp hiện thực hóa những thiết kế phức tạp với độ chính xác và chất lượng ổn định." },
+  { id: "professional-construction", eyebrow: "03 / Thi công", title: "THI CÔNG CHUYÊN NGHIỆP", subtitle: "Đúng tiến độ, an toàn", body: "Đội ngũ kỹ thuật triển khai đồng bộ từ nhà máy đến công trường, kiểm soát chặt chẽ tiến độ, an toàn và chất lượng lắp đặt trong mọi điều kiện thực tế." },
+  { id: "sustainable-warranty", eyebrow: "04 / Bảo hành", title: "BẢO HÀNH BỀN VỮNG", subtitle: "Đồng hành dài lâu", body: "Sau bàn giao, Bảo Lâm tiếp tục theo dõi, bảo trì và hỗ trợ kỹ thuật để công trình giữ được thẩm mỹ, độ bền và giá trị sử dụng lâu dài." },
+] as const;
+
+function CapabilitySections({ projects }: { projects: Array<{ id: string; thumbnail: string; title: string }> }) {
+  return <div className="border-t border-white/10">
+    {CAPABILITY_SECTIONS.map((section, index) => <section id={section.id} key={section.id} className="scroll-mt-20 border-b border-white/10 bg-[#030914] py-20 lg:py-28">
+      <div className={`mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-2 lg:gap-20 lg:px-12 ${index % 2 ? "" : ""}`}>
+        <div className={index % 2 ? "lg:order-2" : ""}>
+          <p className="text-xs font-bold uppercase tracking-[0.28em] text-baolam-primary">{section.eyebrow}</p>
+          <h2 className="mt-5 text-3xl font-black text-white sm:text-4xl lg:text-6xl">{section.title}</h2>
+          <p className="mt-4 text-xl text-white/80">{section.subtitle}</p>
+          <span className="mt-7 block h-px w-20 bg-baolam-primary"/>
+          <p className="mt-8 max-w-xl text-base leading-8 text-baolam-muted">{section.body}</p>
+        </div>
+        <div className={`relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 ${index % 2 ? "lg:order-1" : ""}`}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={projects[index % projects.length]?.thumbnail} alt={projects[index % projects.length]?.title || section.title} className="size-full object-cover"/>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#030914]/55 via-transparent to-transparent"/>
+        </div>
+      </div>
+    </section>)}
+  </div>;
 }
