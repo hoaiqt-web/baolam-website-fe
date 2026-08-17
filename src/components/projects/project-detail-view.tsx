@@ -19,7 +19,7 @@ export function ProjectDetailView({ project, preview = false }: { project: Proje
       <ProjectHeroMedia src={project.coverImage} alt={project.coverAlt || project.title}/>
       <div className="absolute inset-0 bg-gradient-to-t from-baolam-bg via-baolam-bg/20 to-black/15"/>
       <div className="project-hero-glow absolute inset-0"/>
-      <div className="relative mx-auto flex h-full max-w-7xl items-end px-6 py-16 lg:px-12 lg:py-24">
+      <div className="relative flex h-full w-full items-end px-4 py-16 sm:px-6 lg:py-24 xl:px-12">
         <div className="max-w-5xl">
           <h1 className="motion-hero-title text-4xl font-black uppercase leading-[0.95] tracking-tight sm:text-6xl lg:text-8xl">{project.title}</h1>
           <p className="motion-hero-meta mt-5 text-xs font-bold uppercase tracking-[0.3em] text-baolam-primary">{project.eyebrow}</p>
@@ -29,7 +29,7 @@ export function ProjectDetailView({ project, preview = false }: { project: Proje
       <div className="motion-scroll-cue absolute bottom-5 right-6 hidden items-center gap-3 text-[10px] font-bold uppercase tracking-[0.22em] text-white/55 sm:flex lg:right-12"><span>Cuộn để khám phá</span><span className="relative h-10 w-px overflow-hidden bg-white/20"><span className="absolute inset-x-0 top-0 h-1/2 bg-baolam-primary"/></span></div>
     </section>
 
-    {project.excerpt && <ScrollReveal direction="scale"><section className="mx-auto max-w-7xl px-6 py-20 text-left lg:px-12 lg:py-28">
+    {project.excerpt && <ScrollReveal direction="scale"><section className="w-full px-4 py-20 text-left sm:px-6 lg:py-28 xl:px-12">
       <p className="text-xl font-light leading-[1.6] text-white/90 sm:text-2xl lg:text-3xl">{project.excerpt}</p>
     </section></ScrollReveal>}
 
