@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
+import { toProjectMediaUrl } from "@/features/projects/media-path";
 import { getAdminSession } from "@/lib/auth/session";
 import { getGcsBucket } from "@/lib/gcs";
 
@@ -62,9 +63,9 @@ export async function POST(request: Request) {
       fields: { "Content-Type": parsed.data.contentType },
       conditions: [["content-length-range", 1, MAX_IMAGE_SIZE]],
     });
-    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${objectName}`;
+    const mediaUrl = toProjectMediaUrl(objectName);
 
-    return Response.json({ ...policy, publicUrl });
+    return Response.json({ ...policy, mediaUrl });
   } catch (error) {
     console.error("Không thể ký GCS upload:", error);
     return Response.json({ error: "Không thể chuẩn bị upload ảnh." }, { status: 500 });

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { PROJECT_BLOCK_TYPES } from "./types";
+import { isProjectMediaUrl } from "./media-path";
 
 const defaultMediaHosts = ["storage.googleapis.com", "images.unsplash.com"];
 const configuredMediaHosts = (process.env.MEDIA_ALLOWED_HOSTS ?? "")
@@ -8,7 +9,9 @@ const configuredMediaHosts = (process.env.MEDIA_ALLOWED_HOSTS ?? "")
   .filter(Boolean);
 const allowedMediaHosts = new Set([...defaultMediaHosts, ...configuredMediaHosts]);
 
-const mediaUrl = z.url().refine((value) => {
+const mediaUrl = z.string().refine((value) => {
+  if (isProjectMediaUrl(value)) return true;
+
   try {
     const url = new URL(value);
     if (url.protocol !== "https:" || !allowedMediaHosts.has(url.hostname.toLowerCase())) return false;
@@ -19,7 +22,7 @@ const mediaUrl = z.url().refine((value) => {
   } catch {
     return false;
   }
-}, "Ảnh phải dùng HTTPS và thuộc Cloud Storage bucket đã cấu hình");
+}, "Ảnh phải là project media hợp lệ hoặc HTTPS từ nguồn đã cho phép");
 
 const optionalUrl = z.union([z.literal(""), mediaUrl]).optional();
 

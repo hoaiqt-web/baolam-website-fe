@@ -22,6 +22,7 @@ ADMIN_USERNAME=admin
 ADMIN_PASSWORD=a-strong-password-with-at-least-12-characters
 GCS_BUCKET_NAME=baolam-website-media
 GCP_SERVICE_ACCOUNT_JSON={"type":"service_account","project_id":"...","private_key":"...","client_email":"..."}
+SITE_URL=https://noithatbaolam.com
 MEDIA_ALLOWED_HOSTS=
 ```
 
@@ -61,7 +62,9 @@ The first version supports highlights, image with text, gallery, production proc
 
 Admins upload images directly in the project editor. The API only creates a five-minute signed POST policy; the browser sends the image directly to GCS, so image bytes do not pass through the Next.js server. JPG, PNG, WebP, and AVIF are accepted up to 10MB per image.
 
-Create a dedicated Google Cloud service account with permission to create objects in this bucket (for example, a bucket-scoped `Storage Object Creator` role), download its key JSON, and paste the complete JSON into `GCP_SERVICE_ACCOUNT_JSON`. Do not wrap it in extra quote characters and do not expose it with a `NEXT_PUBLIC_` prefix.
+Create a dedicated Google Cloud service account with bucket-scoped `Storage Object Creator` and `Storage Object Viewer` roles, download its key JSON, and paste the complete JSON into `GCP_SERVICE_ACCOUNT_JSON`. Do not wrap it in extra quote characters and do not expose it with a `NEXT_PUBLIC_` prefix.
+
+The bucket remains private with Public Access Prevention enabled. The database stores stable paths such as `/media/projects/2026/08/<uuid>.jpg`. The media route signs a 24-hour GCS read URL and returns a cached redirect, so image bytes travel directly from GCS to the browser rather than through the Next.js server.
 
 The bucket must allow browser POST requests from the admin origins. Apply a CORS configuration equivalent to:
 
