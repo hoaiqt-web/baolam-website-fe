@@ -8,11 +8,8 @@ type ProjectDetail = Project & { blocks: ProjectBlock[] };
 
 export function ProjectDetailView({ project }: { project: ProjectDetail }) {
   const facts = [
-    ["Chủ đầu tư", project.client],
     ["Địa điểm", project.location],
     ["Hoàn thành", project.completionYear],
-    ["Quy mô", project.scale],
-    ["Vật liệu", project.materials],
   ].filter(([, value]) => value);
 
   return <main className="min-h-screen bg-baolam-bg pt-16 text-white sm:pt-20">
@@ -29,7 +26,7 @@ export function ProjectDetailView({ project }: { project: ProjectDetail }) {
     </section>
 
     {facts.length > 0 && <section className="border-y border-baolam-border bg-baolam-surface/45">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 py-8 md:grid-cols-5 lg:px-12">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-6 py-8 lg:px-12">
         {facts.map(([label, value]) => <div key={String(label)} className="border-l border-baolam-border px-4 py-3">
           <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-baolam-primary">{label}</span>
           <strong className="mt-2 block text-sm font-medium">{value}</strong>

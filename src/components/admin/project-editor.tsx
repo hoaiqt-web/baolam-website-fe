@@ -90,12 +90,9 @@ export function ProjectEditor({ project }: { project: EditorProject | null }) {
               <option value="draft">Bản nháp</option><option value="published">Xuất bản</option><option value="archived">Lưu trữ</option>
             </select>
           </div>
-          <Field label="Chủ đầu tư / khách hàng" name="client" defaultValue={project?.client ?? ""} />
           <Field label="Địa điểm" name="location" defaultValue={project?.location ?? ""} />
           <Field label="Danh mục" name="category" defaultValue={project?.category ?? ""} />
           <Field label="Năm hoàn thành" name="completionYear" type="number" defaultValue={project?.completionYear?.toString() ?? ""} />
-          <Field label="Quy mô" name="scale" defaultValue={project?.scale ?? ""} />
-          <Field label="Vật liệu" name="materials" defaultValue={project?.materials ?? ""} />
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="excerpt">Mô tả ngắn</Label>
             <Textarea id="excerpt" name="excerpt" defaultValue={project?.excerpt ?? ""} rows={3} />
