@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { isProjectMediaUrl } from "@/features/projects/media-path";
 import type { ProjectBlock } from "@/db/schema";
+import { ProjectGallery } from "./project-gallery";
 
 export function ProjectBlockRenderer({ block }: { block: ProjectBlock }) {
   const data = block.data;
@@ -12,7 +13,7 @@ export function ProjectBlockRenderer({ block }: { block: ProjectBlock }) {
 
   if (block.type === "imageText" || block.type === "technical") return <section className="bg-baolam-surface/45 py-20 lg:py-28"><div className="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-2 lg:px-12">{data.image && <Image src={data.image} alt={data.imageAlt || data.heading || "Ảnh dự án"} width={1200} height={900} sizes="(min-width: 1024px) 50vw, 100vw" unoptimized={isProjectMediaUrl(data.image)} className="aspect-[4/3] h-full w-full object-cover"/>}<div><SectionHeading eyebrow={block.type === "technical" ? "Giải pháp kỹ thuật" : "Câu chuyện dự án"} title={data.heading}/><p className="mt-6 whitespace-pre-line leading-7 text-baolam-muted">{data.body}</p>{data.items?.length ? <ul className="mt-7 space-y-3">{data.items.map((item) => <li key={item} className="flex gap-3"><span className="mt-2 size-1.5 shrink-0 bg-baolam-primary"/>{item}</li>)}</ul> : null}</div></div></section>;
 
-  if (block.type === "gallery") return <section className="mx-auto max-w-[1600px] px-4 py-16 lg:px-8 lg:py-24"><SectionHeading eyebrow="Gallery" title={data.heading}/><div className={`mt-10 grid gap-3 ${block.variant === "grid" ? "md:grid-cols-2" : "md:grid-cols-12"}`}>{data.images?.map((image, index) => <figure key={`${image.url}-${index}`} className={block.variant === "grid" ? "" : index % 3 === 0 ? "md:col-span-7" : "md:col-span-5"}><Image src={image.url} alt={image.alt || `${data.heading || "Dự án"} ${index + 1}`} width={1200} height={900} sizes="(min-width: 768px) 60vw, 100vw" unoptimized={isProjectMediaUrl(image.url)} className="aspect-[4/3] w-full object-cover"/>{image.caption && <figcaption className="mt-2 text-xs text-baolam-muted">{image.caption}</figcaption>}</figure>)}</div></section>;
+  if (block.type === "gallery") return <section className="mx-auto max-w-[1600px] px-4 py-16 lg:px-8 lg:py-24"><SectionHeading eyebrow="Gallery" title={data.heading}/><ProjectGallery images={data.images ?? []} heading={data.heading} variant={block.variant}/></section>;
 
   if (block.type === "process") return <section className="bg-[#030914] py-20 lg:py-28"><div className="mx-auto max-w-7xl px-6 lg:px-12"><SectionHeading eyebrow="Từ ý tưởng đến công trình" title={data.heading}/><div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">{data.steps?.map((step, index) => <article key={`${step.title}-${index}`}><span className="text-3xl font-light text-baolam-primary">{String(index + 1).padStart(2, "0")}</span>{step.image && <Image src={step.image} alt={step.title} width={800} height={600} sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw" unoptimized={isProjectMediaUrl(step.image)} className="mt-5 aspect-[4/3] w-full object-cover"/>}<h3 className="mt-5 font-bold uppercase tracking-wide">{step.title}</h3><p className="mt-2 text-sm leading-6 text-baolam-muted">{step.description}</p></article>)}</div></div></section>;
 
