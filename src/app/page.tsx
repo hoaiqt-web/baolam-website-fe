@@ -3,6 +3,7 @@ import { LANDMARK_PROJECTS } from "@/data/projects";
 import { ARTWORK_PROJECTS } from '@/data/artworks';
 import DebugToggle from '@/components/DebugToggle';
 import { FeaturedProjectSlider } from '@/components/home/featured-project-slider';
+import { ScrollReveal } from '@/components/motion/scroll-reveal';
 
 export default function Home() {
   const allProjects = [...LANDMARK_PROJECTS, ...ARTWORK_PROJECTS];
@@ -29,7 +30,7 @@ export default function Home() {
           <img 
             src="/hero/c0d0a44c-ab54-4601-9b6e-ac81907b850c.png" 
             alt="Baolam Hero - Cổng Thời Gian" 
-            className="w-full h-auto lg:h-full lg:w-full lg:object-cover lg:object-top"
+            className="home-hero-kenburns w-full h-auto lg:h-full lg:w-full lg:object-cover lg:object-top"
             style={{
               WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
               maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)'
@@ -60,16 +61,16 @@ export default function Home() {
           
           {/* Trái: Nội dung Text */}
           <div className="w-full lg:w-[45%] max-w-[600px] mb-4 mt-4 sm:mt-6 lg:mt-0">
-            <span className="text-[#A5B4C7] font-medium tracking-[1px] text-[9px] sm:text-[10px] uppercase mb-3 block drop-shadow-md leading-relaxed">
+            <span className="motion-hero-meta text-[#A5B4C7] font-medium tracking-[1px] text-[9px] sm:text-[10px] uppercase mb-3 block drop-shadow-md leading-relaxed">
               NHÀ THẦU ARTWORK & KIẾN TRÚC ĐIỂM NHẤN CẢNH QUAN HÀNG ĐẦU VIỆT NAM
             </span>
             
-            <h1 className="text-[14px] sm:text-[20px] md:text-[27px] lg:text-[48px] font-black mb-4 leading-[1.15] tracking-tight">
+            <h1 className="motion-hero-title text-[14px] sm:text-[20px] md:text-[27px] lg:text-[48px] font-black mb-4 leading-[1.15] tracking-tight">
               <span className="text-white block">SÁNG TẠO</span>
               <span className="text-[#00E5FF] block drop-shadow-[0_0_15px_rgba(0,229,255,0.3)]">GIÁ TRỊ ĐÍCH THỰC</span>
             </h1>
             
-            <p className="text-[#A5B4C7] text-[11px] sm:text-[13px] lg:text-[14px] mb-4 sm:mb-6 leading-[1.6] max-w-[480px]">
+            <p className="motion-hero-location text-[#A5B4C7] text-[11px] sm:text-[13px] lg:text-[14px] mb-4 sm:mb-6 leading-[1.6] max-w-[480px]">
               Từ ý tưởng đến biểu tượng. Bảo Lâm kiến tạo những công trình nghệ thuật có giá trị bền vững, nâng tầm không gian và tạo dấu ấn cho mọi công trình trên khắp Việt Nam.
             </p>
             
@@ -148,7 +149,7 @@ export default function Home() {
         <div className="w-full mx-auto px-6 xl:px-8 flex flex-col justify-start gap-3">
           
           {/* FEATURES BAR */}
-          <div id="capabilities" className="w-full scroll-mt-24 grid grid-cols-2 gap-y-3 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-2 lg:mb-5 px-2">
+          <ScrollReveal><div id="capabilities" className="w-full scroll-mt-24 grid grid-cols-2 gap-y-3 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-2 lg:mb-5 px-2">
             
             <Link href="#creative-design" className="group flex items-center gap-2.5 rounded-lg p-2 transition hover:bg-white/5">
               <div className="text-[#00E5FF]">
@@ -190,9 +191,9 @@ export default function Home() {
               </div>
             </Link>
 
-          </div>
+          </div></ScrollReveal>
 
-          <div id="landmarks" className="flex w-full scroll-mt-24 flex-col gap-6 lg:flex-row lg:items-end lg:gap-5">
+          <ScrollReveal delay={120}><div id="landmarks" className="flex w-full scroll-mt-24 flex-col gap-6 lg:flex-row lg:items-end lg:gap-5">
             <div className="flex h-[150px] w-full shrink-0 flex-col justify-end pb-1 pr-2 lg:w-[220px] xl:w-[250px]">
               <span className="text-[#00E5FF] font-bold tracking-widest text-[9px] uppercase mb-1.5 block">
                 DỰ ÁN NỔI BẬT
@@ -208,7 +209,7 @@ export default function Home() {
               </Link>
             </div>
             <FeaturedProjectSlider projects={allProjects}/>
-          </div>
+          </div></ScrollReveal>
         </div>
       </div>
 
@@ -226,8 +227,8 @@ const CAPABILITY_SECTIONS = [
 
 function CapabilitySections({ projects }: { projects: Array<{ id: string; thumbnail: string; title: string }> }) {
   return <div className="border-t border-white/10">
-    {CAPABILITY_SECTIONS.map((section, index) => <section id={section.id} key={section.id} className="scroll-mt-20 border-b border-white/10 bg-[#030914] py-20 lg:py-28">
-      <div className={`mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-2 lg:gap-20 lg:px-12 ${index % 2 ? "" : ""}`}>
+    {CAPABILITY_SECTIONS.map((section, index) => <section id={section.id} key={section.id} className="scroll-mt-20 overflow-hidden border-b border-white/10 bg-[#030914] py-20 lg:py-28">
+      <ScrollReveal direction={index % 2 ? "right" : "left"}><div className="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-2 lg:gap-20 lg:px-12">
         <div className={index % 2 ? "lg:order-2" : ""}>
           <p className="text-xs font-bold uppercase tracking-[0.28em] text-baolam-primary">{section.eyebrow}</p>
           <h2 className="mt-5 text-3xl font-black text-white sm:text-4xl lg:text-6xl">{section.title}</h2>
@@ -240,7 +241,7 @@ function CapabilitySections({ projects }: { projects: Array<{ id: string; thumbn
           <img src={projects[index % projects.length]?.thumbnail} alt={projects[index % projects.length]?.title || section.title} className="size-full object-cover"/>
           <div className="absolute inset-0 bg-gradient-to-t from-[#030914]/55 via-transparent to-transparent"/>
         </div>
-      </div>
+      </div></ScrollReveal>
     </section>)}
   </div>;
 }
