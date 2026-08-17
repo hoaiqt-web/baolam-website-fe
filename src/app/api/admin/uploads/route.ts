@@ -3,6 +3,7 @@ import { z } from "zod";
 import { toProjectMediaUrl } from "@/features/projects/media-path";
 import { getAdminSession } from "@/lib/auth/session";
 import { getGcsBucket } from "@/lib/gcs";
+import { hasValidRequestOrigin } from "@/lib/security/request-origin";
 
 export const runtime = "nodejs";
 
@@ -18,27 +19,6 @@ const requestSchema = z.object({
   contentType: z.enum(["image/jpeg", "image/png", "image/webp", "image/avif"]),
   size: z.number().int().min(1).max(MAX_IMAGE_SIZE),
 });
-
-function firstForwardedValue(value: string | null) {
-  return value?.split(",")[0]?.trim();
-}
-
-function hasValidRequestOrigin(request: Request) {
-  const fetchSite = request.headers.get("sec-fetch-site");
-  if (fetchSite && fetchSite !== "same-origin") return false;
-
-  const origin = request.headers.get("origin");
-  if (!origin) return true;
-
-  const requestUrl = new URL(request.url);
-  const host = firstForwardedValue(request.headers.get("x-forwarded-host"))
-    ?? request.headers.get("host")
-    ?? requestUrl.host;
-  const protocol = firstForwardedValue(request.headers.get("x-forwarded-proto"))
-    ?? requestUrl.protocol.replace(":", "");
-
-  return origin === `${protocol}://${host}`;
-}
 
 export async function POST(request: Request) {
   if (!(await getAdminSession())) {

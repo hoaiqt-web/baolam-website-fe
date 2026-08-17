@@ -2,7 +2,6 @@ import Link from "next/link";
 import { FolderKanban, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { requireAdmin } from "@/lib/auth/session";
-import { logoutAction } from "./actions";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await requireAdmin();
@@ -21,8 +20,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         </nav>
         <div className="mt-auto border-t border-baolam-border p-4 text-sm">
           <p className="mb-3 text-baolam-muted">{session.username}</p>
-          <form action={logoutAction}>
-            <Button variant="outline" className="w-full border-white/15 bg-transparent text-white hover:bg-white/10"><LogOut /> Đăng xuất</Button>
+          <form action="/admin/logout" method="post">
+            <Button type="submit" variant="outline" className="w-full border-white/15 bg-transparent text-white hover:bg-white/10"><LogOut /> Đăng xuất</Button>
           </form>
         </div>
       </aside>
