@@ -36,7 +36,10 @@ export const projectBlockSchema = z.object({
     body: z.string().max(5000).optional(),
     image: optionalUrl,
     imageAlt: z.string().max(255).optional(),
-    items: z.array(z.string().max(500)).max(20).optional(),
+    items: z.array(z.string().max(500))
+      .transform((items) => items.map((item) => item.trim()).filter(Boolean))
+      .refine((items) => items.length <= 20, "Tối đa 20 ý nổi bật")
+      .optional(),
     images: z.array(z.object({
       url: mediaUrl,
       alt: z.string().max(255).optional(),
@@ -57,12 +60,9 @@ export const projectFormSchema = z.object({
   slug: z.string().trim().min(2).max(180).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Slug chỉ gồm chữ thường, số và dấu gạch ngang"),
   eyebrow: z.string().trim().max(120).default("Dự án công trình"),
   excerpt: z.string().trim().max(2000).optional(),
-  client: z.string().trim().max(180).optional(),
   location: z.string().trim().max(255).optional(),
   category: z.string().trim().max(120).optional(),
   completionYear: z.number().int().min(1900).max(2200).nullable(),
-  scale: z.string().trim().max(120).optional(),
-  materials: z.string().trim().max(255).optional(),
   coverImage: mediaUrl,
   coverAlt: z.string().trim().max(255).optional(),
   status: z.enum(["draft", "published", "archived"]),
