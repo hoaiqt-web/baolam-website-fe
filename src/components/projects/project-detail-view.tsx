@@ -6,21 +6,28 @@ import { ProjectBlockRenderer } from "./project-block-renderer";
 
 type ProjectDetail = Project & { blocks: ProjectBlock[] };
 
-export function ProjectDetailView({ project }: { project: ProjectDetail }) {
+export function ProjectDetailView({ project, preview = false }: { project: ProjectDetail; preview?: boolean }) {
   const facts = [
     ["Địa điểm", project.location],
     ["Hoàn thành", project.completionYear],
   ].filter(([, value]) => value);
 
-  return <main className="min-h-screen bg-baolam-bg pt-16 text-white sm:pt-20">
-    <section className="relative min-h-[78vh] overflow-hidden">
+  const headerSpacing = preview
+    ? "pt-12"
+    : "pt-16 sm:pt-20";
+  const heroHeight = preview
+    ? "h-[calc(100dvh-3rem)] min-h-[32rem]"
+    : "h-[calc(100dvh-4rem)] min-h-[32rem] sm:h-[calc(100dvh-5rem)]";
+
+  return <main className={`min-h-screen bg-baolam-bg text-white ${headerSpacing}`}>
+    <section className={`relative overflow-hidden ${heroHeight}`}>
       <Image src={project.coverImage} alt={project.coverAlt || project.title} fill preload quality={85} sizes="100vw" unoptimized={isProjectMediaUrl(project.coverImage)} className="object-cover"/>
       <div className="absolute inset-0 bg-gradient-to-t from-baolam-bg via-baolam-bg/20 to-black/15"/>
-      <div className="relative mx-auto flex min-h-[78vh] max-w-7xl items-end px-6 py-16 lg:px-12 lg:py-24">
+      <div className="relative mx-auto flex h-full max-w-7xl items-end px-6 py-16 lg:px-12 lg:py-24">
         <div className="max-w-5xl">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-baolam-primary">{project.eyebrow}</p>
-          <h1 className="mt-5 text-4xl font-black uppercase leading-[0.95] tracking-tight sm:text-6xl lg:text-8xl">{project.title}</h1>
-          {project.location && <p className="mt-6 text-lg text-white/80">{project.location}</p>}
+          <h1 className="text-4xl font-black uppercase leading-[0.95] tracking-tight sm:text-6xl lg:text-8xl">{project.title}</h1>
+          <p className="mt-5 text-xs font-bold uppercase tracking-[0.3em] text-baolam-primary">{project.eyebrow}</p>
+          {project.location && <p className="mt-4 text-lg text-white/80">{project.location}</p>}
         </div>
       </div>
     </section>
