@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Project, ProjectBlock } from "@/db/schema";
+import { isProjectMediaUrl } from "@/features/projects/media-path";
 import { ProjectBlockRenderer } from "./project-block-renderer";
 
 type ProjectDetail = Project & { blocks: ProjectBlock[] };
@@ -16,7 +17,7 @@ export function ProjectDetailView({ project }: { project: ProjectDetail }) {
 
   return <main className="min-h-screen bg-baolam-bg pt-16 text-white sm:pt-20">
     <section className="relative min-h-[78vh] overflow-hidden">
-      <Image src={project.coverImage} alt={project.coverAlt || project.title} fill preload quality={85} sizes="100vw" className="object-cover"/>
+      <Image src={project.coverImage} alt={project.coverAlt || project.title} fill preload quality={85} sizes="100vw" unoptimized={isProjectMediaUrl(project.coverImage)} className="object-cover"/>
       <div className="absolute inset-0 bg-gradient-to-t from-baolam-bg via-baolam-bg/20 to-black/15"/>
       <div className="relative mx-auto flex min-h-[78vh] max-w-7xl items-end px-6 py-16 lg:px-12 lg:py-24">
         <div className="max-w-5xl">
