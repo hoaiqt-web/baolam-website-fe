@@ -153,3 +153,45 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+.baolam-lightbox .yarl__toolbar {
+  gap: 0.25rem;
+  padding: 0.75rem;
+}
+
+.baolam-lightbox .yarl__button {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(3, 9, 20, 0.58);
+  backdrop-filter: blur(12px);
+  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.baolam-lightbox .yarl__button:hover,
+.baolam-lightbox .yarl__button:focus-visible {
+  border-color: rgba(0, 229, 255, 0.6);
+  background: rgba(7, 21, 34, 0.88);
+}
+
+.baolam-lightbox .yarl__thumbnails_container {
+  border-top: 1px solid rgba(0, 229, 255, 0.14);
+  background: rgba(3, 9, 20, 0.9);
+}
+
+.baolam-lightbox .yarl__thumbnails_thumbnail {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: #071522;
+}
+
+.baolam-lightbox .yarl__thumbnails_thumbnail_active {
+  border-color: #00E5FF;
+}
+
+.baolam-lightbox .yarl__counter {
+  color: rgba(255, 255, 255, 0.78);
+  font-variant-numeric: tabular-nums;
+}
+
+.baolam-lightbox .yarl__captions_description {
+  color: rgba(255, 255, 255, 0.82);
+}
