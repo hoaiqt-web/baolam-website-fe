@@ -19,7 +19,7 @@ export function ProjectDetailView({ project, preview = false }: { project: Proje
     ? "h-[calc(100dvh-3rem)] min-h-[32rem]"
     : "h-[calc(100dvh-4rem)] min-h-[32rem] sm:h-[calc(100dvh-5rem)]";
 
-  return <main className={`min-h-screen bg-baolam-bg text-white ${headerSpacing}`}>
+  return <main className={`min-h-screen max-w-full overflow-x-clip bg-baolam-bg text-white ${headerSpacing}`}>
     <section className={`relative overflow-hidden ${heroHeight}`}>
       <ProjectHeroMedia src={project.coverImage} alt={project.coverAlt || project.title}/>
       <div className="absolute inset-0 bg-gradient-to-t from-baolam-bg via-baolam-bg/20 to-black/15"/>
