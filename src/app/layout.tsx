@@ -6,6 +6,7 @@ import SiteHeader from "@/components/SiteHeader";
 const inter = Inter({ subsets: ["latin", "vietnamese"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.SITE_URL ?? "https://noithatbaolam.com"),
   title: "BAOLAM ART & LANDSCAPE",
   description: "Nhà thầu Artwork & Kiến trúc điểm nhấn cảnh quan hàng đầu Việt Nam. Sáng tạo giá trị đích thực.",
 };

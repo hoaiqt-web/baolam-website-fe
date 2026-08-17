@@ -12,7 +12,7 @@ const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avif"];
 type UploadPolicy = {
   url: string;
   fields: Record<string, string>;
-  publicUrl: string;
+  mediaUrl: string;
   error?: string;
 };
 
@@ -52,7 +52,7 @@ export function ImageUpload({ label, values, onChange, multiple = false, require
         body.append("file", file);
         const uploadResponse = await fetch(policy.url, { method: "POST", body });
         if (!uploadResponse.ok) throw new Error(`Upload ${file.name} thất bại.`);
-        uploaded.push(policy.publicUrl);
+        uploaded.push(policy.mediaUrl);
       }
       onChange(multiple ? [...values, ...uploaded] : uploaded.slice(-1));
     } catch (uploadError) {
