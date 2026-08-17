@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
+import { useEffect, useState } from "react";
 import MobileNav from "@/components/MobileNav";
 
 const NAV_LINKS = [
@@ -16,9 +17,18 @@ const NAV_LINKS = [
 
 export default function SiteHeader() {
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 24);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
   if (pathname.startsWith("/admin") || pathname.startsWith("/preview")) return null;
 
-  return <><nav className="fixed z-50 w-full border-b border-baolam-border bg-[rgba(7,21,34,0.92)] backdrop-blur-md">
+  return <><nav className={`fixed z-50 w-full border-b transition-[background-color,box-shadow,border-color] duration-500 ${scrolled ? "border-baolam-border bg-[rgba(7,21,34,0.94)] shadow-[0_12px_40px_rgba(0,0,0,0.22)] backdrop-blur-xl" : "border-white/10 bg-[rgba(7,21,34,0.72)] backdrop-blur-md"}`}>
     <div className="mx-auto flex h-16 w-full items-center justify-between px-4 sm:h-20 sm:px-6 xl:px-12">
       <Link href="/" className="flex shrink-0 items-center gap-3 sm:gap-4">
         <div className="relative flex size-9 items-center justify-center border-2 border-baolam-primary sm:size-12"><div className="size-6 border-2 border-baolam-primary sm:size-8"/><div className="absolute size-3 bg-baolam-primary sm:size-4"/></div>
