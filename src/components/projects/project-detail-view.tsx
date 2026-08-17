@@ -29,13 +29,13 @@ export function ProjectDetailView({ project, preview = false }: { project: Proje
       <div className="motion-scroll-cue absolute bottom-5 right-6 hidden items-center gap-3 text-[10px] font-bold uppercase tracking-[0.22em] text-white/55 sm:flex lg:right-12"><span>Cuộn để khám phá</span><span className="relative h-10 w-px overflow-hidden bg-white/20"><span className="absolute inset-x-0 top-0 h-1/2 bg-baolam-primary"/></span></div>
     </section>
 
-    {project.excerpt && <ScrollReveal direction="scale"><section className="w-full px-4 py-20 text-left sm:px-6 lg:py-28 xl:px-12">
+    {project.excerpt && <ScrollReveal direction="scale" delay={100}><section className="w-full px-4 py-20 text-left sm:px-6 lg:py-28 xl:px-12">
       <p className="text-xl font-light leading-[1.6] text-white/90 sm:text-2xl lg:text-3xl">{project.excerpt}</p>
     </section></ScrollReveal>}
 
-    {project.blocks.filter((block) => block.isVisible).map((block, index) => <ScrollReveal key={block.id} direction={index % 2 ? "right" : "left"}><ProjectBlockRenderer block={block}/></ScrollReveal>)}
+    {project.blocks.filter((block) => block.isVisible).map((block, index) => <ScrollReveal key={block.id} direction={index % 2 ? "right" : "left"} delay={100}><ProjectBlockRenderer block={block}/></ScrollReveal>)}
 
-    <ScrollReveal direction="scale"><section className="border-t border-baolam-border bg-[#030914] px-6 py-24 text-center">
+    <ScrollReveal direction="scale" delay={100}><section className="border-t border-baolam-border bg-[#030914] px-6 py-24 text-center">
       <p className="text-xs font-bold uppercase tracking-[0.3em] text-baolam-primary">Bắt đầu một dự án mới</p>
       <h2 className="mx-auto mt-5 max-w-3xl text-3xl font-bold lg:text-5xl">Biến ý tưởng thành một công trình tạo dấu ấn.</h2>
       <Link href="/#contact" className="mt-8 inline-flex bg-baolam-primary px-7 py-4 font-bold text-baolam-bg hover:bg-baolam-primary-hover">LIÊN HỆ TƯ VẤN →</Link>
