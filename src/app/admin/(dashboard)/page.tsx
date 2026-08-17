@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Eye, Plus, Send, Undo2 } from "lucide-react";
+import { Eye, Plus } from "lucide-react";
+import { ProjectStatusButton } from "@/components/admin/project-status-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -26,12 +27,7 @@ export default async function AdminProjectsPage() {
             <TableCell className="text-baolam-muted">{project.updatedAt.toLocaleDateString("vi-VN")}</TableCell>
             <TableCell><div className="flex justify-end gap-2">
               <Button render={<Link href={`/preview/projects/${project.id}`} target="_blank" />} variant="outline" size="icon" className="border-white/15 bg-transparent text-white" aria-label={`Xem trước ${project.title}`} title="Xem trước"><Eye /></Button>
-              <form action={`/admin/projects/${project.id}/status`} method="post">
-                <input type="hidden" name="status" value={project.status === "published" ? "draft" : "published"}/>
-                <Button type="submit" variant={project.status === "published" ? "outline" : "default"} className={project.status === "published" ? "border-white/15 bg-transparent text-white" : "bg-baolam-primary text-baolam-bg hover:bg-baolam-primary-hover"}>
-                  {project.status === "published" ? <><Undo2/> Gỡ xuất bản</> : <><Send/> Xuất bản</>}
-                </Button>
-              </form>
+              <ProjectStatusButton projectId={project.id} status={project.status}/>
               <Button render={<Link href={`/admin/projects/${project.id}/edit`} />} variant="outline" className="border-white/15 bg-transparent text-white">Sửa</Button>
             </div></TableCell>
           </TableRow>)}
