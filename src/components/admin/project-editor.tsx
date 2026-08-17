@@ -39,7 +39,7 @@ function emptyBlock(type: ProjectBlockType): EditableBlock {
 }
 
 function parseLines(value: string) {
-  return value.split("\n").map((item) => item.trim()).filter(Boolean);
+  return value.split("\n");
 }
 
 export function ProjectEditor({ project }: { project: EditorProject | null }) {

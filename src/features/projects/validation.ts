@@ -36,7 +36,10 @@ export const projectBlockSchema = z.object({
     body: z.string().max(5000).optional(),
     image: optionalUrl,
     imageAlt: z.string().max(255).optional(),
-    items: z.array(z.string().max(500)).max(20).optional(),
+    items: z.array(z.string().max(500))
+      .transform((items) => items.map((item) => item.trim()).filter(Boolean))
+      .refine((items) => items.length <= 20, "Tối đa 20 ý nổi bật")
+      .optional(),
     images: z.array(z.object({
       url: mediaUrl,
       alt: z.string().max(255).optional(),
