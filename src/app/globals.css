@@ -190,7 +190,7 @@
     transform: scale(0.965);
   }
 
-  .motion-reveal[data-visible='true'] {
+  .motion-reveal[data-ready='true'][data-visible='true'] {
     opacity: 1;
     transform: none;
   }

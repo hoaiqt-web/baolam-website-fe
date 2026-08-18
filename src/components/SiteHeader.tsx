@@ -39,12 +39,12 @@ export default function SiteHeader() {
         <div className='mx-auto flex h-16 w-full items-center justify-between px-4 sm:h-20 sm:px-6 xl:px-12'>
           <Link href='/' className='flex shrink-0 items-center gap-3 sm:gap-4'>
             <Image
-              src='/logo_baolam.png'
+              src='/logo_baolam.jpg'
               alt='Bảo Lâm'
-              width={60}
-              height={60}
+              width={48}
+              height={48}
               priority
-              className='size-15 w-auto object-contain'
+              className='size-12 w-auto object-contain'
             />
             <div className='flex flex-col leading-none'>
               <span className='text-base font-black tracking-widest text-white sm:text-xl'>
