@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useContactModal } from "@/components/contact/contact-modal-context";
 
 interface NavLink {
   href: string;
@@ -10,6 +11,7 @@ interface NavLink {
 
 export default function MobileNav({ links }: { links: NavLink[] }) {
   const [open, setOpen] = useState(false);
+  const { openContactModal } = useContactModal();
 
   // Close on resize to desktop
   useEffect(() => {
@@ -54,14 +56,14 @@ export default function MobileNav({ links }: { links: NavLink[] }) {
       {/* Overlay backdrop */}
       {open && (
         <div
-          className="md:hidden fixed inset-0 z-[9980] bg-black/70"
+          className="md:hidden fixed top-0 left-0 h-dvh w-full z-[9980] bg-black/70"
           onClick={() => setOpen(false)}
         />
       )}
 
       {/* Slide-in drawer — fully opaque, above everything */}
       <div
-        className={`md:hidden fixed top-0 right-0 h-full w-[78vw] max-w-[320px] z-[9990] transition-transform duration-300 ease-in-out flex flex-col ${
+        className={`md:hidden fixed top-0 right-0 h-dvh w-[78vw] max-w-[320px] z-[9990] transition-transform duration-300 ease-in-out flex flex-col ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
         style={{
@@ -116,13 +118,16 @@ export default function MobileNav({ links }: { links: NavLink[] }) {
 
         {/* CTA at bottom */}
         <div className="px-4 pb-8 pt-3 shrink-0 border-t border-white/10">
-          <a
-            href="#contact"
-            onClick={() => setOpen(false)}
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              openContactModal("mobile-nav");
+            }}
             className="w-full py-4 bg-[#00E5FF] text-[#071324] font-bold text-[13px] tracking-wider flex items-center justify-center gap-2 rounded-xl hover:bg-[#2EF2FF] transition-colors shadow-[0_4px_20px_rgba(0,229,255,0.4)]"
           >
             LIÊN HỆ TƯ VẤN &rarr;
-          </a>
+          </button>
         </div>
       </div>
     </>

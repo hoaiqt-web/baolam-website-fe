@@ -7,6 +7,7 @@ import "yet-another-react-lightbox/plugins/counter.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import SiteHeader from "@/components/SiteHeader";
 import { ToastProvider } from "@/components/ui/toast-provider";
+import { ContactModalProvider } from "@/components/contact/contact-modal-context";
 
 const inter = Inter({ subsets: ["latin", "vietnamese"] });
 
@@ -25,8 +26,10 @@ export default function RootLayout({
     <html lang="vi">
       <body className={`${inter.className} antialiased selection:bg-baolam-primary selection:text-[#071522]`}>
         <ToastProvider>
-          <SiteHeader />
-          {children}
+          <ContactModalProvider>
+            <SiteHeader />
+            {children}
+          </ContactModalProvider>
         </ToastProvider>
       </body>
     </html>
