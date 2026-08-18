@@ -1,247 +1,485 @@
-import Link from "next/link";
-import { LANDMARK_PROJECTS } from "@/data/projects";
-import { ARTWORK_PROJECTS } from '@/data/artworks';
-import DebugToggle from '@/components/DebugToggle';
-import { FeaturedProjectSlider } from '@/components/home/featured-project-slider';
-import { ScrollReveal } from '@/components/motion/scroll-reveal';
+import { ScrollReveal } from "@/components/motion/scroll-reveal";
+import { PlaceholderVisual } from "@/components/home/placeholder-visual";
 
 export default function Home() {
-  const allProjects = [...LANDMARK_PROJECTS, ...ARTWORK_PROJECTS];
-
   return (
-    <main className="min-h-screen w-full bg-[#030914] flex flex-col font-sans overflow-x-hidden">
-      
-      <DebugToggle />
-      
-      {/* ---------------- KHỐI TRÊN: HERO & THỐNG KÊ (78%) ---------------- */}
-      <div id="hero-section" className="relative min-h-[680px] lg:h-[68vh] lg:min-h-[620px] w-full shrink-0 bg-[#030914] overflow-hidden flex flex-col">
-        
-        {/* Lớp nền Blur lấp đầy các khoảng trống khi thu nhỏ ảnh chính */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
-          src="/hero/c0d0a44c-ab54-4601-9b6e-ac81907b850c.png" 
-          alt="" 
-          className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-40 scale-110"
-        />
-        
-        {/* Background Image - Mobile: tự điều chỉnh theo chiều rộng, Desktop: cover */}
-        <div className="absolute inset-0 z-0 overflow-hidden flex items-start lg:items-center justify-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img 
-            src="/hero/c0d0a44c-ab54-4601-9b6e-ac81907b850c.png" 
-            alt="Baolam Hero - Cổng Thời Gian" 
-            className="home-hero-kenburns w-full h-auto lg:h-full lg:w-full lg:object-cover lg:object-top"
-            style={{
-              WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
-              maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)'
-            }}
-          />
-        </div>
-        
-        {/* Lớp phủ Overlay Gradient - mạnh hơn ở mobile để đọc chữ */}
-        <div 
-          className="absolute inset-0 z-10" 
-          style={{ 
-            background: 'linear-gradient(to bottom, rgba(3,9,20,0.55) 0%, rgba(3,9,20,0.7) 70%, rgba(3,9,20,1) 100%)'
-          }} 
-        />
-        {/* Desktop overlay - từ trái sang phải */}
-        <div 
-          className="absolute inset-0 z-10 hidden lg:block" 
-          style={{ 
-            background: 'linear-gradient(to right, rgba(3,9,20,0.8) 0%, rgba(3,9,20,0.4) 40%, rgba(3,9,20,0.1) 100%)'
-          }} 
-        />
-        
-        {/* Gradient nối mượt xuống khối dưới */}
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#030914] via-[#030914]/80 to-transparent z-10 w-[1432px] h-[29px]" />
-
-        {/* Content Container - FULL WIDTH CỰC ĐẠI */}
-        <div className="relative z-20 w-full mx-auto px-5 sm:px-6 xl:px-8 flex flex-col lg:flex-row justify-start lg:justify-between items-start lg:items-center pt-[80px] sm:pt-[88px] lg:pt-[60px] pb-10 lg:pb-0 lg:h-full">
-          
-          {/* Trái: Nội dung Text */}
-          <div className="w-full lg:w-[45%] max-w-[600px] mb-4 mt-4 sm:mt-6 lg:mt-0">
-            <span className="motion-hero-meta text-[#A5B4C7] font-medium tracking-[1px] text-[9px] sm:text-[10px] uppercase mb-3 block drop-shadow-md leading-relaxed">
-              NHÀ THẦU ARTWORK & KIẾN TRÚC ĐIỂM NHẤN CẢNH QUAN HÀNG ĐẦU VIỆT NAM
-            </span>
-            
-            <h1 className="motion-hero-title text-[14px] sm:text-[20px] md:text-[27px] lg:text-[48px] font-black mb-4 leading-[1.15] tracking-tight">
-              <span className="text-white block">SÁNG TẠO</span>
-              <span className="text-[#00E5FF] block drop-shadow-[0_0_15px_rgba(0,229,255,0.3)]">GIÁ TRỊ ĐÍCH THỰC</span>
-            </h1>
-            
-            <p className="motion-hero-location text-[#A5B4C7] text-[11px] sm:text-[13px] lg:text-[14px] mb-4 sm:mb-6 leading-[1.6] max-w-[480px]">
-              Từ ý tưởng đến biểu tượng. Bảo Lâm kiến tạo những công trình nghệ thuật có giá trị bền vững, nâng tầm không gian và tạo dấu ấn cho mọi công trình trên khắp Việt Nam.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 sm: w-[600px] h-[42px]">
-              <a href="#landmarks" className="w-full sm:w-auto px-6 py-3 bg-[#00E5FF] text-[#071522] font-bold rounded hover:bg-[#2EF2FF] transition-colors text-[11px] flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(0,229,255,0.3)] whitespace-nowrap">
-                KHÁM PHÁ DỰ ÁN &rarr;
-              </a>
-              <a href="#capabilities" className="w-full sm:w-auto px-6 py-3 border border-white/20 font-bold rounded hover:border-[#00E5FF] hover: transition-all text-[11px] flex items-center justify-center gap-2 whitespace-nowrap text-[#000000] bg-[#00e5ff]">
-                NĂNG LỰC CỦA CHÚNG TÔI &rarr;
-              </a>
-            </div>
-          </div>
-
-          {/* Phải: Thống kê Panel */}
-          <div className="w-[240px] hidden lg:block shrink-0 mb-8">
-            <div className="rounded-xl backdrop-blur-md border border-white/10 bg-[#071324]/50 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden p-6 space-y-5 pr-[32px] pl-[50px] w-[250px] h-[314px]">
-              
-              {/* Stat 1 */}
-              <div className="flex items-start gap-3">
-                <div style={{ color: '#00E5FF' }} className="shrink-0 mt-0.5">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10"></path><path d="M17 4v8a5 5 0 0 1-10 0V4"></path><path d="M7 5H4a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h3"></path><path d="M17 5h3a2 2 0 0 1 2 2v1a2 2 0 0 1 2 2h-3"></path></svg>
-                </div>
-                <div>
-                  <h3 className="text-[18px] font-bold mb-0.5 leading-none text-white">15+</h3>
-                  <p className="text-white text-[9px] font-bold tracking-widest mb-1 uppercase">NĂM KINH NGHIỆM</p>
-                  <p className="text-[9px] text-[#A5B4C7]">Thiết kế & Thi công</p>
-                </div>
-              </div>
-
-              {/* Stat 2 */}
-              <div className="flex items-start gap-3">
-                <div style={{ color: '#00E5FF' }} className="shrink-0 mt-0.5">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg>
-                </div>
-                <div>
-                  <h3 className="text-[18px] font-bold mb-0.5 leading-none text-white">500+</h3>
-                  <p className="text-white text-[9px] font-bold tracking-widest mb-1 uppercase">CÔNG TRÌNH</p>
-                  <p className="text-[9px] text-[#A5B4C7]">Trên toàn quốc</p>
-                </div>
-              </div>
-
-              {/* Stat 3 */}
-              <div className="flex items-start gap-3">
-                <div style={{ color: '#00E5FF' }} className="shrink-0 mt-0.5">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                </div>
-                <div>
-                  <h3 className="text-[18px] font-bold mb-0.5 leading-none text-white">100+</h3>
-                  <p className="text-white text-[9px] font-bold tracking-widest mb-1 uppercase">KỸ SƯ & NHÂN SỰ</p>
-                  <p className="text-[9px] text-[#A5B4C7]">Tận tâm & sáng tạo</p>
-                </div>
-              </div>
-
-              {/* Stat 4 */}
-              <div className="flex items-start gap-3">
-                <div style={{ color: '#00E5FF' }} className="shrink-0 mt-0.5">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M17 18h1"></path><path d="M13 18h1"></path><path d="M9 18h1"></path></svg>
-                </div>
-                <div>
-                  <h3 className="text-[18px] font-bold mb-0.5 leading-none text-[#00E5FF]">20.000+</h3>
-                  <p className="text-white text-[9px] font-bold tracking-widest mb-1 uppercase">M² NHÀ MÁY</p>
-                  <p className="text-[9px] text-[#A5B4C7]">Sản xuất hiện đại</p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      {/* ---------------- KHỐI DƯỚI: TÍNH NĂNG & DỰ ÁN ---------------- */}
-      <div className="w-full bg-[#030914] relative z-20 flex flex-col justify-start overflow-hidden pt-4 lg:pt-5 pb-12">
-        
-        {/* NỘI DUNG */}
-        <div className="w-full mx-auto px-6 xl:px-8 flex flex-col justify-start gap-3">
-          
-          {/* FEATURES BAR */}
-          <ScrollReveal><div id="capabilities" className="w-full scroll-mt-24 grid grid-cols-2 gap-y-3 gap-x-2 lg:flex lg:items-center lg:justify-between shrink-0 mb-2 lg:mb-5 px-2">
-            
-            <Link href="#creative-design" className="group flex items-center gap-2.5 rounded-lg p-2 transition hover:bg-white/5">
-              <div className="text-[#00E5FF]">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-              </div>
-              <div>
-                <h4 className="text-white font-bold text-[10px] mb-0.5 uppercase tracking-wider">THIẾT KẾ SÁNG TẠO</h4>
-                <p className="text-[9px] text-[#A5B4C7]">Ý tưởng độc bản, khác biệt</p>
-              </div>
-            </Link>
-            
-            <Link href="#modern-production" className="group flex items-center gap-2.5 rounded-lg p-2 transition hover:bg-white/5">
-              <div className="text-[#00E5FF]">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-              </div>
-              <div>
-                <h4 className="text-white font-bold text-[10px] mb-0.5 uppercase tracking-wider">SẢN XUẤT HIỆN ĐẠI</h4>
-                <p className="text-[9px] text-[#A5B4C7]">Công nghệ tiên tiến, chất lượng</p>
-              </div>
-            </Link>
-            
-            <Link href="#professional-construction" className="group flex items-center gap-2.5 rounded-lg p-2 transition hover:bg-white/5">
-              <div className="text-[#00E5FF]">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v18"></path><path d="M3 12h18"></path><path d="M3 21h18"></path><path d="M16 3l-4 4-4-4"></path><path d="M3 7l9 5 9-5"></path></svg>
-              </div>
-              <div>
-                <h4 className="text-white font-bold text-[10px] mb-0.5 uppercase tracking-wider">THI CÔNG CHUYÊN NGHIỆP</h4>
-                <p className="text-[9px] text-[#A5B4C7]">Đúng tiến độ, an toàn</p>
-              </div>
-            </Link>
-            
-            <Link href="#sustainable-warranty" className="group flex items-center gap-2.5 rounded-lg p-2 transition hover:bg-white/5">
-              <div className="text-[#00E5FF]">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg>
-              </div>
-              <div>
-                <h4 className="text-white font-bold text-[10px] mb-0.5 uppercase tracking-wider">BẢO HÀNH BỀN VỮNG</h4>
-                <p className="text-[9px] text-[#A5B4C7]">Đồng hành dài lâu</p>
-              </div>
-            </Link>
-
-          </div></ScrollReveal>
-
-          <ScrollReveal delay={120}><div id="landmarks" className="flex w-full scroll-mt-24 flex-col gap-6 lg:flex-row lg:items-end lg:gap-5">
-            <div className="flex h-[150px] w-full shrink-0 flex-col justify-end pb-1 pr-2 lg:w-[220px] xl:w-[250px]">
-              <span className="text-[#00E5FF] font-bold tracking-widest text-[9px] uppercase mb-1.5 block">
-                DỰ ÁN NỔI BẬT
-              </span>
-              <h2 className="text-[20px] font-bold mb-2 text-white leading-[1.1]">
-                Những công trình<br/>tạo dấu ấn
-              </h2>
-              <p className="text-[#A5B4C7] mb-3 text-[10px] leading-[1.5]">
-                Mỗi công trình là một tác phẩm nghệ thuật.
-              </p>
-              <Link href="#landmarks" className="text-[#00E5FF] font-bold text-[10px] uppercase tracking-wider flex items-center gap-1 hover:text-white transition-colors w-fit">
-                XEM TẤT CẢ <span className="text-[12px]">&rarr;</span>
-              </Link>
-            </div>
-            <FeaturedProjectSlider projects={allProjects}/>
-          </div></ScrollReveal>
-        </div>
-      </div>
-
-      <CapabilitySections projects={allProjects}/>
+    <main className="min-h-screen w-full overflow-x-hidden bg-[#030914] font-sans text-white">
+      <Hero />
+      <PositioningIntro />
+      <FeaturedProjects />
+      <CaseStudySpotlight />
+      <ProcessRail />
+      <Differentiators />
+      <StatsBar />
+      <ClientsAndTestimonial />
+      <FinalCta />
+      <SiteFooter />
     </main>
   );
 }
 
-const CAPABILITY_SECTIONS = [
-  { id: "creative-design", eyebrow: "01 / Thiết kế", title: "THIẾT KẾ SÁNG TẠO", subtitle: "Ý tưởng độc bản, khác biệt", body: "Mỗi công trình bắt đầu từ việc thấu hiểu không gian, văn hóa và mục tiêu của chủ đầu tư. Đội ngũ Bảo Lâm phát triển ý tưởng, hình khối và giải pháp vật liệu để tạo nên dấu ấn riêng cho từng dự án." },
-  { id: "modern-production", eyebrow: "02 / Sản xuất", title: "SẢN XUẤT HIỆN ĐẠI", subtitle: "Công nghệ tiên tiến, chất lượng", body: "Quy trình sản xuất được kiểm soát từ tạo mẫu, kết cấu đến hoàn thiện bề mặt. Công nghệ hiện đại giúp hiện thực hóa những thiết kế phức tạp với độ chính xác và chất lượng ổn định." },
-  { id: "professional-construction", eyebrow: "03 / Thi công", title: "THI CÔNG CHUYÊN NGHIỆP", subtitle: "Đúng tiến độ, an toàn", body: "Đội ngũ kỹ thuật triển khai đồng bộ từ nhà máy đến công trường, kiểm soát chặt chẽ tiến độ, an toàn và chất lượng lắp đặt trong mọi điều kiện thực tế." },
-  { id: "sustainable-warranty", eyebrow: "04 / Bảo hành", title: "BẢO HÀNH BỀN VỮNG", subtitle: "Đồng hành dài lâu", body: "Sau bàn giao, Bảo Lâm tiếp tục theo dõi, bảo trì và hỗ trợ kỹ thuật để công trình giữ được thẩm mỹ, độ bền và giá trị sử dụng lâu dài." },
+/* ---------------------------------- Hero ---------------------------------- */
+
+function Hero() {
+  return (
+    <section className="relative flex min-h-dvh w-full items-end overflow-hidden pt-20">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/hero/c0d0a44c-ab54-4601-9b6e-ac81907b850c.png"
+        alt=""
+        className="absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-3xl"
+      />
+      <div className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/hero/c0d0a44c-ab54-4601-9b6e-ac81907b850c.png"
+          alt="Baolam Landscape - Dự án cảnh quan"
+          className="home-hero-kenburns h-full w-full object-cover object-top"
+          style={{
+            WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+            maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+          }}
+        />
+      </div>
+      <div
+        className="absolute inset-0 z-[1]"
+        style={{ background: "linear-gradient(to bottom, rgba(3,9,20,0.35) 0%, rgba(3,9,20,0.55) 55%, rgba(3,9,20,0.96) 100%)" }}
+      />
+      <div
+        className="absolute inset-0 z-[1] hidden lg:block"
+        style={{ background: "linear-gradient(to right, rgba(3,9,20,0.8) 0%, rgba(3,9,20,0.4) 40%, rgba(3,9,20,0.1) 100%)" }}
+      />
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 sm:pb-20 lg:px-12">
+        <span className="motion-hero-meta mb-4 block text-[10px] font-bold uppercase tracking-[0.2em] text-baolam-primary sm:text-xs">
+          Landscape Architecture · Design &amp; Build
+        </span>
+        <h1 className="motion-hero-title max-w-3xl text-[34px] font-black leading-[1.08] sm:text-5xl lg:text-6xl">
+          Kiến tạo cảnh quan
+          <br />
+          <span className="text-baolam-primary drop-shadow-[0_0_20px_rgba(0,229,255,0.3)]">từ ý tưởng đến hiện thực.</span>
+        </h1>
+        <p className="motion-hero-location mt-5 max-w-xl text-sm leading-[1.7] text-baolam-muted sm:text-base">
+          Chúng tôi cung cấp giải pháp cảnh quan toàn diện, từ quy hoạch, thiết kế đến thi công và chăm sóc sau bàn giao.
+        </p>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a
+            href="#projects"
+            className="inline-flex items-center justify-center gap-2 rounded bg-baolam-primary px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-[#071522] shadow-[0_4px_15px_rgba(0,229,255,0.3)] transition-colors hover:bg-baolam-primary-hover"
+          >
+            Khám phá dự án →
+          </a>
+          <a
+            href="#contact"
+            className="inline-flex items-center justify-center gap-2 rounded border border-white/20 px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-white transition-colors hover:border-baolam-primary hover:text-baolam-primary"
+          >
+            Trao đổi về dự án của bạn →
+          </a>
+        </div>
+        <p className="mt-8 text-[10px] uppercase tracking-[0.18em] text-white/40">Hà Nội · TP. Hồ Chí Minh · Toàn quốc</p>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------------------- Positioning intro ---------------------------- */
+
+function PositioningIntro() {
+  return (
+    <section id="about" className="scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        <ScrollReveal>
+          <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
+            <h2 className="text-3xl font-black leading-[1.15] sm:text-4xl lg:text-5xl">
+              Thiết kế cùng thiên nhiên.
+              <br />
+              Xây dựng cho con người.
+            </h2>
+            <div>
+              <p className="max-w-xl text-sm leading-[1.8] text-baolam-muted sm:text-base">
+                Chúng tôi tiếp cận mỗi dự án từ đặc điểm riêng của khu đất, khí hậu, hệ sinh thái và nhu cầu sử dụng. Bằng
+                việc kết nối thiết kế với năng lực triển khai thực tế, mỗi ý tưởng được phát triển đồng bộ từ bản vẽ đến
+                công trình hoàn thiện.
+              </p>
+              <a href="#about" className="mt-5 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white">
+                Tìm hiểu về chúng tôi <span>→</span>
+              </a>
+            </div>
+          </div>
+        </ScrollReveal>
+        <ScrollReveal delay={100}>
+          <div className="mt-12 aspect-[21/9] w-full overflow-hidden rounded-2xl border border-white/10">
+            <PlaceholderVisual label="Không gian cảnh quan có người sử dụng" seed={1} className="h-full w-full" />
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------ Featured projects ------------------------------ */
+
+const FEATURED_PROJECTS = [
+  { id: "p1", name: "[Tên dự án Resort]", location: "[Địa điểm]", year: "2025", type: "Hospitality & Resort", scope: "Landscape Design & Build" },
+  { id: "p2", name: "[Tên dự án Khu đô thị]", location: "[Địa điểm]", year: "2024", type: "Khu đô thị", scope: "Landscape Design" },
+  { id: "p3", name: "[Tên dự án Công viên]", location: "[Địa điểm]", year: "2024", type: "Công viên & Quảng trường", scope: "Landscape Design & Build" },
+  { id: "p4", name: "[Tên dự án Residential]", location: "[Địa điểm]", year: "2023", type: "Residential", scope: "Landscape Construction" },
+  { id: "p5", name: "[Tên dự án Commercial]", location: "[Địa điểm]", year: "2023", type: "Commercial & Mixed-use", scope: "Landscape Design & Build" },
 ] as const;
 
-function CapabilitySections({ projects }: { projects: Array<{ id: string; thumbnail: string; title: string }> }) {
-  return <div className="border-t border-white/10">
-    {CAPABILITY_SECTIONS.map((section, index) => <section id={section.id} key={section.id} className="scroll-mt-20 overflow-hidden border-b border-white/10 bg-[#030914] py-20 lg:py-28">
-      <ScrollReveal direction={index % 2 ? "right" : "left"}><div className="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-2 lg:gap-20 lg:px-12">
-        <div className={index % 2 ? "lg:order-2" : ""}>
-          <p className="text-xs font-bold uppercase tracking-[0.28em] text-baolam-primary">{section.eyebrow}</p>
-          <h2 className="mt-5 text-3xl font-black text-white sm:text-4xl lg:text-6xl">{section.title}</h2>
-          <p className="mt-4 text-xl text-white/80">{section.subtitle}</p>
-          <span className="mt-7 block h-px w-20 bg-baolam-primary"/>
-          <p className="mt-8 max-w-xl text-base leading-8 text-baolam-muted">{section.body}</p>
+function ProjectMeta({ project }: { project: (typeof FEATURED_PROJECTS)[number] }) {
+  return (
+    <div className="mt-3">
+      <h3 className="text-base font-bold text-white sm:text-lg">{project.name}</h3>
+      <p className="mt-1 text-xs text-baolam-muted">
+        {project.location} · {project.type} · {project.year}
+      </p>
+      <span className="mt-2 inline-block rounded-full border border-baolam-border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-baolam-primary">
+        {project.scope}
+      </span>
+    </div>
+  );
+}
+
+function FeaturedProjects() {
+  const [big1, side1, side2, feature, big2] = FEATURED_PROJECTS;
+  return (
+    <section id="projects" className="scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        <ScrollReveal>
+          <div className="mb-10 flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
+            <div>
+              <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-baolam-primary">Dự án nổi bật</span>
+              <h2 className="text-3xl font-black leading-[1.1] sm:text-4xl">
+                Những công trình
+                <br />
+                tạo dấu ấn
+              </h2>
+            </div>
+            <a href="#projects" className="text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white">
+              Xem tất cả dự án →
+            </a>
+          </div>
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+          <ScrollReveal className="lg:col-span-12">
+            <div className="aspect-[16/8] w-full overflow-hidden rounded-2xl border border-white/10">
+              <PlaceholderVisual label={big1.type} seed={2} className="h-full w-full" />
+            </div>
+            <ProjectMeta project={big1} />
+          </ScrollReveal>
+
+          <ScrollReveal direction="left" className="lg:col-span-6">
+            <div className="aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/10">
+              <PlaceholderVisual label={side1.type} seed={3} className="h-full w-full" />
+            </div>
+            <ProjectMeta project={side1} />
+          </ScrollReveal>
+          <ScrollReveal direction="right" className="lg:col-span-6">
+            <div className="aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/10">
+              <PlaceholderVisual label={side2.type} seed={4} className="h-full w-full" />
+            </div>
+            <ProjectMeta project={side2} />
+          </ScrollReveal>
+
+          <ScrollReveal direction="left" className="lg:col-span-5">
+            <div className="aspect-[3/4] w-full overflow-hidden rounded-2xl border border-white/10">
+              <PlaceholderVisual label={feature.type} seed={5} className="h-full w-full" />
+            </div>
+            <ProjectMeta project={feature} />
+          </ScrollReveal>
+          <ScrollReveal direction="right" className="flex items-center lg:col-span-7">
+            <div className="w-full rounded-2xl border border-white/10 bg-white/[0.03] p-8">
+              <span className="text-4xl font-black text-baolam-primary">“</span>
+              <p className="mt-2 text-lg font-medium leading-[1.6] text-white/90 sm:text-xl">
+                Mỗi công trình là một tác phẩm — được phát triển đồng bộ từ ý tưởng thiết kế đến năng lực thi công thực tế.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal className="lg:col-span-12">
+            <div className="aspect-[16/8] w-full overflow-hidden rounded-2xl border border-white/10">
+              <PlaceholderVisual label={big2.type} seed={0} className="h-full w-full" />
+            </div>
+            <ProjectMeta project={big2} />
+          </ScrollReveal>
         </div>
-        <div className={`relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 ${index % 2 ? "lg:order-1" : ""}`}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={projects[index % projects.length]?.thumbnail} alt={projects[index % projects.length]?.title || section.title} className="size-full object-cover"/>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#030914]/55 via-transparent to-transparent"/>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------------------- Case study spotlight ---------------------------- */
+
+const CASE_STUDY_STAGES = ["Hiện trạng", "Masterplan", "Render", "Thi công", "Hoàn thiện"];
+
+function CaseStudySpotlight() {
+  return (
+    <section id="case-study" className="scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        <ScrollReveal>
+          <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-baolam-primary">Case Study</span>
+          <h2 className="max-w-2xl text-3xl font-black leading-[1.1] sm:text-4xl">[Tên dự án tiêu biểu]</h2>
+        </ScrollReveal>
+
+        <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-16">
+          <ScrollReveal direction="left" className="space-y-7">
+            <CaseStudyBlock title="Bối cảnh" body="Một khu nghỉ dưỡng nằm trên địa hình dốc, tiếp giáp hệ sinh thái tự nhiên nhạy cảm." />
+            <CaseStudyBlock title="Thách thức" body="Bảo tồn thảm thực vật hiện trạng, hạn chế can thiệp địa hình và vẫn tạo được trải nghiệm cảnh quan riêng tư." />
+            <CaseStudyBlock title="Giải pháp" body="Tổ chức tuyến tiếp cận theo cao độ tự nhiên, tái sử dụng cây bản địa và tích hợp hệ thống thu nước vào cấu trúc cảnh quan." />
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-baolam-primary">Kết quả</h3>
+              <div className="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                {[
+                  ["[XX] m²", "Diện tích cây xanh"],
+                  ["[XX]", "Cây được bảo tồn"],
+                  ["[XX] tháng", "Thời gian triển khai"],
+                  ["[XX]%", "Tỷ lệ cây bản địa"],
+                ].map(([value, label]) => (
+                  <div key={label}>
+                    <p className="text-lg font-black text-white">{value}</p>
+                    <p className="mt-0.5 text-[10px] leading-tight text-baolam-muted">{label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <a href="#case-study" className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white">
+              Khám phá toàn bộ dự án →
+            </a>
+          </ScrollReveal>
+
+          <ScrollReveal direction="right">
+            <div className="flex flex-col gap-3">
+              {CASE_STUDY_STAGES.map((stage, i) => (
+                <div key={stage} className="flex items-center gap-3">
+                  <div className="aspect-[16/9] w-full overflow-hidden rounded-xl border border-white/10">
+                    <PlaceholderVisual label={stage} tag="" seed={i} className="h-full w-full" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
-      </div></ScrollReveal>
-    </section>)}
-  </div>;
+      </div>
+    </section>
+  );
+}
+
+function CaseStudyBlock({ title, body }: { title: string; body: string }) {
+  return (
+    <div>
+      <h3 className="text-xs font-bold uppercase tracking-wider text-baolam-primary">{title}</h3>
+      <p className="mt-2 text-sm leading-[1.7] text-baolam-muted">{body}</p>
+    </div>
+  );
+}
+
+/* --------------------------------- Process rail --------------------------------- */
+
+const PROCESS_STEPS = [
+  { n: "01", title: "Site Analysis", body: "Khảo sát địa hình, khí hậu, hệ sinh thái và nhu cầu sử dụng." },
+  { n: "02", title: "Concept Design", body: "Chiến lược cảnh quan, masterplan và định hướng vật liệu." },
+  { n: "03", title: "Design Development", body: "Thiết kế chi tiết hardscape, softscape, chiếu sáng, tưới và thoát nước." },
+  { n: "04", title: "Cost & Technical Planning", body: "Bóc tách khối lượng, dự toán, lựa chọn vật liệu, cây và tiến độ." },
+  { n: "05", title: "Construction", body: "Thi công hardscape, softscape, hệ thống kỹ thuật và kiểm soát chất lượng." },
+  { n: "06", title: "Handover & Maintenance", body: "Nghiệm thu, bàn giao, bảo hành và chăm sóc cảnh quan dài hạn." },
+] as const;
+
+function ProcessRail() {
+  return (
+    <section id="process" className="scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        <ScrollReveal>
+          <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-baolam-primary">Năng lực Design &amp; Build</span>
+          <h2 className="max-w-xl text-3xl font-black leading-[1.15] sm:text-4xl">
+            Một quy trình thống nhất.
+            <br />
+            Một trách nhiệm xuyên suốt.
+          </h2>
+        </ScrollReveal>
+
+        <div className="mt-12 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          {PROCESS_STEPS.map((step, i) => (
+            <ScrollReveal key={step.n} delay={i * 60}>
+              <div className="border-t border-baolam-border pt-4">
+                <span className="text-xs font-black text-baolam-primary">{step.n}</span>
+                <h3 className="mt-2 text-sm font-bold uppercase tracking-wide text-white">{step.title}</h3>
+                <p className="mt-2 text-xs leading-[1.7] text-baolam-muted">{step.body}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------- Differentiators ------------------------------- */
+
+const DIFFERENTIATORS = [
+  { title: "Design grounded in execution", body: "Thiết kế được phát triển dựa trên vật liệu, chi phí và khả năng thi công thực tế." },
+  { title: "One integrated team", body: "Đội ngũ thiết kế, kỹ thuật và thi công phối hợp trong cùng một quy trình." },
+  { title: "Local landscape knowledge", body: "Am hiểu khí hậu, thổ nhưỡng, nguồn cây và điều kiện xây dựng tại Việt Nam." },
+  { title: "Long-term performance", body: "Không chỉ bàn giao một công trình đẹp mà còn tính đến sinh trưởng, bảo trì và vận hành lâu dài." },
+] as const;
+
+function Differentiators() {
+  return (
+    <section id="why" className="scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        <ScrollReveal>
+          <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-baolam-primary">Điểm khác biệt</span>
+          <h2 className="max-w-xl text-3xl font-black leading-[1.15] sm:text-4xl">Vì sao chọn một đội ngũ Design &amp; Build</h2>
+        </ScrollReveal>
+
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          {DIFFERENTIATORS.map((item, i) => (
+            <ScrollReveal key={item.title} delay={i * 70}>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                <span className="text-xs font-black text-baolam-primary">0{i + 1}</span>
+                <h3 className="mt-2 text-base font-bold text-white">{item.title}</h3>
+                <p className="mt-2 text-sm leading-[1.7] text-baolam-muted">{item.body}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ----------------------------------- Stats ----------------------------------- */
+
+const STATS = [
+  ["15+", "Năm kinh nghiệm"],
+  ["500+", "Công trình"],
+  ["20.000+", "m² Nhà máy"],
+  ["100+", "Kỹ sư & nhân sự"],
+] as const;
+
+function StatsBar() {
+  return (
+    <section className="border-t border-white/10 bg-[#030914] py-14">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        <div className="flex items-center justify-center">
+          <div className="grid grid-cols-2 items-center gap-x-16 gap-y-8 sm:grid-cols-4">
+            {STATS.map(([value, label]) => (
+              <div key={label} className="text-center">
+                <p className="text-2xl font-black text-baolam-primary sm:text-3xl">{value}</p>
+                <p className="mt-1 text-[10px] uppercase tracking-wider text-baolam-muted">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* --------------------------- Clients & testimonial --------------------------- */
+
+function ClientsAndTestimonial() {
+  return (
+    <section id="clients" className="scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        <ScrollReveal>
+          <span className="mb-6 block text-[10px] font-bold uppercase tracking-[0.2em] text-baolam-primary">
+            Khách hàng &amp; đối tác
+          </span>
+          <div className="grid grid-cols-3 gap-4 sm:grid-cols-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div
+                key={i}
+                className="flex aspect-[3/2] items-center justify-center rounded-lg border border-dashed border-white/15 text-[9px] uppercase tracking-wider text-white/30"
+              >
+                Logo đối tác
+              </div>
+            ))}
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={100}>
+          <blockquote className="mt-16 max-w-3xl">
+            <span className="text-4xl font-black text-baolam-primary">“</span>
+            <p className="text-lg font-medium leading-[1.7] text-white/90 sm:text-xl">
+              [Trích dẫn phản hồi khách hàng — ví dụ: đội ngũ đã kiểm soát tốt sự thống nhất giữa ý tưởng thiết kế, ngân
+              sách và chất lượng triển khai tại công trường.]
+            </p>
+            <footer className="mt-4 text-xs text-baolam-muted">— [Tên khách hàng], [Chức vụ · Công ty · Dự án]</footer>
+          </blockquote>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------ CTA ------------------------------------ */
+
+function FinalCta() {
+  return (
+    <section id="contact" className="scroll-mt-20 relative overflow-hidden border-t border-white/10">
+      <div className="absolute inset-0">
+        <PlaceholderVisual label="Bắt đầu một dự án mới" seed={4} className="h-full w-full" />
+      </div>
+      <div
+        className="absolute inset-0"
+        style={{ background: "linear-gradient(to bottom, rgba(3,9,20,0.9) 0%, rgba(3,9,20,0.72) 100%)" }}
+      />
+      <div className="relative z-10 mx-auto max-w-3xl px-6 py-24 text-center lg:px-12 lg:py-32">
+        <ScrollReveal>
+          <h2 className="text-3xl font-black leading-[1.15] sm:text-4xl">Bắt đầu từ khu đất của bạn.</h2>
+          <p className="mx-auto mt-5 max-w-xl text-sm leading-[1.8] text-baolam-muted sm:text-base">
+            Hãy trao đổi với chúng tôi từ giai đoạn đầu để cùng phát triển một giải pháp cân bằng giữa ý tưởng, ngân
+            sách, kỹ thuật và giá trị vận hành lâu dài.
+          </p>
+          <a
+            href="mailto:#"
+            className="mt-8 inline-flex items-center justify-center gap-2 rounded bg-baolam-primary px-8 py-3.5 text-[11px] font-bold uppercase tracking-wider text-[#071522] shadow-[0_4px_15px_rgba(0,229,255,0.3)] transition-colors hover:bg-baolam-primary-hover"
+          >
+            Bắt đầu một dự án →
+          </a>
+          <p className="mt-8 text-xs text-white/40">[Email liên hệ] · [Hotline] · [Địa chỉ văn phòng]</p>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+/* ----------------------------------- Footer ----------------------------------- */
+
+function SiteFooter() {
+  const year = new Date().getFullYear();
+  const columns = [
+    { title: "Sitemap", links: [["Dự án", "#projects"], ["Năng lực", "#process"], ["Dịch vụ", "#services"], ["Liên hệ", "#contact"]] },
+  ];
+
+  return (
+    <footer className="border-t border-white/10 bg-[#030914] py-12">
+      <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 sm:flex-row sm:items-start sm:justify-between lg:px-12">
+        <div>
+          <span className="text-lg font-black tracking-widest text-white">BAOLAM</span>
+          <p className="mt-2 max-w-xs text-xs leading-[1.7] text-baolam-muted">
+            Landscape Architecture · Design &amp; Build. Kiến tạo cảnh quan từ ý tưởng đến hiện thực.
+          </p>
+        </div>
+        {columns.map((col) => (
+          <div key={col.title}>
+            <h4 className="text-[10px] font-bold uppercase tracking-wider text-white/50">{col.title}</h4>
+            <ul className="mt-3 space-y-2">
+              {col.links.map(([label, href]) => (
+                <li key={href}>
+                  <a href={href} className="text-xs text-baolam-muted hover:text-baolam-primary">
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div className="mx-auto mt-10 max-w-7xl border-t border-white/10 px-6 pt-6 text-[10px] text-white/30 lg:px-12">
+        © {year} Bảo Lâm. All rights reserved.
+      </div>
+    </footer>
+  );
 }
