@@ -1,6 +1,6 @@
-import Link from "next/link";
 import type { Project, ProjectBlock } from "@/db/schema";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
+import { ContactModalTrigger } from "@/components/contact/contact-modal-trigger";
 import { ProjectBlockRenderer } from "./project-block-renderer";
 import { ProjectHeroMedia } from "./project-hero-media";
 
@@ -38,7 +38,7 @@ export function ProjectDetailView({ project, preview = false }: { project: Proje
     <ScrollReveal direction="scale" delay={100}><section className="border-t border-baolam-border bg-[#030914] px-6 py-24 text-center">
       <p className="text-xs font-bold uppercase tracking-[0.3em] text-baolam-primary">Bắt đầu một dự án mới</p>
       <h2 className="mx-auto mt-5 max-w-3xl text-3xl font-bold lg:text-5xl">Biến ý tưởng thành một công trình tạo dấu ấn.</h2>
-      <Link href="/#contact" className="mt-8 inline-flex bg-baolam-primary px-7 py-4 font-bold text-baolam-bg hover:bg-baolam-primary-hover">LIÊN HỆ TƯ VẤN →</Link>
+      <ContactModalTrigger source="project-detail" className="mt-8 inline-flex bg-baolam-primary px-7 py-4 font-bold text-baolam-bg hover:bg-baolam-primary-hover">LIÊN HỆ TƯ VẤN →</ContactModalTrigger>
     </section></ScrollReveal>
   </main>;
 }
