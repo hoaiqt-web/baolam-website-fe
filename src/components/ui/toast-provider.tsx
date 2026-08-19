@@ -40,16 +40,38 @@ export function useToast() {
   return context;
 }
 
+const VARIANT_STYLES: Record<ToastVariant, { border: string; accent: string; background: string }> = {
+  success: {
+    border: "border-baolam-success/60",
+    accent: "bg-baolam-success text-baolam-bg",
+    background: "color-mix(in srgb, var(--color-baolam-success) 22%, #071522)",
+  },
+  error: {
+    border: "border-baolam-error/60",
+    accent: "bg-baolam-error text-baolam-bg",
+    background: "color-mix(in srgb, var(--color-baolam-error) 22%, #071522)",
+  },
+  info: {
+    border: "border-baolam-primary/60",
+    accent: "bg-baolam-primary text-baolam-bg",
+    background: "color-mix(in srgb, var(--color-baolam-primary) 22%, #071522)",
+  },
+};
+
 function ToastCard({ item, onDismiss }: { item: ToastItem; onDismiss: () => void }) {
   const variant = item.variant ?? "info";
   const Icon = variant === "success" ? CheckCircle2 : variant === "error" ? CircleAlert : Info;
-  const colors = variant === "success"
-    ? "border-emerald-400/35 text-emerald-300"
-    : variant === "error" ? "border-red-400/35 text-red-300" : "border-baolam-primary/35 text-baolam-primary";
+  const styles = VARIANT_STYLES[variant];
 
-  return <div role={variant === "error" ? "alert" : "status"} className={`pointer-events-auto flex items-start gap-3 rounded-xl border bg-[#071522]/95 p-4 text-white shadow-2xl backdrop-blur-xl ${colors}`}>
-    <Icon className="mt-0.5 size-5 shrink-0"/>
-    <div className="min-w-0 flex-1">
+  return <div
+    role={variant === "error" ? "alert" : "status"}
+    style={{ background: styles.background }}
+    className={`pointer-events-auto flex items-start gap-3 rounded-xl border p-4 text-white shadow-2xl backdrop-blur-xl ${styles.border}`}
+  >
+    <span className={`grid size-8 shrink-0 place-items-center rounded-full ${styles.accent}`}>
+      <Icon className="size-4"/>
+    </span>
+    <div className="min-w-0 flex-1 pt-0.5">
       <p className="text-sm font-semibold text-white">{item.title}</p>
       {item.description && <p className="mt-1 text-xs leading-5 text-baolam-muted">{item.description}</p>}
     </div>
