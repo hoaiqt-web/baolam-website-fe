@@ -224,15 +224,22 @@ function ProjectCard({
   className?: string;
 }) {
   return (
-    <ScrollReveal direction={direction} className={cn('group cursor-pointer', className)}>
+    <ScrollReveal
+      direction={direction}
+      className={cn('group cursor-pointer', className)}
+    >
       <div
         className={cn(
           'w-full overflow-hidden rounded-2xl border border-white/10 transition-colors duration-500 group-hover:border-baolam-primary/40',
-          aspect
+          aspect,
         )}
       >
         <div className='h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.06]'>
-          <PlaceholderVisual label={project.type} seed={seed} className='h-full w-full' />
+          <PlaceholderVisual
+            label={project.type}
+            seed={seed}
+            className='h-full w-full'
+          />
         </div>
       </div>
       <ProjectMeta project={project} />
@@ -270,12 +277,35 @@ function FeaturedProjects() {
         </ScrollReveal>
 
         <div className='grid grid-cols-1 gap-5 lg:grid-cols-12'>
-          <ProjectCard project={big1} seed={2} aspect='aspect-[16/8]' className='lg:col-span-12' />
+          <ProjectCard
+            project={big1}
+            seed={2}
+            aspect='aspect-[16/8]'
+            className='lg:col-span-12'
+          />
 
-          <ProjectCard project={side1} seed={3} aspect='aspect-[4/3]' direction='left' className='lg:col-span-6' />
-          <ProjectCard project={side2} seed={4} aspect='aspect-[4/3]' direction='right' className='lg:col-span-6' />
+          <ProjectCard
+            project={side1}
+            seed={3}
+            aspect='aspect-[4/3]'
+            direction='left'
+            className='lg:col-span-6'
+          />
+          <ProjectCard
+            project={side2}
+            seed={4}
+            aspect='aspect-[4/3]'
+            direction='right'
+            className='lg:col-span-6'
+          />
 
-          <ProjectCard project={feature} seed={5} aspect='aspect-[3/4]' direction='left' className='lg:col-span-5' />
+          <ProjectCard
+            project={feature}
+            seed={5}
+            aspect='aspect-[3/4]'
+            direction='left'
+            className='lg:col-span-5'
+          />
           <ScrollReveal
             direction='right'
             className='group flex items-center lg:col-span-7'
@@ -289,7 +319,12 @@ function FeaturedProjects() {
             </div>
           </ScrollReveal>
 
-          <ProjectCard project={big2} seed={0} aspect='aspect-[16/8]' className='lg:col-span-12' />
+          <ProjectCard
+            project={big2}
+            seed={0}
+            aspect='aspect-[16/8]'
+            className='lg:col-span-12'
+          />
         </div>
       </div>
     </section>
@@ -314,7 +349,10 @@ function CaseStudySpotlight() {
     >
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='grid gap-10 lg:grid-cols-2 lg:gap-16'>
-          <ScrollReveal direction='left' className='space-y-7 lg:sticky lg:top-24 lg:self-start'>
+          <ScrollReveal
+            direction='left'
+            className='space-y-7 lg:sticky lg:top-24 lg:self-start'
+          >
             <div>
               <span className='mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-baolam-primary'>
                 Case Study
@@ -604,4 +642,3 @@ function ClientsAndTestimonial() {
     </section>
   );
 }
-
