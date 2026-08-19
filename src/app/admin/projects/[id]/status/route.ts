@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 import { getDb } from "@/db";
 import { projects } from "@/db/schema";
 import { getAdminSession } from "@/lib/auth/session";
-import { hasValidRequestOrigin } from "@/lib/security/request-origin";
+import { getPublicOrigin, hasValidRequestOrigin } from "@/lib/security/request-origin";
 
 export const runtime = "nodejs";
 
@@ -11,7 +11,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   const wantsJson = request.headers.get("accept")?.includes("application/json");
   if (!(await getAdminSession())) {
     if (wantsJson) return Response.json({ error: "Phiên đăng nhập đã hết hạn." }, { status: 401 });
-    return Response.redirect(new URL("/admin/login", request.url), 303);
+    return Response.redirect(new URL("/admin/login", getPublicOrigin(request)), 303);
   }
   if (!hasValidRequestOrigin(request)) {
     return wantsJson ? Response.json({ error: "Origin không hợp lệ." }, { status: 403 }) : new Response("Forbidden", { status: 403 });
@@ -35,5 +35,5 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   revalidatePath("/admin");
   revalidatePath(`/projects/${project.slug}`);
   if (wantsJson) return Response.json({ success: true, status: nextStatus });
-  return Response.redirect(new URL("/admin", request.url), 303);
+  return Response.redirect(new URL("/admin", getPublicOrigin(request)), 303);
 }
