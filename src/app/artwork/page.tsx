@@ -34,7 +34,6 @@ export default function ArtworkPage() {
       <InHouseFabrication />
       <FeaturedCaseStudy />
       <StatsBar />
-      <FinalCta />
       <SiteFooter />
     </main>
   );
@@ -510,7 +509,7 @@ function InHouseFabrication() {
 
         <ScrollReveal delay={140}>
           <Link
-            href='/capabilities#factory'
+            href='/factory'
             className='mt-10 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white'
           >
             Khám phá nhà máy →
@@ -629,43 +628,6 @@ function StatsBar() {
             ))}
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------ CTA ------------------------------------ */
-
-function FinalCta() {
-  return (
-    <section className='relative overflow-hidden border-t border-white/10'>
-      <div className='absolute inset-0'>
-        <PlaceholderVisual label='Commission an artwork' seed={8} className='h-full w-full' />
-      </div>
-      <div
-        className='absolute inset-0'
-        style={{ background: 'linear-gradient(to bottom, rgba(3,9,20,0.9) 0%, rgba(3,9,20,0.72) 100%)' }}
-      />
-      <div className='relative z-10 mx-auto max-w-3xl px-6 py-24 text-center lg:px-12 lg:py-32'>
-        <ScrollReveal>
-          <SectionEyebrow>Commission an artwork</SectionEyebrow>
-          <h2 className='text-3xl font-black leading-[1.15] sm:text-4xl'>
-            Cùng tạo nên một biểu tượng
-            <br />
-            dành riêng cho không gian.
-          </h2>
-          <p className='mx-auto mt-5 max-w-xl text-sm leading-[1.8] text-baolam-muted sm:text-base'>
-            Hãy chia sẻ với chúng tôi về địa điểm, ý tưởng và mục tiêu của dự
-            án. Đội ngũ Bảo Lâm sẽ cùng bạn phát triển artwork từ concept đến
-            sản xuất và lắp đặt hoàn thiện.
-          </p>
-          <ContactModalTrigger
-            source='artwork-final-cta'
-            className='mt-8 inline-flex items-center justify-center gap-2 rounded bg-baolam-primary px-8 py-3.5 text-[11px] font-bold uppercase tracking-wider text-[#071522] shadow-[0_4px_15px_rgba(0,229,255,0.3)] transition-colors hover:bg-baolam-primary-hover'
-          >
-            Trao đổi ý tưởng →
-          </ContactModalTrigger>
-        </ScrollReveal>
       </div>
     </section>
   );

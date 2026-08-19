@@ -35,6 +35,14 @@
   --color-baolam-muted: #a5b4c7;
   --color-baolam-error: #ff6b63;
   --color-baolam-success: #38d996;
+
+  --color-footer-bg: #020a13;
+  --color-footer-surface: #061521;
+  --color-footer-text: #f3f6f8;
+  --color-footer-muted: #7e8c99;
+  --color-footer-border: rgba(255, 255, 255, 0.12);
+  --color-footer-accent: #17d4e8;
+  --color-footer-accent-ink: #03111f;
 }
 
 @layer base {

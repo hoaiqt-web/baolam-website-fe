@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { ScrollReveal } from '@/components/motion/scroll-reveal';
 import { PlaceholderVisual } from '@/components/home/placeholder-visual';
-import { ContactModalTrigger } from '@/components/contact/contact-modal-trigger';
 import { SiteFooter } from '@/components/site-footer';
 import { SignatureProjectExplorer } from '@/components/projects/signature-project-explorer';
 import { SIGNATURE_PROJECTS, type SignatureProject } from '@/data/signature-projects';
@@ -23,7 +22,6 @@ export default function SignatureProjectsPage() {
       <ProjectIndex projects={SIGNATURE_PROJECTS} />
       {caseStudy && <CaseStudyBreak project={caseStudy} />}
       <StatsBar />
-      <FinalCta />
       <SiteFooter />
     </main>
   );
@@ -205,40 +203,6 @@ function StatsBar() {
             ))}
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------ CTA ------------------------------------ */
-
-function FinalCta() {
-  return (
-    <section className='relative overflow-hidden'>
-      <div className='absolute inset-0'>
-        <PlaceholderVisual label='Bắt đầu một dự án mới' seed={4} className='h-full w-full' />
-      </div>
-      <div
-        className='absolute inset-0'
-        style={{ background: 'linear-gradient(to bottom, rgba(3,9,20,0.9) 0%, rgba(3,9,20,0.72) 100%)' }}
-      />
-      <div className='relative z-10 mx-auto max-w-3xl px-6 py-24 text-center lg:px-12 lg:py-32'>
-        <ScrollReveal>
-          <h2 className='text-3xl font-black leading-[1.15] sm:text-4xl'>
-            Cùng tạo nên một dấu ấn mới.
-          </h2>
-          <p className='mx-auto mt-5 max-w-xl text-sm leading-[1.8] text-baolam-muted sm:text-base'>
-            Hãy chia sẻ với chúng tôi về bối cảnh, mục tiêu và giai đoạn hiện
-            tại của dự án. Đội ngũ Bảo Lâm sẽ cùng bạn xác định phạm vi hợp
-            tác phù hợp.
-          </p>
-          <ContactModalTrigger
-            source='signature-projects-final-cta'
-            className='mt-8 inline-flex items-center justify-center gap-2 rounded bg-baolam-primary px-8 py-3.5 text-[11px] font-bold uppercase tracking-wider text-[#071522] shadow-[0_4px_15px_rgba(0,229,255,0.3)] transition-colors hover:bg-baolam-primary-hover'
-          >
-            Liên hệ tư vấn →
-          </ContactModalTrigger>
-        </ScrollReveal>
       </div>
     </section>
   );

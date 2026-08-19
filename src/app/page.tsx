@@ -1,7 +1,6 @@
 import { ScrollReveal } from '@/components/motion/scroll-reveal';
 import { PlaceholderVisual } from '@/components/home/placeholder-visual';
 import { ContactModalTrigger } from '@/components/contact/contact-modal-trigger';
-import { ContactLine } from '@/components/contact/contact-line';
 import { SiteFooter } from '@/components/site-footer';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
@@ -18,7 +17,6 @@ export default function Home() {
       <Differentiators />
       <StatsBar />
       <ClientsAndTestimonial />
-      <FinalCta />
       <SiteFooter />
     </main>
   );
@@ -85,12 +83,12 @@ function Hero() {
           >
             Khám phá dự án →
           </a>
-          <a
-            href='#contact'
+          <ContactModalTrigger
+            source='landing-hero'
             className='inline-flex items-center justify-center gap-2 rounded border border-white/20 px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-white transition-colors hover:border-baolam-primary hover:text-baolam-primary'
           >
             Trao đổi về dự án của bạn →
-          </a>
+          </ContactModalTrigger>
         </div>
         <p className='mt-8 text-[10px] uppercase tracking-[0.18em] text-white/40'>
           Hà Nội · TP. Hồ Chí Minh · Toàn quốc
@@ -601,51 +599,6 @@ function ClientsAndTestimonial() {
               — [Tên khách hàng], [Chức vụ · Công ty · Dự án]
             </footer>
           </blockquote>
-        </ScrollReveal>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------ CTA ------------------------------------ */
-
-function FinalCta() {
-  return (
-    <section
-      id='contact'
-      className='scroll-mt-20 relative overflow-hidden border-t border-white/10'
-    >
-      <div className='absolute inset-0'>
-        <PlaceholderVisual
-          label='Bắt đầu một dự án mới'
-          seed={4}
-          className='h-full w-full'
-        />
-      </div>
-      <div
-        className='absolute inset-0'
-        style={{
-          background:
-            'linear-gradient(to bottom, rgba(3,9,20,0.9) 0%, rgba(3,9,20,0.72) 100%)',
-        }}
-      />
-      <div className='relative z-10 mx-auto max-w-3xl px-6 py-24 text-center lg:px-12 lg:py-32'>
-        <ScrollReveal>
-          <h2 className='text-3xl font-black leading-[1.15] sm:text-4xl'>
-            Bắt đầu từ khu đất của bạn.
-          </h2>
-          <p className='mx-auto mt-5 max-w-xl text-sm leading-[1.8] text-baolam-muted sm:text-base'>
-            Hãy trao đổi với chúng tôi từ giai đoạn đầu để cùng phát triển một
-            giải pháp cân bằng giữa ý tưởng, ngân sách, kỹ thuật và giá trị vận
-            hành lâu dài.
-          </p>
-          <ContactModalTrigger
-            source='landing-final-cta'
-            className='mt-8 inline-flex items-center justify-center gap-2 rounded bg-baolam-primary px-8 py-3.5 text-[11px] font-bold uppercase tracking-wider text-[#071522] shadow-[0_4px_15px_rgba(0,229,255,0.3)] transition-colors hover:bg-baolam-primary-hover'
-          >
-            Bắt đầu một dự án →
-          </ContactModalTrigger>
-          <ContactLine className='mt-8 text-xs text-white/40' />
         </ScrollReveal>
       </div>
     </section>

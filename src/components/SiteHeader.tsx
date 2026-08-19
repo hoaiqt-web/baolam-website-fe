@@ -13,7 +13,7 @@ const NAV_LINKS = [
   { href: '/capabilities', label: 'NĂNG LỰC' },
   { href: '/projects', label: 'DỰ ÁN BIỂU TƯỢNG' },
   { href: '/artwork', label: 'ARTWORK CẢNH QUAN' },
-  { href: '/capabilities#factory', label: 'NHÀ MÁY' },
+  { href: '/factory', label: 'NHÀ MÁY' },
   { href: '/contact', label: 'LIÊN HỆ' },
 ];
 
