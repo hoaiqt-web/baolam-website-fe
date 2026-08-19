@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { FolderKanban, LogOut, Settings } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AdminNav } from "@/components/admin/admin-nav";
 import { requireAdmin } from "@/lib/auth/session";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -13,14 +14,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <span className="grid size-10 place-items-center border-2 border-baolam-primary font-black text-baolam-primary">BL</span>
           <span><b className="block tracking-widest">BAOLAM</b><small className="text-baolam-muted">CONTENT CMS</small></span>
         </Link>
-        <nav className="space-y-1 p-4">
-          <Link href="/admin" className="flex items-center gap-3 rounded-lg border border-baolam-primary/25 bg-baolam-primary/10 px-4 py-3 text-sm font-semibold text-baolam-primary">
-            <FolderKanban /> Dự án
-          </Link>
-          <Link href="/admin/settings" className="flex items-center gap-3 rounded-lg border border-transparent px-4 py-3 text-sm font-semibold text-baolam-muted hover:bg-white/5 hover:text-white">
-            <Settings /> Thông tin liên hệ
-          </Link>
-        </nav>
+        <AdminNav />
         <div className="mt-auto border-t border-baolam-border p-4 text-sm">
           <p className="mb-3 text-baolam-muted">{session.username}</p>
           <form action="/admin/logout" method="post">

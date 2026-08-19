@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { ScrollReveal } from '@/components/motion/scroll-reveal';
 import { PlaceholderVisual } from '@/components/home/placeholder-visual';
 import { ContactModalTrigger } from '@/components/contact/contact-modal-trigger';
-import { ContactLine } from '@/components/contact/contact-line';
 import { CapabilityOverviewGroups } from '@/components/capabilities/capability-overview-groups';
 import { SiteFooter } from '@/components/site-footer';
 import { FACTORY_INFO } from '@/data/factory';
@@ -29,7 +28,6 @@ export default function CapabilitiesPage() {
       <QualityControl />
       <TeamAndStats />
       <ProofProjects />
-      <CapabilitiesFinalCta />
       <SiteFooter />
     </main>
   );
@@ -620,7 +618,7 @@ function FactoryCapability() {
 
         <ScrollReveal delay={220}>
           <Link
-            href='/#factory'
+            href='/factory'
             className='mt-10 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white'
           >
             Khám phá nhà máy →
@@ -981,51 +979,6 @@ function ProofProjects() {
             </ScrollReveal>
           ))}
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------ CTA ------------------------------------ */
-
-function CapabilitiesFinalCta() {
-  return (
-    <section id='contact' className='scroll-mt-20 relative overflow-hidden border-t border-white/10'>
-      <div className='grid grid-cols-1 sm:grid-cols-2'>
-        <div className='aspect-[4/3] sm:aspect-auto'>
-          <PlaceholderVisual label='Masterplan' tag='Bản vẽ' seed={7} className='h-full w-full' />
-        </div>
-        <div className='aspect-[4/3] sm:aspect-auto'>
-          <PlaceholderVisual label='Công trình hoàn thiện' tag='' seed={8} className='h-full w-full' />
-        </div>
-      </div>
-      <div
-        className='absolute inset-0'
-        style={{
-          background:
-            'linear-gradient(to bottom, rgba(3,9,20,0.55) 0%, rgba(3,9,20,0.8) 65%, rgba(3,9,20,0.97) 100%)',
-        }}
-      />
-      <div className='relative z-10 mx-auto max-w-3xl px-6 py-24 text-center lg:px-12 lg:py-32'>
-        <ScrollReveal>
-          <h2 className='text-3xl font-black leading-[1.15] sm:text-4xl'>
-            Bạn đang tìm kiếm một đối tác
-            <br />
-            có thể đồng hành xuyên suốt?
-          </h2>
-          <p className='mx-auto mt-5 max-w-xl text-sm leading-[1.8] text-baolam-muted sm:text-base'>
-            Hãy chia sẻ với chúng tôi về bối cảnh, mục tiêu và giai đoạn hiện
-            tại của dự án. Đội ngũ Bảo Lâm sẽ cùng bạn xác định phạm vi hợp
-            tác phù hợp.
-          </p>
-          <ContactModalTrigger
-            source='capabilities-final-cta'
-            className='mt-8 inline-flex items-center justify-center gap-2 rounded bg-baolam-primary px-8 py-3.5 text-[11px] font-bold uppercase tracking-wider text-[#071522] shadow-[0_4px_15px_rgba(0,229,255,0.3)] transition-colors hover:bg-baolam-primary-hover'
-          >
-            Liên hệ tư vấn →
-          </ContactModalTrigger>
-          <ContactLine className='mt-8 text-xs text-white/40' />
-        </ScrollReveal>
       </div>
     </section>
   );
