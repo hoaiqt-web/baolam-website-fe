@@ -132,11 +132,10 @@ function PositioningIntro() {
         </ScrollReveal>
         <ScrollReveal delay={100}>
           <div className='relative mt-12 aspect-[21/9] w-full overflow-hidden rounded-2xl border border-white/10'>
-            <Image
-              src='/images/daiphunnuoc.jpg'
-              alt='Không gian cảnh quan có người sử dụng'
-              fill
-              className='object-cover'
+            <PlaceholderVisual
+              label='Không gian cảnh quan có người sử dụng'
+              seed={0}
+              className='h-full w-full'
             />
           </div>
         </ScrollReveal>

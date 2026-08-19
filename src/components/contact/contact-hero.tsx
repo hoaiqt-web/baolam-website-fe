@@ -1,16 +1,9 @@
-import Image from "next/image";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
 
 export function ContactHero() {
   return (
     <section className="relative flex min-h-[70vh] w-full flex-col justify-end overflow-hidden pt-24 lg:min-h-[85vh]">
-      <Image
-        src="/images/daiphunnuoc.jpg"
-        alt="Khảo sát công trường Bảo Lâm"
-        fill
-        priority
-        className="object-cover opacity-50"
-      />
+      <div className="absolute inset-0 bg-baolam-surface opacity-50" />
       <div
         className="absolute inset-0"
         style={{
