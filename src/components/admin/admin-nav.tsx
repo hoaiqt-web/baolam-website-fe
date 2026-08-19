@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FolderKanban, Settings } from "lucide-react";
+import { FolderKanban, Mail, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { href: "/admin", label: "Dự án", icon: FolderKanban },
+  { href: "/admin/contacts", label: "Yêu cầu liên hệ", icon: Mail },
   { href: "/admin/settings", label: "Thông tin liên hệ", icon: Settings },
 ];
 

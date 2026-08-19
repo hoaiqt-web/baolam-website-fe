@@ -72,6 +72,18 @@
     background-color: var(--background);
     color: var(--foreground);
   }
+
+  /* Tailwind's preflight resets <button> to the browser-native cursor: default.
+     Every clickable control on the site should read as clickable. */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [role='button'][aria-disabled='true'] {
+    cursor: not-allowed;
+  }
 }
 
 @layer utilities {
