@@ -24,14 +24,14 @@ function buildColumns(settings: PublicSiteSettings) {
       title: "Văn phòng",
       rows: [
         { label: "Địa chỉ", value: settings.officeAddress },
-        { label: "Google Maps", value: "Xem chỉ đường", href: settings.googleMapsUrl || "#" },
+        { label: "Google Maps", value: "Xem chỉ đường", href: settings.googleMapsUrl || "#", external: true },
         { label: "Giờ làm việc", value: settings.workingHours },
       ],
     },
     {
       title: "Kết nối",
       rows: [
-        { label: "Facebook", value: "Bảo Lâm Art & Landscape", href: settings.facebookUrl || "#" },
+        { label: "Facebook", value: "Bảo Lâm Art & Landscape", href: settings.facebookUrl || "#", external: true },
       ],
     },
   ];
@@ -57,6 +57,7 @@ export function ContactInformation({ settings }: { settings: PublicSiteSettings 
                       {row.href ? (
                         <a
                           href={row.href}
+                          {...("external" in row && row.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                           className="text-white underline decoration-transparent underline-offset-4 transition-colors hover:text-baolam-primary hover:decoration-baolam-primary"
                         >
                           {row.value}
