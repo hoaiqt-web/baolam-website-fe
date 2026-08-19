@@ -3,9 +3,11 @@ import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AdminNav } from "@/components/admin/admin-nav";
 import { requireAdmin } from "@/lib/auth/session";
+import { countUnreadContactRequests } from "@/features/contact-requests/queries";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await requireAdmin();
+  const unreadContacts = await countUnreadContactRequests();
 
   return (
     <div className="min-h-screen bg-baolam-bg text-white">
@@ -14,7 +16,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <span className="grid size-10 place-items-center border-2 border-baolam-primary font-black text-baolam-primary">BL</span>
           <span><b className="block tracking-widest">BAOLAM</b><small className="text-baolam-muted">CONTENT CMS</small></span>
         </Link>
-        <AdminNav />
+        <AdminNav unreadContacts={unreadContacts} />
         <div className="mt-auto border-t border-baolam-border p-4 text-sm">
           <p className="mb-3 text-baolam-muted">{session.username}</p>
           <form action="/admin/logout" method="post">

@@ -1,9 +1,13 @@
+import { eq } from "drizzle-orm";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Paperclip } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ContactStatusSelect } from "@/components/admin/contact-status-select";
+import { ContactReadToggle } from "@/components/admin/contact-read-toggle";
+import { getDb } from "@/db";
+import { contactRequests } from "@/db/schema";
 import { getContactRequestForAdmin } from "@/features/contact-requests/queries";
 
 export const dynamic = "force-dynamic";
@@ -17,6 +21,11 @@ export default async function AdminContactDetailPage({ params }: { params: Promi
   const { id } = await params;
   const request = await getContactRequestForAdmin(id);
   if (!request) notFound();
+
+  if (!request.isRead) {
+    await getDb().update(contactRequests).set({ isRead: true, updatedAt: new Date() }).where(eq(contactRequests.id, id));
+    request.isRead = true;
+  }
 
   return (
     <main className="p-4 lg:p-8">
@@ -32,7 +41,10 @@ export default async function AdminContactDetailPage({ params }: { params: Promi
           </div>
           <h1 className="mt-2 text-3xl font-bold">{request.fullName}</h1>
         </div>
-        <ContactStatusSelect id={request.id} status={request.status} />
+        <div className="flex flex-wrap items-center gap-3">
+          <ContactReadToggle id={request.id} isRead={request.isRead} />
+          <ContactStatusSelect id={request.id} status={request.status} />
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">

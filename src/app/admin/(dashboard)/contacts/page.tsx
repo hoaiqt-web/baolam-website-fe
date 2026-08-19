@@ -3,7 +3,9 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ContactStatusSelect } from "@/components/admin/contact-status-select";
+import { ContactReadToggle } from "@/components/admin/contact-read-toggle";
 import { listContactRequestsForAdmin } from "@/features/contact-requests/queries";
+import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -26,20 +28,25 @@ export default async function AdminContactsPage() {
         <Table>
           <TableHeader>
             <TableRow className="border-baolam-border hover:bg-transparent">
+              <TableHead />
               <TableHead>Người gửi</TableHead>
               <TableHead>Loại</TableHead>
               <TableHead>Dự án / Công ty</TableHead>
               <TableHead>Nguồn</TableHead>
               <TableHead>Ngày gửi</TableHead>
               <TableHead>Trạng thái</TableHead>
+              <TableHead>Đã đọc</TableHead>
               <TableHead />
             </TableRow>
           </TableHeader>
           <TableBody>
             {requests.map((request) => (
-              <TableRow key={request.id} className="border-baolam-border hover:bg-white/5">
+              <TableRow key={request.id} className={cn("border-baolam-border hover:bg-white/5", !request.isRead && "bg-baolam-primary/[0.04]")}>
                 <TableCell>
-                  <Link href={`/admin/contacts/${request.id}`} className="font-semibold hover:text-baolam-primary">
+                  {!request.isRead && <span className="block size-2 rounded-full bg-baolam-primary" aria-label="Chưa đọc" />}
+                </TableCell>
+                <TableCell>
+                  <Link href={`/admin/contacts/${request.id}`} className={cn("hover:text-baolam-primary", request.isRead ? "font-medium text-white/85" : "font-bold text-white")}>
                     {request.fullName}
                   </Link>
                   <span className="mt-1 block text-xs text-baolam-muted">{request.phone}</span>
@@ -58,6 +65,9 @@ export default async function AdminContactsPage() {
                   <ContactStatusSelect id={request.id} status={request.status} />
                 </TableCell>
                 <TableCell>
+                  <ContactReadToggle id={request.id} isRead={request.isRead} />
+                </TableCell>
+                <TableCell>
                   <Link href={`/admin/contacts/${request.id}`} className="text-xs font-semibold text-baolam-primary hover:text-white">
                     Xem chi tiết →
                   </Link>
@@ -66,7 +76,7 @@ export default async function AdminContactsPage() {
             ))}
             {!requests.length && (
               <TableRow>
-                <TableCell colSpan={7} className="h-40 text-center text-baolam-muted">
+                <TableCell colSpan={9} className="h-40 text-center text-baolam-muted">
                   Chưa có yêu cầu liên hệ nào.
                 </TableCell>
               </TableRow>

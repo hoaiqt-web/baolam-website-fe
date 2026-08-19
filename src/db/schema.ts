@@ -97,6 +97,7 @@ export const contactRequests = pgTable(
     id: uuid("id").defaultRandom().primaryKey(),
     type: contactRequestType("type").notNull(),
     status: contactRequestStatus("status").notNull().default("new"),
+    isRead: boolean("is_read").notNull().default(false),
     fullName: varchar("full_name", { length: 255 }).notNull(),
     phone: varchar("phone", { length: 50 }).notNull(),
     email: varchar("email", { length: 255 }),
@@ -116,6 +117,7 @@ export const contactRequests = pgTable(
   (table) => [
     index("contact_requests_status_idx").on(table.status),
     index("contact_requests_created_at_idx").on(table.createdAt),
+    index("contact_requests_is_read_idx").on(table.isRead),
   ],
 );
 

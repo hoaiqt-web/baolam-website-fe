@@ -12,3 +12,11 @@ export async function updateContactRequestStatusAction(id: string, status: "new"
   revalidatePath("/admin/contacts");
   revalidatePath(`/admin/contacts/${id}`);
 }
+
+export async function setContactRequestReadAction(id: string, isRead: boolean) {
+  await requireAdmin();
+  await getDb().update(contactRequests).set({ isRead, updatedAt: new Date() }).where(eq(contactRequests.id, id));
+  revalidatePath("/admin/contacts");
+  revalidatePath(`/admin/contacts/${id}`);
+  revalidatePath("/admin", "layout");
+}
