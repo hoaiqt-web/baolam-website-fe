@@ -7,18 +7,40 @@ import { ProjectTypeChips, ServiceScopeChips } from "@/components/contact/chips"
 import { ContactFilePicker } from "@/components/contact/contact-file-picker";
 import { ContactSuccess } from "@/components/contact/contact-success";
 import { ContactError } from "@/components/contact/contact-error";
-import { ContactDemoToggle } from "@/components/contact/contact-demo-toggle";
+import { HoneypotField } from "@/components/contact/honeypot-field";
 import { useContactModal } from "@/components/contact/contact-modal-context";
 import { PROJECT_STAGES, isValidEmail, isValidVietnamesePhone } from "@/lib/contact-options";
+import { submitProjectBriefAction } from "@/features/contact-requests/actions";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
 type FormErrors = Partial<Record<"fullName" | "phone" | "email", string>>;
 
+type UploadPolicy = { url: string; fields: Record<string, string>; objectKey: string; error?: string };
+
+async function uploadAttachment(file: File) {
+  const policyResponse = await fetch("/api/contact/uploads", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ contentType: file.type, size: file.size }),
+  });
+  const policy = (await policyResponse.json()) as UploadPolicy;
+  if (!policyResponse.ok) throw new Error(policy.error || `Không thể tải lên ${file.name}.`);
+
+  const body = new FormData();
+  Object.entries(policy.fields).forEach(([key, value]) => body.append(key, value));
+  body.append("file", file);
+  const uploadResponse = await fetch(policy.url, { method: "POST", body });
+  if (!uploadResponse.ok) throw new Error(`Tải lên ${file.name} thất bại.`);
+
+  return { name: file.name, objectKey: policy.objectKey, size: file.size };
+}
+
 export function ProjectBriefForm() {
-  const { siteSettings } = useContactModal();
+  const { siteSettings, source } = useContactModal();
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errors, setErrors] = useState<FormErrors>({});
+  const [serverError, setServerError] = useState<string>();
 
   const [fullName, setFullName] = useState("");
   const [company, setCompany] = useState("");
@@ -34,6 +56,7 @@ export function ProjectBriefForm() {
   const [scopes, setScopes] = useState<string[]>([]);
   const [message, setMessage] = useState("");
   const [files, setFiles] = useState<File[]>([]);
+  const [honeypot, setHoneypot] = useState("");
 
   const validate = (): FormErrors => {
     const nextErrors: FormErrors = {};
@@ -52,8 +75,35 @@ export function ProjectBriefForm() {
     if (Object.keys(nextErrors).length > 0) return;
 
     setStatus("loading");
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setStatus("success");
+    try {
+      const attachments = await Promise.all(files.map(uploadAttachment));
+      const result = await submitProjectBriefAction({
+        fullName,
+        phone,
+        email,
+        company: company || undefined,
+        projectName: projectName || undefined,
+        location: location || undefined,
+        projectType: projectType || undefined,
+        scale: scale || undefined,
+        stage: stage || undefined,
+        scopes,
+        message: message || undefined,
+        attachments,
+        source: source || undefined,
+        honeypot: honeypot || undefined,
+      });
+
+      if (result.success) {
+        setStatus("success");
+      } else {
+        setServerError(result.error);
+        setStatus("error");
+      }
+    } catch (uploadError) {
+      setServerError(uploadError instanceof Error ? uploadError.message : undefined);
+      setStatus("error");
+    }
   };
 
   if (status === "success") {
@@ -97,11 +147,12 @@ export function ProjectBriefForm() {
 
           {status === "error" ? (
             <ContactError
-              message={`Không thể gửi yêu cầu vào lúc này. Vui lòng thử lại hoặc liên hệ qua số ${siteSettings.contactPhone}.`}
+              message={serverError || `Không thể gửi yêu cầu vào lúc này. Vui lòng thử lại hoặc liên hệ qua số ${siteSettings.contactPhone}.`}
               onRetry={() => setStatus("idle")}
             />
           ) : (
             <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-12">
+              <HoneypotField value={honeypot} onChange={setHoneypot} />
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.2em] text-baolam-primary">
                   01 / Your information
@@ -208,7 +259,6 @@ export function ProjectBriefForm() {
                 <p className="mt-4 max-w-lg text-xs leading-[1.7] text-baolam-muted">
                   Bằng việc gửi thông tin, bạn đồng ý để Bảo Lâm liên hệ về nội dung của dự án.
                 </p>
-                <ContactDemoToggle status={status} onChange={setStatus} />
               </div>
             </form>
           )}

@@ -86,7 +86,43 @@ export const siteSettings = pgTable("site_settings", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+export const contactRequestType = pgEnum("contact_request_type", ["quick", "project_brief"]);
+export const contactRequestStatus = pgEnum("contact_request_status", ["new", "contacted", "closed"]);
+
+export type ContactAttachment = { name: string; objectKey: string; size: number };
+
+export const contactRequests = pgTable(
+  "contact_requests",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    type: contactRequestType("type").notNull(),
+    status: contactRequestStatus("status").notNull().default("new"),
+    isRead: boolean("is_read").notNull().default(false),
+    fullName: varchar("full_name", { length: 255 }).notNull(),
+    phone: varchar("phone", { length: 50 }).notNull(),
+    email: varchar("email", { length: 255 }),
+    company: varchar("company", { length: 255 }),
+    projectName: varchar("project_name", { length: 255 }),
+    location: varchar("location", { length: 255 }),
+    projectType: varchar("project_type", { length: 120 }),
+    scale: varchar("scale", { length: 120 }),
+    stage: varchar("stage", { length: 120 }),
+    scopes: jsonb("scopes").$type<string[]>(),
+    message: text("message"),
+    attachments: jsonb("attachments").$type<ContactAttachment[]>(),
+    source: varchar("source", { length: 120 }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("contact_requests_status_idx").on(table.status),
+    index("contact_requests_created_at_idx").on(table.createdAt),
+    index("contact_requests_is_read_idx").on(table.isRead),
+  ],
+);
+
 export type AdminUser = typeof adminUsers.$inferSelect;
 export type Project = typeof projects.$inferSelect;
 export type ProjectBlock = typeof projectBlocks.$inferSelect;
 export type SiteSettings = typeof siteSettings.$inferSelect;
+export type ContactRequest = typeof contactRequests.$inferSelect;

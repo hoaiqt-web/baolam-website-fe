@@ -6,9 +6,10 @@ import { ContactField, ContactTextarea } from "@/components/contact/contact-fiel
 import { ProjectTypeChips } from "@/components/contact/chips";
 import { ContactSuccess } from "@/components/contact/contact-success";
 import { ContactError } from "@/components/contact/contact-error";
-import { ContactDemoToggle } from "@/components/contact/contact-demo-toggle";
+import { HoneypotField } from "@/components/contact/honeypot-field";
 import { useContactModal } from "@/components/contact/contact-modal-context";
 import { isValidVietnamesePhone } from "@/lib/contact-options";
+import { submitQuickContactAction } from "@/features/contact-requests/actions";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
@@ -21,14 +22,16 @@ export function QuickContactForm({
   nameInputRef?: Ref<HTMLInputElement>;
   onClose: () => void;
 }) {
-  const { siteSettings } = useContactModal();
+  const { siteSettings, source } = useContactModal();
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errors, setErrors] = useState<FormErrors>({});
+  const [serverError, setServerError] = useState<string>();
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [company, setCompany] = useState("");
   const [projectType, setProjectType] = useState("");
   const [message, setMessage] = useState("");
+  const [honeypot, setHoneypot] = useState("");
 
   const validate = (): FormErrors => {
     const nextErrors: FormErrors = {};
@@ -45,8 +48,22 @@ export function QuickContactForm({
     if (Object.keys(nextErrors).length > 0) return;
 
     setStatus("loading");
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setStatus("success");
+    const result = await submitQuickContactAction({
+      fullName,
+      phone,
+      company: company || undefined,
+      projectType: projectType || undefined,
+      message: message || undefined,
+      source: source || undefined,
+      honeypot: honeypot || undefined,
+    });
+
+    if (result.success) {
+      setStatus("success");
+    } else {
+      setServerError(result.error);
+      setStatus("error");
+    }
   };
 
   if (status === "success") {
@@ -68,7 +85,7 @@ export function QuickContactForm({
   if (status === "error") {
     return (
       <ContactError
-        message={`Không thể gửi yêu cầu vào lúc này. Vui lòng thử lại hoặc liên hệ qua số ${siteSettings.contactPhone}.`}
+        message={serverError || `Không thể gửi yêu cầu vào lúc này. Vui lòng thử lại hoặc liên hệ qua số ${siteSettings.contactPhone}.`}
         onRetry={() => setStatus("idle")}
       />
     );
@@ -76,6 +93,7 @@ export function QuickContactForm({
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+      <HoneypotField value={honeypot} onChange={setHoneypot} />
       <ContactField
         ref={nameInputRef}
         label="Họ và tên"
@@ -136,8 +154,6 @@ export function QuickContactForm({
           Gửi project brief chi tiết →
         </a>
       </div>
-
-      <ContactDemoToggle status={status} onChange={setStatus} />
     </form>
   );
 }
