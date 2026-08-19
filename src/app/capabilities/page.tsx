@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ScrollReveal } from '@/components/motion/scroll-reveal';
 import { PlaceholderVisual } from '@/components/home/placeholder-visual';
 import { ContactModalTrigger } from '@/components/contact/contact-modal-trigger';
+import { ContactLine } from '@/components/contact/contact-line';
 import { CapabilityOverviewGroups } from '@/components/capabilities/capability-overview-groups';
 import { SiteFooter } from '@/components/site-footer';
 import { FACTORY_INFO } from '@/data/factory';
@@ -447,7 +448,7 @@ function ArtworkCapability() {
 
         <ScrollReveal delay={180}>
           <Link
-            href='/#artworks'
+            href='/artwork'
             className='mt-10 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white'
           >
             Khám phá artwork cảnh quan →
@@ -931,7 +932,7 @@ function ProofProjects() {
               bằng công trình thực tế.
             </h2>
             <Link
-              href='/#projects'
+              href='/projects'
               className='text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white'
             >
               Xem tất cả dự án →
@@ -1023,9 +1024,7 @@ function CapabilitiesFinalCta() {
           >
             Liên hệ tư vấn →
           </ContactModalTrigger>
-          <p className='mt-8 text-xs text-white/40'>
-            [Email liên hệ] · [Hotline] · [Địa chỉ văn phòng]
-          </p>
+          <ContactLine className='mt-8 text-xs text-white/40' />
         </ScrollReveal>
       </div>
     </section>

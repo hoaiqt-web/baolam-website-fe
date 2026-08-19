@@ -11,8 +11,8 @@ import { ContactModalTrigger } from '@/components/contact/contact-modal-trigger'
 const NAV_LINKS = [
   { href: '/', label: 'TRANG CHỦ', active: true },
   { href: '/capabilities', label: 'NĂNG LỰC' },
-  { href: '/#projects', label: 'DỰ ÁN BIỂU TƯỢNG' },
-  { href: '/capabilities#artwork', label: 'ARTWORK CẢNH QUAN' },
+  { href: '/projects', label: 'DỰ ÁN BIỂU TƯỢNG' },
+  { href: '/artwork', label: 'ARTWORK CẢNH QUAN' },
   { href: '/capabilities#factory', label: 'NHÀ MÁY' },
   { href: '/contact', label: 'LIÊN HỆ' },
 ];

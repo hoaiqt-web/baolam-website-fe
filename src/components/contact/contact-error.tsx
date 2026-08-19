@@ -8,7 +8,7 @@ type ContactErrorProps = {
 };
 
 export function ContactError({
-  message = "Không thể gửi yêu cầu vào lúc này. Vui lòng thử lại hoặc liên hệ qua số +84 xxx xxx xxx.",
+  message = "Không thể gửi yêu cầu vào lúc này. Vui lòng thử lại hoặc liên hệ qua số 096 315 28 61.",
   onRetry,
 }: ContactErrorProps) {
   return (

@@ -8,6 +8,7 @@ import { ContactFilePicker } from "@/components/contact/contact-file-picker";
 import { ContactSuccess } from "@/components/contact/contact-success";
 import { ContactError } from "@/components/contact/contact-error";
 import { ContactDemoToggle } from "@/components/contact/contact-demo-toggle";
+import { useContactModal } from "@/components/contact/contact-modal-context";
 import { PROJECT_STAGES, isValidEmail, isValidVietnamesePhone } from "@/lib/contact-options";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
@@ -15,6 +16,7 @@ type FormStatus = "idle" | "loading" | "success" | "error";
 type FormErrors = Partial<Record<"fullName" | "phone" | "email", string>>;
 
 export function ProjectBriefForm() {
+  const { siteSettings } = useContactModal();
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errors, setErrors] = useState<FormErrors>({});
 
@@ -69,7 +71,7 @@ export function ProjectBriefForm() {
             }
             actions={[
               { label: "Trở về trang chủ", href: "/" },
-              { label: "Khám phá dự án", href: "/#projects", variant: "secondary" },
+              { label: "Khám phá dự án", href: "/projects", variant: "secondary" },
             ]}
           />
         </div>
@@ -94,7 +96,10 @@ export function ProjectBriefForm() {
           </div>
 
           {status === "error" ? (
-            <ContactError onRetry={() => setStatus("idle")} />
+            <ContactError
+              message={`Không thể gửi yêu cầu vào lúc này. Vui lòng thử lại hoặc liên hệ qua số ${siteSettings.contactPhone}.`}
+              onRetry={() => setStatus("idle")}
+            />
           ) : (
             <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-12">
               <div>

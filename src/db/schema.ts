@@ -75,6 +75,18 @@ export const projectBlocks = pgTable(
   (table) => [index("project_blocks_project_position_idx").on(table.projectId, table.position)],
 );
 
+export const siteSettings = pgTable("site_settings", {
+  id: varchar("id", { length: 40 }).primaryKey().default("default"),
+  contactEmail: varchar("contact_email", { length: 255 }),
+  contactPhone: varchar("contact_phone", { length: 50 }),
+  officeAddress: text("office_address"),
+  workingHours: varchar("working_hours", { length: 160 }),
+  googleMapsUrl: text("google_maps_url"),
+  facebookUrl: text("facebook_url"),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 export type AdminUser = typeof adminUsers.$inferSelect;
 export type Project = typeof projects.$inferSelect;
 export type ProjectBlock = typeof projectBlocks.$inferSelect;
+export type SiteSettings = typeof siteSettings.$inferSelect;
