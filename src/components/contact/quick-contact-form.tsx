@@ -7,6 +7,7 @@ import { ProjectTypeChips } from "@/components/contact/chips";
 import { ContactSuccess } from "@/components/contact/contact-success";
 import { ContactError } from "@/components/contact/contact-error";
 import { ContactDemoToggle } from "@/components/contact/contact-demo-toggle";
+import { useContactModal } from "@/components/contact/contact-modal-context";
 import { isValidVietnamesePhone } from "@/lib/contact-options";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
@@ -20,6 +21,7 @@ export function QuickContactForm({
   nameInputRef?: Ref<HTMLInputElement>;
   onClose: () => void;
 }) {
+  const { siteSettings } = useContactModal();
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errors, setErrors] = useState<FormErrors>({});
   const [fullName, setFullName] = useState("");
@@ -58,16 +60,18 @@ export function QuickContactForm({
             Đội ngũ của chúng tôi sẽ phản hồi trong vòng một ngày làm việc.
           </>
         }
-        actions={[
-          { label: "Đóng", onClick: onClose },
-          { label: "Liên hệ qua Zalo", variant: "secondary" },
-        ]}
+        actions={[{ label: "Đóng", onClick: onClose }]}
       />
     );
   }
 
   if (status === "error") {
-    return <ContactError onRetry={() => setStatus("idle")} />;
+    return (
+      <ContactError
+        message={`Không thể gửi yêu cầu vào lúc này. Vui lòng thử lại hoặc liên hệ qua số ${siteSettings.contactPhone}.`}
+        onRetry={() => setStatus("idle")}
+      />
+    );
   }
 
   return (

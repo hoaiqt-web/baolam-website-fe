@@ -4,17 +4,19 @@ import { useRef } from "react";
 import { Dialog } from "@base-ui/react/dialog";
 import { X } from "lucide-react";
 import { QuickContactForm } from "@/components/contact/quick-contact-form";
+import type { PublicSiteSettings } from "@/data/site-settings-defaults";
 
 type ContactModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  settings: PublicSiteSettings;
 };
 
 const HEADLINE = "Cùng kiến tạo một không gian có giá trị.";
 const INTRO =
   "Chia sẻ với chúng tôi một vài thông tin ban đầu. Đội ngũ Bảo Lâm sẽ liên hệ để trao đổi về ý tưởng, phạm vi và khả năng triển khai.";
 
-export function ContactModal({ open, onOpenChange }: ContactModalProps) {
+export function ContactModal({ open, onOpenChange, settings }: ContactModalProps) {
   const nameInputRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -68,12 +70,16 @@ export function ContactModal({ open, onOpenChange }: ContactModalProps) {
                 </p>
                 <div className="mt-3 space-y-1 text-sm text-white/85">
                   <p>
-                    <a href="mailto:project@baolam.vn" className="hover:text-baolam-primary">
-                      project@baolam.vn
+                    <a href={`mailto:${settings.contactEmail}`} className="hover:text-baolam-primary">
+                      {settings.contactEmail}
                     </a>
                   </p>
-                  <p>+84 xxx xxx xxx</p>
-                  <p>Hà Nội, Việt Nam</p>
+                  <p>
+                    <a href={`tel:${settings.contactPhone.replace(/[^\d+]/g, "")}`} className="hover:text-baolam-primary">
+                      {settings.contactPhone}
+                    </a>
+                  </p>
+                  <p>{settings.officeAddress}</p>
                 </div>
               </div>
             </div>

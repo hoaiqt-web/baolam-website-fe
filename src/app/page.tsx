@@ -1,9 +1,11 @@
 import { ScrollReveal } from '@/components/motion/scroll-reveal';
 import { PlaceholderVisual } from '@/components/home/placeholder-visual';
 import { ContactModalTrigger } from '@/components/contact/contact-modal-trigger';
+import { ContactLine } from '@/components/contact/contact-line';
 import { SiteFooter } from '@/components/site-footer';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -260,12 +262,12 @@ function FeaturedProjects() {
                 tạo dấu ấn
               </h2>
             </div>
-            <a
-              href='#projects'
+            <Link
+              href='/projects'
               className='text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white'
             >
               Xem tất cả dự án →
-            </a>
+            </Link>
           </div>
         </ScrollReveal>
 
@@ -643,9 +645,7 @@ function FinalCta() {
           >
             Bắt đầu một dự án →
           </ContactModalTrigger>
-          <p className='mt-8 text-xs text-white/40'>
-            [Email liên hệ] · [Hotline] · [Địa chỉ văn phòng]
-          </p>
+          <ContactLine className='mt-8 text-xs text-white/40' />
         </ScrollReveal>
       </div>
     </section>

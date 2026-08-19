@@ -4,7 +4,7 @@ export function SiteFooter() {
     {
       title: 'Sitemap',
       links: [
-        ['Dự án', '/#projects'],
+        ['Dự án', '/projects'],
         ['Năng lực', '/capabilities'],
         ['Dịch vụ', '/#services'],
         ['Liên hệ', '/#contact'],
