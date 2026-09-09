@@ -5,7 +5,7 @@ import { PlaceholderVisual } from "@/components/home/placeholder-visual";
 import { cn } from "@/lib/utils";
 import type { ArtworkTypology } from "@/data/artwork-typologies";
 
-export function ArtworkTypologyExplorer({ typologies }: { typologies: ArtworkTypology[] }) {
+export function ArtworkTypologyExplorer({ typologies, cmsBlock }: { typologies: ArtworkTypology[]; cmsBlock?: string }) {
   const [active, setActive] = useState(0);
   const current = typologies[active];
 
@@ -46,7 +46,7 @@ export function ArtworkTypologyExplorer({ typologies }: { typologies: ArtworkTyp
       </div>
 
       <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/10 lg:aspect-auto lg:h-full">
-        <PlaceholderVisual label={current.title} tag="Artwork Typology" seed={active + 1} className="h-full w-full" />
+        <PlaceholderVisual cmsBlock={cmsBlock} label={current.title} tag="Artwork Typology" seed={active + 1} className="h-full w-full" />
         <div className="absolute inset-x-0 bottom-0 p-6">
           <div className="flex flex-wrap gap-2">
             {current.items.map((item) => (

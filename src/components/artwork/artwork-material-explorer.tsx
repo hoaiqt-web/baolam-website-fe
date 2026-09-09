@@ -5,7 +5,7 @@ import { PlaceholderVisual } from "@/components/home/placeholder-visual";
 import { cn } from "@/lib/utils";
 import type { ArtworkMaterial } from "@/data/artwork-materials";
 
-export function ArtworkMaterialExplorer({ materials }: { materials: ArtworkMaterial[] }) {
+export function ArtworkMaterialExplorer({ materials, cmsBlock }: { materials: ArtworkMaterial[]; cmsBlock?: string }) {
   const [active, setActive] = useState(0);
   const current = materials[active];
 
@@ -37,7 +37,7 @@ export function ArtworkMaterialExplorer({ materials }: { materials: ArtworkMater
 
       <div>
         <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/10">
-          <PlaceholderVisual label={current.title} tag="Material & Craft" seed={active + 1} className="h-full w-full" />
+          <PlaceholderVisual cmsBlock={cmsBlock} label={current.title} tag="Material & Craft" seed={active + 1} className="h-full w-full" />
         </div>
         <p className="mt-5 max-w-xl text-sm leading-[1.8] text-baolam-muted sm:text-base">{current.description}</p>
       </div>

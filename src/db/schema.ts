@@ -126,3 +126,22 @@ export type Project = typeof projects.$inferSelect;
 export type ProjectBlock = typeof projectBlocks.$inferSelect;
 export type SiteSettings = typeof siteSettings.$inferSelect;
 export type ContactRequest = typeof contactRequests.$inferSelect;
+
+// Fixed page blocks keep separate draft/published snapshots; editing never changes live content.
+export const contentPages = pgTable('content_pages', {
+  id: varchar('id', { length: 80 }).primaryKey(),
+  draft: jsonb('draft').$type<Record<string, string>>().notNull().default({}),
+  published: jsonb('published').$type<Record<string, string>>().notNull().default({}),
+  version: integer('version').notNull().default(0),
+  updatedBy: uuid('updated_by').references(() => adminUsers.id, { onDelete: 'set null' }),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  publishedAt: timestamp('published_at', { withTimezone: true }),
+});
+export const contentRevisions = pgTable('content_revisions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  pageId: varchar('page_id', { length: 80 }).notNull().references(() => contentPages.id, { onDelete: 'cascade' }),
+  content: jsonb('content').$type<Record<string, string>>().notNull(),
+  version: integer('version').notNull(),
+  createdBy: uuid('created_by').references(() => adminUsers.id, { onDelete: 'set null' }),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, table => [index('content_revisions_page_idx').on(table.pageId, table.createdAt)]);

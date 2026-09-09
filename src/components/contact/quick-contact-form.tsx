@@ -1,4 +1,5 @@
 "use client";
+import { useCmsBlock } from "@/components/cms/content-provider";
 
 import { useState, type Ref } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
@@ -22,6 +23,7 @@ export function QuickContactForm({
   nameInputRef?: Ref<HTMLInputElement>;
   onClose: () => void;
 }) {
+  const c = useCmsBlock("contact.QuickContactForm");
   const { siteSettings, source } = useContactModal();
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errors, setErrors] = useState<FormErrors>({});
@@ -69,13 +71,9 @@ export function QuickContactForm({
   if (status === "success") {
     return (
       <ContactSuccess
-        title="Yêu cầu đã được gửi"
+        title={c("Yêu cầu đã được gửi")}
         description={
-          <>
-            Cảm ơn bạn đã liên hệ với Bảo Lâm.
-            <br />
-            Đội ngũ của chúng tôi sẽ phản hồi trong vòng một ngày làm việc.
-          </>
+          <>{c("Cảm ơn bạn đã liên hệ với Bảo Lâm.")}<br />{c("Đội ngũ của chúng tôi sẽ phản hồi trong vòng một ngày làm việc.")}</>
         }
         actions={[{ label: "Đóng", onClick: onClose }]}
       />
@@ -96,7 +94,7 @@ export function QuickContactForm({
       <HoneypotField value={honeypot} onChange={setHoneypot} />
       <ContactField
         ref={nameInputRef}
-        label="Họ và tên"
+        label={c("Họ và tên")}
         required
         value={fullName}
         onChange={(event) => setFullName(event.target.value)}
@@ -104,7 +102,7 @@ export function QuickContactForm({
         autoComplete="name"
       />
       <ContactField
-        label="Số điện thoại"
+        label={c("Số điện thoại")}
         required
         type="tel"
         value={phone}
@@ -113,17 +111,17 @@ export function QuickContactForm({
         autoComplete="tel"
       />
       <ContactField
-        label="Công ty/đơn vị"
+        label={c("Công ty/đơn vị")}
         value={company}
         onChange={(event) => setCompany(event.target.value)}
         autoComplete="organization"
       />
       <div>
-        <p className="text-xs font-bold uppercase tracking-wider text-baolam-muted">Loại dự án</p>
+        <p className="text-xs font-bold uppercase tracking-wider text-baolam-muted">{c("Loại dự án")}</p>
         <ProjectTypeChips value={projectType} onChange={setProjectType} className="mt-1.5" />
       </div>
       <ContactTextarea
-        label="Nội dung"
+        label={c("Nội dung")}
         value={message}
         onChange={(event) => setMessage(event.target.value)}
         rows={3}
@@ -137,22 +135,16 @@ export function QuickContactForm({
         >
           {status === "loading" ? (
             <>
-              <Loader2 className="size-4 animate-spin" />
-              Đang gửi...
-            </>
+              <Loader2 className="size-4 animate-spin" />{c("Đang gửi...")}</>
           ) : (
-            <>
-              Gửi yêu cầu tư vấn
-              <ArrowRight className="size-4 transition-transform duration-200 group-hover/submit:translate-x-1" />
+            <>{c("Gửi yêu cầu tư vấn")}<ArrowRight className="size-4 transition-transform duration-200 group-hover/submit:translate-x-1" />
             </>
           )}
         </button>
         <a
-          href="/contact"
+          href={c("/contact")}
           className="mt-3 block text-center text-[11px] font-bold uppercase tracking-wider text-baolam-primary hover:text-white md:text-left"
-        >
-          Gửi project brief chi tiết →
-        </a>
+        >{c("Gửi project brief chi tiết →")}</a>
       </div>
     </form>
   );

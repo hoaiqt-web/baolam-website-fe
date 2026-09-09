@@ -29,6 +29,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <Link href="/admin" className="font-bold tracking-wide lg:hidden">BAOLAM CMS</Link>
           <span className="ml-auto text-sm text-baolam-muted">Đăng nhập: {session.username}</span>
         </header>
+        <div className="border-b border-white/10 lg:hidden"><AdminNav unreadContacts={unreadContacts} /></div>
         {children}
       </div>
     </div>

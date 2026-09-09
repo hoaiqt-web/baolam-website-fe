@@ -1,4 +1,5 @@
 'use client';
+import { useCmsBlock } from "@/components/cms/content-provider";
 
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -32,11 +33,12 @@ const GROUPS = [
 ] as const;
 
 export function CapabilityOverviewGroups() {
+  const c = useCmsBlock("capabilities.CapabilityOverviewGroups");
   const [active, setActive] = useState<number>(0);
 
   return (
     <div className='mt-12 grid grid-cols-1 divide-y divide-baolam-border border-y border-baolam-border sm:grid-cols-1'>
-      {GROUPS.map((group, i) => {
+      {c(GROUPS).map((group, i) => {
         const isActive = active === i;
         return (
           <button
