@@ -1,3 +1,5 @@
+'use client';
+import { useCmsBlock } from "@/components/cms/content-provider";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
 import type { PublicSiteSettings } from "@/data/site-settings-defaults";
 
@@ -38,7 +40,8 @@ function buildColumns(settings: PublicSiteSettings) {
 }
 
 export function ContactInformation({ settings }: { settings: PublicSiteSettings }) {
-  const columns = buildColumns(settings);
+  const c = useCmsBlock("contact.ContactInformation");
+  const columns = c(buildColumns(settings));
 
   return (
     <section className="border-t border-white/10 bg-[#030914] py-16 lg:py-24">

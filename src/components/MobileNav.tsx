@@ -1,4 +1,5 @@
 "use client";
+import { useCmsBlock } from "@/components/cms/content-provider";
 
 import { useState, useEffect } from "react";
 import { useContactModal } from "@/components/contact/contact-modal-context";
@@ -10,6 +11,7 @@ interface NavLink {
 }
 
 export default function MobileNav({ links }: { links: NavLink[] }) {
+  const c = useCmsBlock("shared.MobileNav");
   const [open, setOpen] = useState(false);
   const { openContactModal } = useContactModal();
 
@@ -33,7 +35,7 @@ export default function MobileNav({ links }: { links: NavLink[] }) {
       {/* Hamburger button — only visible on mobile */}
       <button
         onClick={() => setOpen(!open)}
-        aria-label="Toggle menu"
+        aria-label={c("Toggle menu")}
         className="md:hidden flex flex-col gap-[5px] justify-center items-center w-10 h-10 rounded-lg border border-white/20 hover:border-[#00E5FF]/60 hover:bg-[#00E5FF]/10 transition-all"
       >
         <span
@@ -73,9 +75,7 @@ export default function MobileNav({ links }: { links: NavLink[] }) {
       >
         {/* Drawer header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 shrink-0">
-          <span className="text-[#00E5FF] font-bold text-[12px] uppercase tracking-[3px]">
-            Menu
-          </span>
+          <span className="text-[#00E5FF] font-bold text-[12px] uppercase tracking-[3px]">{c("Menu")}</span>
           <button
             onClick={() => setOpen(false)}
             className="w-8 h-8 rounded-lg flex items-center justify-center border border-white/20 hover:border-[#00E5FF]/60 transition-colors"
@@ -125,9 +125,7 @@ export default function MobileNav({ links }: { links: NavLink[] }) {
               openContactModal("mobile-nav");
             }}
             className="w-full py-4 bg-[#00E5FF] text-[#071324] font-bold text-[13px] tracking-wider flex items-center justify-center gap-2 rounded-xl hover:bg-[#2EF2FF] transition-colors shadow-[0_4px_20px_rgba(0,229,255,0.4)]"
-          >
-            LIÊN HỆ TƯ VẤN &rarr;
-          </button>
+          >{c("LIÊN HỆ TƯ VẤN &rarr;")}</button>
         </div>
       </div>
     </>

@@ -1,6 +1,9 @@
+'use client';
+import { useCmsBlock } from "@/components/cms/content-provider";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
 
 export function ContactHero() {
+  const c = useCmsBlock("contact.ContactHero");
   return (
     <section className="relative flex min-h-[70vh] w-full flex-col justify-end overflow-hidden pt-24 lg:min-h-[85vh]">
       <div className="absolute inset-0 bg-baolam-surface opacity-50" />
@@ -12,23 +15,15 @@ export function ContactHero() {
       />
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 lg:px-12 lg:pb-24">
         <ScrollReveal>
-          <span className="mb-4 block text-[10px] font-bold uppercase tracking-[0.2em] text-baolam-primary">
-            Contact / Start a project
-          </span>
+          <span className="mb-4 block text-[10px] font-bold uppercase tracking-[0.2em] text-baolam-primary">{c("Contact / Start a project")}</span>
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
-            <h1 className="text-3xl font-black leading-[1.1] sm:text-4xl lg:text-5xl">
-              Hãy bắt đầu từ khu đất và mục tiêu của bạn.
-            </h1>
-            <p className="max-w-xl text-sm leading-[1.8] text-baolam-muted sm:text-base">
-              Mỗi dự án bắt đầu bằng một cuộc trao đổi về bối cảnh, mục tiêu và khả năng triển khai.
-            </p>
+            <h1 className="text-3xl font-black leading-[1.1] sm:text-4xl lg:text-5xl">{c("Hãy bắt đầu từ khu đất và mục tiêu của bạn.")}</h1>
+            <p className="max-w-xl text-sm leading-[1.8] text-baolam-muted sm:text-base">{c("Mỗi dự án bắt đầu bằng một cuộc trao đổi về bối cảnh, mục tiêu và khả năng triển khai.")}</p>
           </div>
           <a
-            href="#project-brief"
+            href={c("#project-brief")}
             className="mt-10 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white"
-          >
-            Chia sẻ về dự án ↓
-          </a>
+          >{c("Chia sẻ về dự án ↓")}</a>
         </ScrollReveal>
       </div>
     </section>

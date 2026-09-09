@@ -1,3 +1,5 @@
+"use client";
+import { useCmsImage } from "@/components/cms/content-provider";
 import { cn } from "@/lib/utils";
 
 const ORIGINS = ["20% 20%", "80% 25%", "50% 75%", "15% 80%", "85% 85%", "50% 10%"];
@@ -19,19 +21,30 @@ const CORNER_POSITIONS = [
  */
 export function PlaceholderVisual({
   label,
+  cmsBlock,
+  imageKey,
   tag = "Ảnh minh hoạ · cập nhật sau",
   seed = 0,
   className,
 }: {
   label: string;
+  cmsBlock?: string;
+  imageKey?: string;
   tag?: string;
   seed?: number;
   className?: string;
 }) {
+  const photo = useCmsImage(imageKey ?? label, cmsBlock);
   const origin = ORIGINS[seed % ORIGINS.length];
+  if (photo.src) {
+    return <div data-cms-image={imageKey ?? label} data-cms-block={cmsBlock} className={cn("relative isolate h-full w-full overflow-hidden bg-[#071522]", className)}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={photo.src} alt={photo.alt} className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+    </div>;
+  }
 
   return (
-    <div className={cn("relative isolate flex h-full w-full items-end overflow-hidden bg-[#071522]", className)}>
+    <div data-cms-image={imageKey ?? label} data-cms-block={cmsBlock} className={cn("relative isolate flex h-full w-full items-end overflow-hidden bg-[#071522]", className)}>
       <div
         className="absolute inset-0"
         style={{ background: "linear-gradient(160deg, #0c2136 0%, #071522 55%, #030914 100%)" }}

@@ -1,3 +1,4 @@
+import { getCmsMetadata } from '@/features/page-content/metadata';
 import type { Metadata } from "next";
 import { ContactHero } from "@/components/contact/contact-hero";
 import { ContactInformation } from "@/components/contact/contact-information";
@@ -6,10 +7,10 @@ import { getSiteSettings } from "@/features/site-settings/queries";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> { return getCmsMetadata("contact", {
   title: "Liên hệ | Bảo Lâm",
   description: "Chia sẻ về khu đất, mục tiêu và bối cảnh dự án của bạn để đội ngũ Bảo Lâm cùng trao đổi về bước tiếp theo.",
-};
+}); }
 
 export default async function ContactPage() {
   const settings = await getSiteSettings();

@@ -26,7 +26,7 @@ function getCardLayout(index: number) {
   return CARD_PATTERN[index % CARD_PATTERN.length];
 }
 
-export function SignatureProjectExplorer({ projects }: { projects: SignatureProject[] }) {
+export function SignatureProjectExplorer({ projects, cmsBlock }: { projects: SignatureProject[]; cmsBlock?: string }) {
   const groups = useMemo(() => {
     const seen = new Set<SignatureProject["group"]>();
     for (const project of projects) seen.add(project.group);
@@ -69,14 +69,14 @@ export function SignatureProjectExplorer({ projects }: { projects: SignatureProj
 
       <div className={cn("grid grid-cols-1 gap-5 lg:grid-cols-12", groups.length > 1 && "mt-10")}>
         {filtered.map((project, index) => (
-          <ProjectCard key={project.id} project={project} index={index} />
+          <ProjectCard cmsBlock={cmsBlock} key={project.id} project={project} index={index} />
         ))}
       </div>
     </div>
   );
 }
 
-function ProjectCard({ project, index }: { project: SignatureProject; index: number }) {
+function ProjectCard({ project, index, cmsBlock }: { project: SignatureProject; index: number; cmsBlock?: string }) {
   const layout = getCardLayout(index);
   const meta = [project.location, project.category, project.completionYear]
     .filter(Boolean)
@@ -94,7 +94,7 @@ function ProjectCard({ project, index }: { project: SignatureProject; index: num
         )}
       >
         <div className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.04]">
-          <PlaceholderVisual label={project.category} seed={index} className="h-full w-full" />
+          <PlaceholderVisual cmsBlock={cmsBlock} imageKey={project.title} label={project.category} seed={index} className="h-full w-full" />
         </div>
         <div
           className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"

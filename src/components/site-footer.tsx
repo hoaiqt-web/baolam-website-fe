@@ -1,4 +1,5 @@
 'use client';
+import { useCmsBlock } from "@/components/cms/content-provider";
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -47,30 +48,21 @@ export function SiteFooter() {
 /* ------------------------------- Pre-footer CTA ------------------------------- */
 
 function PreFooterCta() {
+  const c = useCmsBlock("shared.PreFooterCta");
   return (
     <section className='bg-footer-accent'>
       <div className='mx-auto max-w-7xl px-6 py-14 lg:px-12 lg:py-16'>
         <ScrollReveal>
           <div className='flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between'>
             <div className='max-w-2xl'>
-              <span className='mb-3 block text-[10px] font-bold uppercase tracking-[0.25em] text-footer-accent-ink/70'>
-                Start a Project
-              </span>
-              <h2 className='text-3xl font-black leading-[1.1] text-footer-accent-ink sm:text-5xl'>
-                Cùng tạo nên một không gian có giá trị lâu dài.
-              </h2>
-              <p className='mt-4 max-w-lg text-sm leading-[1.7] text-footer-accent-ink/80 sm:text-base'>
-                Hãy chia sẻ với chúng tôi về bối cảnh, mục tiêu và giai đoạn
-                hiện tại của dự án. Đội ngũ Bảo Lâm sẽ cùng bạn xác định phạm
-                vi hợp tác phù hợp.
-              </p>
+              <span className='mb-3 block text-[10px] font-bold uppercase tracking-[0.25em] text-footer-accent-ink/70'>{c("Start a Project")}</span>
+              <h2 className='text-3xl font-black leading-[1.1] text-footer-accent-ink sm:text-5xl'>{c("Cùng tạo nên một không gian có giá trị lâu dài.")}</h2>
+              <p className='mt-4 max-w-lg text-sm leading-[1.7] text-footer-accent-ink/80 sm:text-base'>{c("Hãy chia sẻ với chúng tôi về bối cảnh, mục tiêu và giai đoạn hiện tại của dự án. Đội ngũ Bảo Lâm sẽ cùng bạn xác định phạm vi hợp tác phù hợp.")}</p>
             </div>
             <ContactModalTrigger
               source='footer-cta'
               className='group inline-flex w-full shrink-0 items-center justify-center gap-2 border-2 border-footer-accent-ink px-7 py-3.5 text-[11px] font-bold uppercase tracking-wider text-footer-accent-ink transition-colors hover:bg-footer-accent-ink hover:text-footer-accent sm:w-fit'
-            >
-              Liên hệ tư vấn
-              <span className='transition-transform duration-300 group-hover:translate-x-1'>→</span>
+            >{c("Liên hệ tư vấn")}<span className='transition-transform duration-300 group-hover:translate-x-1'>→</span>
             </ContactModalTrigger>
           </div>
         </ScrollReveal>
@@ -103,25 +95,23 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
 }
 
 function BrandBlock({ facebookUrl }: { facebookUrl: string }) {
+  const c = useCmsBlock("shared.BrandBlock");
   return (
     <div>
       <Link href='/' className='flex items-center gap-3'>
-        <Image
-          src='/logo_baolam.jpg'
-          alt='Bảo Lâm'
+        <Image unoptimized
+          src={c("/logo_baolam.jpg")}
+          alt={c("Bảo Lâm")}
           width={44}
           height={44}
           className='size-11 w-auto object-contain'
         />
         <div className='flex flex-col leading-none'>
-          <span className='text-lg font-black tracking-widest text-footer-text'>BAOLAM</span>
-          <span className='mt-1 text-[10px] font-bold tracking-[0.2em] text-footer-muted'>ART &amp; LANDSCAPE</span>
+          <span className='text-lg font-black tracking-widest text-footer-text'>{c("BAOLAM")}</span>
+          <span className='mt-1 text-[10px] font-bold tracking-[0.2em] text-footer-muted'>{c("ART & LANDSCAPE")}</span>
         </div>
       </Link>
-      <p className='mt-5 max-w-xs text-sm leading-[1.7] text-footer-muted'>
-        Kiến trúc cảnh quan, artwork và giải pháp Design &amp; Build từ ý
-        tưởng đến công trình hoàn thiện.
-      </p>
+      <p className='mt-5 max-w-xs text-sm leading-[1.7] text-footer-muted'>{c("Kiến trúc cảnh quan, artwork và giải pháp Design & Build từ ý tưởng đến công trình hoàn thiện.")}</p>
       {facebookUrl && (
         <a
           href={facebookUrl}
@@ -129,9 +119,7 @@ function BrandBlock({ facebookUrl }: { facebookUrl: string }) {
           rel='noopener noreferrer'
           className='group mt-6 inline-flex min-h-11 items-center gap-1.5 text-[13px] font-bold uppercase tracking-wider text-footer-text/85 transition-colors hover:text-footer-accent'
         >
-          <span className='relative'>
-            Facebook
-            <span className='absolute -bottom-1 left-0 h-px w-0 bg-footer-accent transition-all duration-300 group-hover:w-full' />
+          <span className='relative'>{c("Facebook")}<span className='absolute -bottom-1 left-0 h-px w-0 bg-footer-accent transition-all duration-300 group-hover:w-full' />
           </span>
           <ArrowUpRight className='size-3.5 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100' />
         </a>
@@ -141,6 +129,7 @@ function BrandBlock({ facebookUrl }: { facebookUrl: string }) {
 }
 
 function ContactBlock({ settings }: { settings: PublicSiteSettings }) {
+  const c = useCmsBlock("shared.ContactBlock");
   return (
     <div>
       <div className='space-y-1'>
@@ -158,16 +147,14 @@ function ContactBlock({ settings }: { settings: PublicSiteSettings }) {
         </a>
       </div>
       <div className='mt-6'>
-        <p className='text-[10px] font-bold uppercase tracking-wider text-footer-muted'>Hà Nội Office</p>
+        <p className='text-[10px] font-bold uppercase tracking-wider text-footer-muted'>{c("Hà Nội Office")}</p>
         <p className='mt-1.5 max-w-xs text-sm leading-[1.6] text-footer-text/80'>{settings.officeAddress}</p>
         <p className='mt-2 text-sm text-footer-muted'>{settings.workingHours}</p>
       </div>
       <Link
-        href='/contact#project-brief'
+        href={c("/contact#project-brief")}
         className='mt-6 inline-flex min-h-11 items-center gap-1.5 text-[13px] font-bold uppercase tracking-wider text-footer-accent transition-colors hover:text-footer-text'
-      >
-        Gửi project brief →
-      </Link>
+      >{c("Gửi project brief →")}</Link>
     </div>
   );
 }
@@ -195,6 +182,7 @@ function MobileAccordion({ title, links }: { title: string; links: { label: stri
 }
 
 function FooterMain({ settings }: { settings: PublicSiteSettings }) {
+  const c = useCmsBlock("shared.FooterMain");
   return (
     <div className='mx-auto max-w-7xl px-6 py-16 lg:px-12 lg:py-20'>
       {/* Desktop layout */}
@@ -203,9 +191,9 @@ function FooterMain({ settings }: { settings: PublicSiteSettings }) {
           <BrandBlock facebookUrl={settings.facebookUrl} />
         </ScrollReveal>
         <ScrollReveal delay={50} className='lg:col-span-2'>
-          <FooterColumnTitle>Khám phá</FooterColumnTitle>
+          <FooterColumnTitle>{c("Khám phá")}</FooterColumnTitle>
           <div className='mt-5 flex flex-col'>
-            {EXPLORE_LINKS.map((link) => (
+            {c(EXPLORE_LINKS).map((link) => (
               <FooterLink key={link.href} href={link.href}>
                 {link.label}
               </FooterLink>
@@ -213,9 +201,9 @@ function FooterMain({ settings }: { settings: PublicSiteSettings }) {
           </div>
         </ScrollReveal>
         <ScrollReveal delay={100} className='lg:col-span-3'>
-          <FooterColumnTitle>Năng lực</FooterColumnTitle>
+          <FooterColumnTitle>{c("Năng lực")}</FooterColumnTitle>
           <div className='mt-5 flex flex-col'>
-            {CAPABILITY_LINKS.map((link) => (
+            {c(CAPABILITY_LINKS).map((link) => (
               <FooterLink key={link.href} href={link.href}>
                 {link.label}
               </FooterLink>
@@ -223,7 +211,7 @@ function FooterMain({ settings }: { settings: PublicSiteSettings }) {
           </div>
         </ScrollReveal>
         <ScrollReveal delay={150} className='lg:col-span-3'>
-          <FooterColumnTitle>Liên hệ</FooterColumnTitle>
+          <FooterColumnTitle>{c("Liên hệ")}</FooterColumnTitle>
           <div className='mt-5'>
             <ContactBlock settings={settings} />
           </div>
@@ -240,8 +228,8 @@ function FooterMain({ settings }: { settings: PublicSiteSettings }) {
         </ScrollReveal>
         <ScrollReveal delay={100}>
           <div className='border-t border-footer-border'>
-            <MobileAccordion title='Khám phá' links={EXPLORE_LINKS} />
-            <MobileAccordion title='Năng lực' links={CAPABILITY_LINKS} />
+            <MobileAccordion title={c("Khám phá")} links={c(EXPLORE_LINKS)} />
+            <MobileAccordion title={c("Năng lực")} links={c(CAPABILITY_LINKS)} />
           </div>
         </ScrollReveal>
       </div>
@@ -250,15 +238,13 @@ function FooterMain({ settings }: { settings: PublicSiteSettings }) {
       <ScrollReveal delay={200}>
         <div className='mt-14 flex flex-col gap-3 border-t border-footer-border pt-8 sm:flex-row sm:items-center sm:justify-between'>
           <div className='flex flex-wrap items-baseline gap-x-3 gap-y-1'>
-            <span className='text-[11px] font-bold uppercase tracking-[0.2em] text-footer-accent'>Factory</span>
-            <span className='text-sm text-footer-muted'>Nhà máy sản xuất Bảo Lâm</span>
+            <span className='text-[11px] font-bold uppercase tracking-[0.2em] text-footer-accent'>{c("Factory")}</span>
+            <span className='text-sm text-footer-muted'>{c("Nhà máy sản xuất Bảo Lâm")}</span>
           </div>
           <Link
-            href='/factory'
+            href={c("/factory")}
             className='group inline-flex min-h-11 items-center gap-1.5 text-[13px] font-bold uppercase tracking-wider text-footer-text transition-colors hover:text-footer-accent'
-          >
-            Khám phá nhà máy
-            <span className='transition-transform duration-200 group-hover:translate-x-1'>→</span>
+          >{c("Khám phá nhà máy")}<span className='transition-transform duration-200 group-hover:translate-x-1'>→</span>
           </Link>
         </div>
       </ScrollReveal>
@@ -269,12 +255,13 @@ function FooterMain({ settings }: { settings: PublicSiteSettings }) {
 /* ---------------------------------- Bottom bar ---------------------------------- */
 
 function BottomBar({ year }: { year: number }) {
+  const c = useCmsBlock("shared.BottomBar");
   return (
     <div className='border-t border-footer-border'>
       <div className='mx-auto flex max-w-7xl flex-col gap-4 px-6 py-6 text-[11px] text-footer-muted sm:flex-row sm:items-center sm:justify-between lg:px-12'>
-        <p>© {year} BAOLAM ART &amp; LANDSCAPE. ALL RIGHTS RESERVED.</p>
+        <p>{c("© ")}{year}{c(" BAOLAM ART & LANDSCAPE. ALL RIGHTS RESERVED.")}</p>
         <div className='flex flex-wrap items-center gap-x-6 gap-y-2'>
-          {LEGAL_LINKS.map((link) => (
+          {c(LEGAL_LINKS).map((link) => (
             <Link key={link.href} href={link.href} className='transition-colors hover:text-footer-accent'>
               {link.label}
             </Link>
