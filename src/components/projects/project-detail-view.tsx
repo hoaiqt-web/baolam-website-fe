@@ -14,8 +14,8 @@ export function ProjectDetailView({ project, preview = false }: { project: Proje
     ? "h-[calc(100dvh-3rem)] min-h-[32rem]"
     : "h-[calc(100dvh-4rem)] min-h-[32rem] sm:h-[calc(100dvh-5rem)]";
 
-  return <main className={`min-h-screen max-w-full overflow-x-clip bg-baolam-bg text-white ${headerSpacing}`}>
-    <section className={`relative overflow-hidden ${heroHeight}`}>
+  return <main className={`min-h-screen max-w-full overflow-x-clip bg-baolam-bg text-ink ${headerSpacing}`}>
+    <section className={`theme-media relative overflow-hidden ${heroHeight}`}>
       <ProjectHeroMedia src={project.coverImage} alt={project.coverAlt || project.title}/>
       <div className="absolute inset-0 bg-gradient-to-t from-baolam-bg via-baolam-bg/20 to-black/15"/>
       <div className="project-hero-glow absolute inset-0"/>
@@ -23,14 +23,14 @@ export function ProjectDetailView({ project, preview = false }: { project: Proje
         <div className="max-w-5xl">
           <h1 className="motion-hero-title text-4xl font-black uppercase leading-[0.95] tracking-tight sm:text-6xl lg:text-8xl">{project.title}</h1>
           <p className="motion-hero-meta mt-5 text-xs font-bold uppercase tracking-[0.3em] text-baolam-primary">{project.eyebrow}</p>
-          {project.location && <p className="motion-hero-location mt-4 text-lg text-white/80">{project.location}</p>}
+          {project.location && <p className="motion-hero-location mt-4 text-lg text-ink/80">{project.location}</p>}
         </div>
       </div>
-      <div className="motion-scroll-cue absolute bottom-5 right-6 hidden items-center gap-3 text-[10px] font-bold uppercase tracking-[0.22em] text-white/55 sm:flex lg:right-12"><span>Cuộn để khám phá</span><span className="relative h-10 w-px overflow-hidden bg-white/20"><span className="absolute inset-x-0 top-0 h-1/2 bg-baolam-primary"/></span></div>
+      <div className="motion-scroll-cue absolute bottom-5 right-6 hidden items-center gap-3 text-[10px] font-bold uppercase tracking-[0.22em] text-subtle-55 sm:flex lg:right-12"><span>Cuộn để khám phá</span><span className="relative h-10 w-px overflow-hidden bg-ink/20"><span className="absolute inset-x-0 top-0 h-1/2 bg-baolam-primary"/></span></div>
     </section>
 
     {project.excerpt && <ScrollReveal direction="scale" delay={100}><section className="w-full px-4 py-20 text-left sm:px-6 lg:py-28 xl:px-12">
-      <p className="text-xl font-light leading-[1.6] text-white/90 sm:text-2xl lg:text-3xl">{project.excerpt}</p>
+      <p className="text-xl font-light leading-[1.6] text-ink/90 sm:text-2xl lg:text-3xl">{project.excerpt}</p>
     </section></ScrollReveal>}
 
     {project.blocks.filter((block) => block.isVisible).map((block) => <ScrollReveal key={block.id} direction="up" delay={100}><ProjectBlockRenderer block={block}/></ScrollReveal>)}

@@ -1,3 +1,4 @@
+import { themeInitScript } from '@/lib/theme';
 import { draftMode } from 'next/headers';
 import { requireAdmin } from '@/lib/auth/session';
 import { getDraftPageContent, getPublishedPageContent } from '@/features/page-content/queries';
@@ -30,7 +31,8 @@ export default async function RootLayout({
   if (preview) await requireAdmin();
   const content = preview ? await getDraftPageContent() : await getPublishedPageContent();
   return (
-    <html lang="vi">
+    <html lang="vi" data-theme="dark" className="dark" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: themeInitScript }} /></head>
       <body className={`${inter.className} antialiased selection:bg-baolam-primary selection:text-[#071522]`}>
         <ContentProvider values={content}>
         {preview && <div className="fixed bottom-4 left-1/2 z-[9999] -translate-x-1/2 rounded-xl border border-cyan-300/40 bg-slate-950 px-5 py-3 text-sm text-white shadow-xl">Đang xem bản nháp ·{" "}

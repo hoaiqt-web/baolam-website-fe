@@ -44,7 +44,7 @@ export function ContactInformation({ settings }: { settings: PublicSiteSettings 
   const columns = c(buildColumns(settings));
 
   return (
-    <section className="border-t border-white/10 bg-[#030914] py-16 lg:py-24">
+    <section className="border-t border-ink/10 bg-canvas py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-8">
           {columns.map((column, i) => (
@@ -61,12 +61,12 @@ export function ContactInformation({ settings }: { settings: PublicSiteSettings 
                         <a
                           href={row.href}
                           {...("external" in row && row.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                          className="text-white underline decoration-transparent underline-offset-4 transition-colors hover:text-baolam-primary hover:decoration-baolam-primary"
+                          className="text-ink underline decoration-transparent underline-offset-4 transition-colors hover:text-baolam-primary hover:decoration-baolam-primary"
                         >
                           {row.value}
                         </a>
                       ) : (
-                        <span className="text-white">{row.value}</span>
+                        <span className="text-ink">{row.value}</span>
                       )}
                     </li>
                   ))}

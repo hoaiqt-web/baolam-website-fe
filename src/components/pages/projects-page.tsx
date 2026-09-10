@@ -15,7 +15,7 @@ export default function SignatureProjectsPage() {
   const caseStudy = rest[0];
 
   return (
-    <main className='min-h-screen w-full overflow-x-clip bg-[#030914] pt-16 font-sans text-white sm:pt-20'>
+    <main className='min-h-screen w-full overflow-x-clip bg-canvas pt-16 font-sans text-ink sm:pt-20'>
       <Hero />
       {spotlight && <Spotlight project={spotlight} />}
       <ProjectIndex projects={c(SIGNATURE_PROJECTS)} />
@@ -31,7 +31,7 @@ export default function SignatureProjectsPage() {
 function Hero() {
   const c = useCmsBlock("projects.Hero");
   return (
-    <section className='relative w-full overflow-hidden border-b border-white/10'>
+    <section className='relative w-full overflow-hidden border-b border-ink/10'>
       <div className='relative aspect-[4/5] w-full sm:aspect-[16/9] lg:aspect-[21/9]'>
         <PlaceholderVisual cmsBlock="projects.Hero" label={c("Signature Projects")} tag={c("Dự án biểu tượng")} seed={1} className='absolute inset-0' />
         <div
@@ -47,10 +47,10 @@ function Hero() {
               <span className='text-baolam-primary drop-shadow-[0_0_20px_rgba(0,229,255,0.3)]'>{c("biểu tượng.")}</span>
             </h1>
             <p className='motion-hero-location mt-5 max-w-xl text-sm leading-[1.7] text-baolam-muted sm:text-base'>{c("Những dự án đại diện cho cách Bảo Lâm kết nối thiết kế, kỹ thuật và năng lực triển khai để tạo nên các công trình có bản sắc và giá trị sử dụng lâu dài.")}</p>
-            <span className='mt-6 block text-[10px] font-bold uppercase tracking-[0.18em] text-white/40'>{c("Công trình biểu tượng · Kiến trúc điểm nhấn · Artwork cảnh quan")}</span>
+            <span className='mt-6 block text-[10px] font-bold uppercase tracking-[0.18em] text-subtle-40'>{c("Công trình biểu tượng · Kiến trúc điểm nhấn · Artwork cảnh quan")}</span>
             <a
               href={c("#index")}
-              className='mt-8 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-white transition-colors hover:text-baolam-primary'
+              className='mt-8 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-ink transition-colors hover:text-baolam-primary'
             >{c("Khám phá dự án ↓")}</a>
           </div>
         </div>
@@ -67,11 +67,11 @@ function Spotlight({ project }: { project: SignatureProject }) {
   const scope = [project.category, project.scopeLabel].filter(Boolean).join(' · ');
 
   return (
-    <section className='scroll-mt-20 border-b border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-b border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='grid grid-cols-1 gap-8 lg:grid-cols-[65%_35%] lg:gap-12'>
           <ScrollReveal direction='scale'>
-            <div className='aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/10 sm:aspect-[16/10]'>
+            <div className='aspect-[4/3] w-full overflow-hidden rounded-2xl border border-ink/10 sm:aspect-[16/10]'>
               <PlaceholderVisual cmsBlock="projects.Spotlight" imageKey={project.title} label={project.category} seed={2} className='h-full w-full' />
             </div>
           </ScrollReveal>
@@ -100,7 +100,7 @@ function Spotlight({ project }: { project: SignatureProject }) {
 function ProjectIndex({ projects }: { projects: SignatureProject[] }) {
   const c = useCmsBlock("projects.ProjectIndex");
   return (
-    <section id='index' className='scroll-mt-20 border-b border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section id='index' className='scroll-mt-20 border-b border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <span className='mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-baolam-primary'>{c("Project Index")}</span>
@@ -126,7 +126,7 @@ function CaseStudyBreak({ project }: { project: SignatureProject }) {
   const meta = [project.client, project.location, project.completionYear].filter(Boolean).join(' · ');
 
   return (
-    <section className='scroll-mt-20 border-b border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-b border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='grid gap-10 lg:grid-cols-2 lg:gap-16'>
           <ScrollReveal direction='left' className='space-y-6 lg:sticky lg:top-24 lg:self-start'>
@@ -145,7 +145,7 @@ function CaseStudyBreak({ project }: { project: SignatureProject }) {
           </ScrollReveal>
 
           <ScrollReveal direction='right'>
-            <div className='aspect-[4/5] w-full overflow-hidden rounded-2xl border border-white/10 sm:aspect-[4/3]'>
+            <div className='aspect-[4/5] w-full overflow-hidden rounded-2xl border border-ink/10 sm:aspect-[4/3]'>
               <PlaceholderVisual cmsBlock="projects.CaseStudyBreak" imageKey={project.title} label={project.category} seed={3} className='h-full w-full' />
             </div>
           </ScrollReveal>
@@ -167,7 +167,7 @@ const STATS = [
 function StatsBar() {
   const c = useCmsBlock("projects.StatsBar");
   return (
-    <section className='border-b border-white/10 bg-[#030914] py-14'>
+    <section className='border-b border-ink/10 bg-canvas py-14'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='flex items-center justify-center'>
           <div className='grid grid-cols-2 items-center gap-x-16 gap-y-8 sm:grid-cols-4'>

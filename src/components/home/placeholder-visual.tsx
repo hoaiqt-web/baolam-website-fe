@@ -37,14 +37,14 @@ export function PlaceholderVisual({
   const photo = useCmsImage(imageKey ?? label, cmsBlock);
   const origin = ORIGINS[seed % ORIGINS.length];
   if (photo.src) {
-    return <div data-cms-image={imageKey ?? label} data-cms-block={cmsBlock} className={cn("relative isolate h-full w-full overflow-hidden bg-[#071522]", className)}>
+    return <div data-cms-image={imageKey ?? label} data-cms-block={cmsBlock} className={cn("theme-media relative isolate h-full w-full overflow-hidden bg-baolam-bg", className)}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={photo.src} alt={photo.alt} className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
     </div>;
   }
 
   return (
-    <div data-cms-image={imageKey ?? label} data-cms-block={cmsBlock} className={cn("relative isolate flex h-full w-full items-end overflow-hidden bg-[#071522]", className)}>
+    <div data-cms-image={imageKey ?? label} data-cms-block={cmsBlock} className={cn("theme-media relative isolate flex h-full w-full items-end overflow-hidden bg-baolam-bg", className)}>
       <div
         className="absolute inset-0"
         style={{ background: "linear-gradient(160deg, #0c2136 0%, #071522 55%, #030914 100%)" }}
@@ -68,7 +68,7 @@ export function PlaceholderVisual({
       />
       <div className="relative z-10 flex w-full flex-col gap-1.5 p-4 sm:p-6">
         {tag ? (
-          <span className="w-fit rounded-full border border-white/15 bg-[#030914]/60 px-2.5 py-1 text-[9px] font-medium uppercase tracking-[0.14em] text-white/50 backdrop-blur-sm">
+          <span className="w-fit rounded-full border border-ink/15 bg-canvas/60 px-2.5 py-1 text-[9px] font-medium uppercase tracking-[0.14em] text-subtle-50 backdrop-blur-sm">
             {tag}
           </span>
         ) : null}

@@ -5,6 +5,9 @@
 
 @theme inline {
   --color-background: var(--background);
+  --color-ink: var(--ink);
+  --color-canvas: var(--canvas);
+  --color-subtle-30: var(--subtle-30);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -47,6 +50,14 @@
 
 @layer base {
   :root {
+    color-scheme: dark;
+    --ink: #ffffff;
+    --canvas: #030914;
+    --menu-background: #060f1e;
+    --subtle-30: rgb(255 255 255 / 30%);
+    --header-idle: rgba(7, 21, 34, 0.72);
+    --header-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+    --contact-hero-overlay: linear-gradient(to bottom, rgba(3,9,20,0.4) 0%, rgba(3,9,20,0.6) 55%, rgba(3,9,20,0.97) 100%);
     --background: #071522;
     --foreground: #ffffff;
     --card: #14263d;
@@ -88,10 +99,10 @@
 
 @layer utilities {
   .glass-panel {
-    background: rgba(20, 38, 61, 0.6);
+    background: color-mix(in srgb, var(--color-baolam-surface) 60%, transparent);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(0, 229, 255, 0.16);
+    border: 1px solid var(--border);
   }
 
   .text-gradient {
@@ -130,7 +141,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.375rem;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
     padding: 0.55rem 0.9rem;
     font-size: 0.7rem;
     font-weight: 700;
@@ -144,12 +155,12 @@
       color 160ms ease;
   }
   .contact-chip:hover {
-    border-color: rgba(255, 255, 255, 0.55);
+    border-color: color-mix(in srgb, var(--ink) 55%, transparent);
   }
   .contact-chip[data-selected='true'] {
     background: var(--color-baolam-primary);
     border-color: var(--color-baolam-primary);
-    color: var(--color-baolam-bg);
+    color: var(--primary-foreground);
   }
   .contact-chip:focus-visible {
     outline: 2px solid var(--color-baolam-primary);
@@ -355,4 +366,137 @@
 
 .baolam-lightbox .yarl__captions_description {
   color: rgba(255, 255, 255, 0.82);
+}
+
+/* Light is an editorial ivory/navy palette. Photography keeps its own dark
+   contrast context; images themselves are never inverted or filtered. */
+@layer base {
+  :root[data-theme='light'] {
+    color-scheme: light;
+    --ink: #152e40;
+    --canvas: #faf9f6;
+    --menu-background: #faf9f6;
+    --subtle-30: #63747d;
+    --header-idle: rgba(250, 249, 246, 0.96);
+    --header-shadow: 0 8px 28px rgba(21, 46, 64, 0.08);
+    --contact-hero-overlay: linear-gradient(135deg, #f6f5f1, #e8efea);
+    --background: #f6f5f1;
+    --foreground: #152e40;
+    --card: #ffffff;
+    --card-foreground: #152e40;
+    --primary: #007581;
+    --primary-foreground: #ffffff;
+    --secondary: #e9eeeb;
+    --secondary-foreground: #152e40;
+    --muted: #e9eeeb;
+    --muted-foreground: #526570;
+    --border: #d3ddd9;
+    --input: #c1ceca;
+    --ring: #007581;
+    --color-baolam-bg: #f6f5f1;
+    --color-baolam-surface: #ffffff;
+    --color-baolam-surface-secondary: #e9eeeb;
+    --color-baolam-primary: #007581;
+    --color-baolam-primary-hover: #005d67;
+    --color-baolam-border: #d3ddd9;
+    --color-baolam-text: #152e40;
+    --color-baolam-muted: #526570;
+    --color-baolam-error: #b82d28;
+    --color-baolam-success: #14764e;
+    --color-footer-bg: #e8ede8;
+    --color-footer-surface: #f4f5f0;
+    --color-footer-text: #152e40;
+    --color-footer-muted: #526570;
+    --color-footer-border: #cad5ce;
+    --color-footer-accent: #007581;
+    --color-footer-accent-ink: #ffffff;
+  }
+
+  .theme-media {
+    --ink: #ffffff;
+    --canvas: #030914;
+    --primary-foreground: #071522;
+    --color-baolam-bg: #071522;
+    --color-baolam-primary: #00e5ff;
+    --color-baolam-primary-hover: #2ef2ff;
+    --color-baolam-muted: #a5b4c7;
+    --color-baolam-border: rgba(0, 229, 255, 0.16);
+    color: #ffffff;
+  }
+}
+
+.theme-to-dark { display: none; }
+[data-theme='light'] .theme-to-dark { display: inline-block; }
+[data-theme='light'] .theme-to-light { display: none; }
+
+@layer base {
+  .theme-admin {
+
+  --color-baolam-bg: #071522;
+  --color-baolam-surface: #14263d;
+  --color-baolam-surface-secondary: #0a2030;
+  --color-baolam-primary: #00e5ff;
+  --color-baolam-primary-hover: #2ef2ff;
+  --color-baolam-border: rgba(0, 229, 255, 0.16);
+  --color-baolam-text: #ffffff;
+  --color-baolam-muted: #a5b4c7;
+  --color-baolam-error: #ff6b63;
+  --color-baolam-success: #38d996;
+
+  --color-footer-bg: #020a13;
+  --color-footer-surface: #061521;
+  --color-footer-text: #f3f6f8;
+  --color-footer-muted: #7e8c99;
+  --color-footer-border: rgba(255, 255, 255, 0.12);
+  --color-footer-accent: #17d4e8;
+  --color-footer-accent-ink: #03111f;
+    color-scheme: dark;
+    --ink: #ffffff;
+    --canvas: #030914;
+    --menu-background: #060f1e;
+    --subtle-30: rgb(255 255 255 / 30%);
+    --header-idle: rgba(7, 21, 34, 0.72);
+    --header-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+    --contact-hero-overlay: linear-gradient(to bottom, rgba(3,9,20,0.4) 0%, rgba(3,9,20,0.6) 55%, rgba(3,9,20,0.97) 100%);
+    --background: #071522;
+    --foreground: #ffffff;
+    --card: #14263d;
+    --card-foreground: #ffffff;
+    --primary: #00e5ff;
+    --primary-foreground: #071522;
+    --secondary: #1b3048;
+    --secondary-foreground: #ffffff;
+    --muted: #1b3048;
+    --muted-foreground: #a5b4c7;
+    --border: rgba(0, 229, 255, 0.16);
+    --input: rgba(255, 255, 255, 0.16);
+    --ring: #00e5ff;
+    --destructive: #ef4444;
+    --radius: 0.625rem;
+  }
+}
+
+/* Small supporting labels retain readable contrast on the light canvas. */
+@theme inline {
+  --color-subtle-25: var(--subtle-25);
+  --color-subtle-30: var(--subtle-30);
+  --color-subtle-40: var(--subtle-40);
+  --color-subtle-50: var(--subtle-50);
+  --color-subtle-55: var(--subtle-55);
+}
+@layer base {
+  :root, .theme-media, .theme-admin {
+    --subtle-25: rgb(255 255 255 / 25%);
+    --subtle-30: rgb(255 255 255 / 30%);
+    --subtle-40: rgb(255 255 255 / 40%);
+    --subtle-50: rgb(255 255 255 / 50%);
+    --subtle-55: rgb(255 255 255 / 55%);
+  }
+  :root[data-theme="light"] {
+    --subtle-25: #63747d;
+    --subtle-30: #63747d;
+    --subtle-40: #63747d;
+    --subtle-50: #63747d;
+    --subtle-55: #63747d;
+  }
 }

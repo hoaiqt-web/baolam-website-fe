@@ -53,7 +53,7 @@ export function CapabilityOverviewGroups() {
             <span
               className={cn(
                 'text-xs font-black transition-colors',
-                isActive ? 'text-baolam-primary' : 'text-white/30'
+                isActive ? 'text-baolam-primary' : 'text-subtle-30'
               )}
             >
               {group.n}
@@ -62,7 +62,7 @@ export function CapabilityOverviewGroups() {
               <h3
                 className={cn(
                   'shrink-0 text-lg font-bold transition-colors sm:text-xl',
-                  isActive ? 'text-white' : 'text-white/50'
+                  isActive ? 'text-ink' : 'text-subtle-50'
                 )}
               >
                 {group.title}
@@ -70,7 +70,7 @@ export function CapabilityOverviewGroups() {
               <p
                 className={cn(
                   'max-w-xl text-sm leading-[1.7] transition-colors',
-                  isActive ? 'text-baolam-muted' : 'text-white/25'
+                  isActive ? 'text-baolam-muted' : 'text-subtle-25'
                 )}
               >
                 {group.body}

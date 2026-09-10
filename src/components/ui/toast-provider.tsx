@@ -43,17 +43,17 @@ export function useToast() {
 const VARIANT_STYLES: Record<ToastVariant, { border: string; accent: string; background: string }> = {
   success: {
     border: "border-baolam-success/60",
-    accent: "bg-baolam-success text-baolam-bg",
+    accent: "bg-baolam-success text-primary-foreground",
     background: "color-mix(in srgb, var(--color-baolam-success) 22%, #071522)",
   },
   error: {
     border: "border-baolam-error/60",
-    accent: "bg-baolam-error text-baolam-bg",
+    accent: "bg-baolam-error text-primary-foreground",
     background: "color-mix(in srgb, var(--color-baolam-error) 22%, #071522)",
   },
   info: {
     border: "border-baolam-primary/60",
-    accent: "bg-baolam-primary text-baolam-bg",
+    accent: "bg-baolam-primary text-primary-foreground",
     background: "color-mix(in srgb, var(--color-baolam-primary) 22%, #071522)",
   },
 };
@@ -66,15 +66,15 @@ function ToastCard({ item, onDismiss }: { item: ToastItem; onDismiss: () => void
   return <div
     role={variant === "error" ? "alert" : "status"}
     style={{ background: styles.background }}
-    className={`pointer-events-auto flex items-start gap-3 rounded-xl border p-4 text-white shadow-2xl backdrop-blur-xl ${styles.border}`}
+    className={`pointer-events-auto flex items-start gap-3 rounded-xl border p-4 text-ink shadow-2xl backdrop-blur-xl ${styles.border}`}
   >
     <span className={`grid size-8 shrink-0 place-items-center rounded-full ${styles.accent}`}>
       <Icon className="size-4"/>
     </span>
     <div className="min-w-0 flex-1 pt-0.5">
-      <p className="text-sm font-semibold text-white">{item.title}</p>
+      <p className="text-sm font-semibold text-ink">{item.title}</p>
       {item.description && <p className="mt-1 text-xs leading-5 text-baolam-muted">{item.description}</p>}
     </div>
-    <button type="button" onClick={onDismiss} aria-label="Đóng thông báo" className="grid size-7 shrink-0 place-items-center rounded-md text-white/55 transition hover:bg-white/10 hover:text-white"><X className="size-4"/></button>
+    <button type="button" onClick={onDismiss} aria-label="Đóng thông báo" className="grid size-7 shrink-0 place-items-center rounded-md text-subtle-55 transition hover:bg-ink/10 hover:text-ink"><X className="size-4"/></button>
   </div>;
 }

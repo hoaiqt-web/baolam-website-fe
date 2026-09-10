@@ -21,7 +21,7 @@ export default function ArtworkPage() {
   const spotlight = c(ARTWORK_PROJECTS)[0];
 
   return (
-    <main className='min-h-screen w-full overflow-x-clip bg-[#030914] pt-16 font-sans text-white sm:pt-20'>
+    <main className='min-h-screen w-full overflow-x-clip bg-canvas pt-16 font-sans text-ink sm:pt-20'>
       <Hero />
       <Definition />
       <Spotlight project={spotlight} />
@@ -72,7 +72,7 @@ function ScopeList({ items, columns = 2 }: { items: readonly string[]; columns?:
 function Hero() {
   const c = useCmsBlock("artwork.Hero");
   return (
-    <section className='relative flex min-h-[85dvh] w-full items-end overflow-hidden'>
+    <section className='theme-media relative flex min-h-[85dvh] w-full items-end overflow-hidden'>
       <PlaceholderVisual cmsBlock="artwork.Hero" label={c("Landscape Artwork")} tag={c("Nghệ thuật × Cảnh quan × Kỹ thuật")} seed={0} className='absolute inset-0' />
       <div
         className='absolute inset-0'
@@ -89,11 +89,11 @@ function Hero() {
         <div className='mt-8 flex flex-col gap-3 sm:flex-row'>
           <a
             href={c("#definition")}
-            className='inline-flex items-center justify-center gap-2 rounded bg-baolam-primary px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-[#071522] shadow-[0_4px_15px_rgba(0,229,255,0.3)] transition-colors hover:bg-baolam-primary-hover'
+            className='inline-flex items-center justify-center gap-2 rounded bg-baolam-primary px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-primary-foreground shadow-[0_4px_15px_rgba(0,229,255,0.3)] transition-colors hover:bg-baolam-primary-hover'
           >{c("Khám phá artwork ↓")}</a>
           <ContactModalTrigger
             source='artwork-hero'
-            className='inline-flex items-center justify-center gap-2 rounded border border-white/20 px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-white transition-colors hover:border-baolam-primary hover:text-baolam-primary'
+            className='inline-flex items-center justify-center gap-2 rounded border border-ink/20 px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-ink transition-colors hover:border-baolam-primary hover:text-baolam-primary'
           >{c("Trao đổi ý tưởng →")}</ContactModalTrigger>
         </div>
       </div>
@@ -108,7 +108,7 @@ const DEFINITION_KEYWORDS = ['Place', 'Identity', 'Experience', 'Craft'];
 function Definition() {
   const c = useCmsBlock("artwork.Definition");
   return (
-    <section id='definition' className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section id='definition' className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='grid grid-cols-1 gap-10 lg:grid-cols-[45%_55%] lg:gap-16'>
           <ScrollReveal direction='left'>
@@ -120,7 +120,7 @@ function Definition() {
             <div className='mt-8 flex flex-wrap items-center gap-x-2 gap-y-3'>
               {c(DEFINITION_KEYWORDS).map((word, i) => (
                 <div key={word} className='flex items-center gap-2'>
-                  <span className='rounded-full border border-baolam-border px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white/80'>
+                  <span className='rounded-full border border-baolam-border px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-ink/80'>
                     {word}
                   </span>
                   {i < c(DEFINITION_KEYWORDS).length - 1 && <span className='text-baolam-primary/60'>→</span>}
@@ -141,11 +141,11 @@ function Spotlight({ project }: { project: (typeof ARTWORK_PROJECTS)[number] }) 
   const meta = [project.location, project.completionYear].filter(Boolean).join(' · ');
 
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='grid grid-cols-1 gap-8 lg:grid-cols-[65%_35%] lg:gap-12'>
           <ScrollReveal direction='scale'>
-            <div className='aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/10 sm:aspect-[16/10]'>
+            <div className='aspect-[4/3] w-full overflow-hidden rounded-2xl border border-ink/10 sm:aspect-[16/10]'>
               <PlaceholderVisual cmsBlock="artwork.Spotlight" imageKey={project.title} label={project.category} seed={5} className='h-full w-full' />
             </div>
           </ScrollReveal>
@@ -155,11 +155,11 @@ function Spotlight({ project }: { project: (typeof ARTWORK_PROJECTS)[number] }) 
             {meta && <p className='mt-3 text-sm text-baolam-muted'>{meta}</p>}
             <dl className='mt-5 space-y-3 text-sm'>
               <div>
-                <dt className='text-[10px] font-bold uppercase tracking-wider text-white/50'>{c("Vật liệu")}</dt>
+                <dt className='text-[10px] font-bold uppercase tracking-wider text-subtle-50'>{c("Vật liệu")}</dt>
                 <dd className='mt-1 text-baolam-muted'>{project.material}</dd>
               </div>
               <div>
-                <dt className='text-[10px] font-bold uppercase tracking-wider text-white/50'>{c("Phạm vi Bảo Lâm thực hiện")}</dt>
+                <dt className='text-[10px] font-bold uppercase tracking-wider text-subtle-50'>{c("Phạm vi Bảo Lâm thực hiện")}</dt>
                 <dd className='mt-1 text-baolam-muted'>{c("Thiết kế sáng tạo · Sản xuất chính xác · Thi công chuyên nghiệp")}</dd>
               </div>
             </dl>
@@ -179,7 +179,7 @@ function Spotlight({ project }: { project: (typeof ARTWORK_PROJECTS)[number] }) 
 function Typologies() {
   const c = useCmsBlock("artwork.Typologies");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Artwork Typologies")}</SectionEyebrow>
@@ -200,7 +200,7 @@ function Typologies() {
 function Portfolio({ projects }: { projects: typeof ARTWORK_PROJECTS }) {
   const c = useCmsBlock("artwork.Portfolio");
   return (
-    <section id='portfolio' className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section id='portfolio' className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Portfolio")}</SectionEyebrow>
@@ -229,7 +229,7 @@ function PortfolioCard({ project, index }: { project: (typeof ARTWORK_PROJECTS)[
     >
       <div
         className={cn(
-          'relative w-full overflow-hidden rounded-2xl border border-white/10 transition-colors duration-500 group-hover:border-baolam-primary/40',
+          'relative w-full overflow-hidden rounded-2xl border border-ink/10 transition-colors duration-500 group-hover:border-baolam-primary/40',
           isFullWidth ? 'aspect-[16/8]' : 'aspect-[4/3]'
         )}
       >
@@ -242,12 +242,12 @@ function PortfolioCard({ project, index }: { project: (typeof ARTWORK_PROJECTS)[
         />
         <div className='absolute inset-x-0 bottom-0 translate-y-3 p-5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100'>
           <span className='block h-px w-0 bg-baolam-primary transition-all duration-500 group-hover:w-full' />
-          <p className='mt-3 text-[11px] font-bold uppercase tracking-wider text-white/80'>{project.material}</p>
+          <p className='mt-3 text-[11px] font-bold uppercase tracking-wider text-ink/80'>{project.material}</p>
           <span className='mt-1 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-baolam-primary'>{c("Xem chi tiết →")}</span>
         </div>
       </div>
       <div className='mt-3'>
-        <h3 className='text-base font-bold text-white transition-colors duration-300 group-hover:text-baolam-primary sm:text-lg'>
+        <h3 className='text-base font-bold text-ink transition-colors duration-300 group-hover:text-baolam-primary sm:text-lg'>
           {project.title}
         </h3>
         <p className='mt-1 text-xs text-baolam-muted'>{meta}</p>
@@ -296,7 +296,7 @@ const CONCEPT_VISUAL_STAGES = ['Sketch', 'Mô hình 3D', 'Mockup', 'Nhà máy', 
 function ConceptToInstallation() {
   const c = useCmsBlock("artwork.ConceptToInstallation");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("From Concept to Installation")}</SectionEyebrow>
@@ -306,9 +306,9 @@ function ConceptToInstallation() {
         <div className='mt-12 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3'>
           {c(CONCEPT_STAGES).map((stage, i) => (
             <ScrollReveal key={stage.n} delay={i * 60}>
-              <div className='h-full rounded-2xl border border-white/10 bg-white/[0.03] p-6'>
+              <div className='h-full rounded-2xl border border-ink/10 bg-ink/[0.03] p-6'>
                 <span className='text-xs font-black text-baolam-primary'>{stage.n}</span>
-                <h3 className='mt-2 text-sm font-bold uppercase tracking-wide text-white'>{stage.title}</h3>
+                <h3 className='mt-2 text-sm font-bold uppercase tracking-wide text-ink'>{stage.title}</h3>
                 <ul className='mt-4 space-y-2'>
                   {stage.items.map((item) => (
                     <li key={item} className='flex items-start gap-2 text-xs leading-[1.6] text-baolam-muted'>
@@ -327,10 +327,10 @@ function ConceptToInstallation() {
             <div className='grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6'>
               {c(CONCEPT_VISUAL_STAGES).map((stage, i) => (
                 <div key={stage} className='flex flex-col gap-2'>
-                  <div className='aspect-square w-full overflow-hidden rounded-lg border border-white/10'>
+                  <div className='aspect-square w-full overflow-hidden rounded-lg border border-ink/10'>
                     <PlaceholderVisual cmsBlock="artwork.ConceptToInstallation" label={stage} tag='' seed={i + 3} className='h-full w-full' />
                   </div>
-                  <span className='text-center text-[10px] font-bold uppercase tracking-wider text-white/40'>
+                  <span className='text-center text-[10px] font-bold uppercase tracking-wider text-subtle-40'>
                     {i + 1}{c(". ")}{stage}
                   </span>
                 </div>
@@ -348,7 +348,7 @@ function ConceptToInstallation() {
 function MaterialAndCraft() {
   const c = useCmsBlock("artwork.MaterialAndCraft");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Material & Craft")}</SectionEyebrow>
@@ -383,7 +383,7 @@ const ENGINEERING_CONSIDERATIONS = [
 function EngineeringBehind() {
   const c = useCmsBlock("artwork.EngineeringBehind");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='grid gap-10 lg:grid-cols-2 lg:gap-16'>
           <ScrollReveal direction='left'>
@@ -402,7 +402,7 @@ function EngineeringBehind() {
         <ScrollReveal delay={120}>
           <div className='mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4'>
             {c(['Exploded view', 'Bản vẽ liên kết', 'Mô hình 3D', 'Ảnh cẩu lắp']).map((label, i) => (
-              <div key={label} className='aspect-[4/3] overflow-hidden rounded-xl border border-white/10'>
+              <div key={label} className='aspect-[4/3] overflow-hidden rounded-xl border border-ink/10'>
                 <PlaceholderVisual cmsBlock="artwork.EngineeringBehind" label={label} tag='' seed={i + 2} className='h-full w-full' />
               </div>
             ))}
@@ -418,7 +418,7 @@ function EngineeringBehind() {
 function InHouseFabrication() {
   const c = useCmsBlock("artwork.InHouseFabrication");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("In-house Fabrication")}</SectionEyebrow>
@@ -433,7 +433,7 @@ function InHouseFabrication() {
             ['Kích thước artwork tối đa', '[XX] m'],
           ]).map(([label, value]) => (
             <ScrollReveal key={label}>
-              <div className='rounded-xl border border-white/10 bg-white/[0.03] p-5'>
+              <div className='rounded-xl border border-ink/10 bg-ink/[0.03] p-5'>
                 <p className='text-lg font-black text-baolam-primary'>{value}</p>
                 <p className='mt-1 text-[10px] uppercase tracking-wider text-baolam-muted'>{label}</p>
               </div>
@@ -444,8 +444,8 @@ function InHouseFabrication() {
         <ScrollReveal delay={80}>
           <div className='mt-12 grid grid-cols-1 gap-5 lg:grid-cols-2'>
             {c(FACTORY_INFO).map((item) => (
-              <div key={item.id} className='rounded-2xl border border-white/10 bg-white/[0.03] p-6'>
-                <h4 className='text-base font-bold text-white'>{item.title}</h4>
+              <div key={item.id} className='rounded-2xl border border-ink/10 bg-ink/[0.03] p-6'>
+                <h4 className='text-base font-bold text-ink'>{item.title}</h4>
                 <p className='mt-2 text-sm leading-[1.7] text-baolam-muted'>{item.description}</p>
                 <ul className='mt-4 flex flex-wrap gap-2'>
                   {(item.specs ?? []).map((spec) => (
@@ -465,7 +465,7 @@ function InHouseFabrication() {
         <ScrollReveal delay={140}>
           <Link
             href={c("/factory")}
-            className='mt-10 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white'
+            className='mt-10 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-ink'
           >{c("Khám phá nhà máy →")}</Link>
         </ScrollReveal>
       </div>
@@ -516,7 +516,7 @@ const CASE_STUDY_VISUAL_STAGES = [
 function FeaturedCaseStudy() {
   const c = useCmsBlock("artwork.FeaturedCaseStudy");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Case Study")}</SectionEyebrow>
@@ -526,7 +526,7 @@ function FeaturedCaseStudy() {
         <div className='mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
           {c(CASE_STUDY_NARRATIVE).map((block, i) => (
             <ScrollReveal key={block.title} delay={i * 60}>
-              <div className='h-full rounded-2xl border border-white/10 bg-white/[0.03] p-6'>
+              <div className='h-full rounded-2xl border border-ink/10 bg-ink/[0.03] p-6'>
                 <h3 className='text-xs font-bold uppercase tracking-wider text-baolam-primary'>{block.title}</h3>
                 <p className='mt-3 text-sm leading-[1.7] text-baolam-muted'>{block.body}</p>
               </div>
@@ -538,10 +538,10 @@ function FeaturedCaseStudy() {
           <div className='mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8'>
             {c(CASE_STUDY_VISUAL_STAGES).map((stage, i) => (
               <div key={stage} className='flex flex-col gap-2'>
-                <div className='aspect-square w-full overflow-hidden rounded-lg border border-white/10'>
+                <div className='aspect-square w-full overflow-hidden rounded-lg border border-ink/10'>
                   <PlaceholderVisual cmsBlock="artwork.FeaturedCaseStudy" label={stage} tag='' seed={i + 1} className='h-full w-full' />
                 </div>
-                <span className='text-center text-[9px] font-bold uppercase tracking-wider text-white/40'>{stage}</span>
+                <span className='text-center text-[9px] font-bold uppercase tracking-wider text-subtle-40'>{stage}</span>
               </div>
             ))}
           </div>
@@ -567,7 +567,7 @@ const STATS = [
 function StatsBar() {
   const c = useCmsBlock("artwork.StatsBar");
   return (
-    <section className='border-t border-white/10 bg-[#030914] py-14'>
+    <section className='border-t border-ink/10 bg-canvas py-14'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='flex items-center justify-center'>
           <div className='grid grid-cols-2 items-center gap-x-16 gap-y-8 sm:grid-cols-4'>

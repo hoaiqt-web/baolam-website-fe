@@ -20,7 +20,7 @@ export function ProjectBlockRenderer({ block }: { block: ProjectBlock }) {
   if (block.type === "process") {
     const processImages = (data.steps ?? []).flatMap((step) => step.image ? [{ src: step.image, alt: step.title, caption: step.description }] : []);
     let imageIndex = -1;
-    return <section className="bg-[#030914] py-20 lg:py-28"><div className="w-full px-4 sm:px-6 xl:px-12"><SectionHeading eyebrow="Từ ý tưởng đến công trình" title={data.heading}/><ProjectImageViewer images={processImages} className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">{data.steps?.map((step, index) => {
+    return <section className="bg-canvas py-20 lg:py-28"><div className="w-full px-4 sm:px-6 xl:px-12"><SectionHeading eyebrow="Từ ý tưởng đến công trình" title={data.heading}/><ProjectImageViewer images={processImages} className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">{data.steps?.map((step, index) => {
       if (step.image) imageIndex += 1;
       return <article key={`${step.title}-${index}`}><span className="text-3xl font-light text-baolam-primary">{String(index + 1).padStart(2, "0")}</span>{step.image && <ZoomableImage src={step.image} alt={step.title} index={imageIndex} sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw" className="mt-5"/>}<h3 className="mt-5 font-bold uppercase tracking-wide">{step.title}</h3><p className="mt-2 text-sm leading-6 text-baolam-muted">{step.description}</p></article>;
     })}</ProjectImageViewer></div></section>;
@@ -34,7 +34,7 @@ export function ProjectBlockRenderer({ block }: { block: ProjectBlock }) {
 function ZoomableImage({ src, alt, sizes, index = 0, className = "" }: { src: string; alt: string; sizes: string; index?: number; className?: string }) {
   return <button type="button" data-project-image-index={index} aria-label={`Xem ảnh ${alt} ở kích thước lớn`} className={`group relative block w-full cursor-zoom-in overflow-hidden text-left ${className}`}>
     <Image src={src} alt={alt} width={1200} height={900} sizes={sizes} unoptimized={isProjectMediaUrl(src)} className="aspect-[4/3] h-full w-full object-cover transition duration-500 group-hover:scale-[1.02] group-hover:brightness-75"/>
-    <span className="pointer-events-none absolute bottom-3 right-3 grid size-10 place-items-center rounded-full bg-black/65 opacity-0 backdrop-blur transition group-hover:opacity-100 group-focus-visible:opacity-100"><ZoomIn className="size-4"/></span>
+    <span className="pointer-events-none absolute bottom-3 right-3 grid size-10 place-items-center rounded-full text-white bg-black/65 opacity-0 backdrop-blur transition group-hover:opacity-100 group-focus-visible:opacity-100"><ZoomIn className="size-4"/></span>
   </button>;
 }
 

@@ -38,7 +38,7 @@ export function ContactSuccess({ title, description, actions }: ContactSuccessPr
           d="M14 27l7 7 16-16"
         />
       </svg>
-      <h3 className="mt-5 text-lg font-black uppercase tracking-wide text-white">{title}</h3>
+      <h3 className="mt-5 text-lg font-black uppercase tracking-wide text-ink">{title}</h3>
       <div className="mt-3 max-w-sm text-sm leading-[1.7] text-baolam-muted">{description}</div>
       <div className="mt-7 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
         {actions.map((action) =>
@@ -48,8 +48,8 @@ export function ContactSuccess({ title, description, actions }: ContactSuccessPr
               href={action.href}
               className={
                 action.variant === "secondary"
-                  ? "inline-flex items-center justify-center border border-white/20 px-6 py-3 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-baolam-primary hover:text-baolam-primary"
-                  : "inline-flex items-center justify-center bg-baolam-primary px-6 py-3 text-xs font-bold uppercase tracking-wider text-baolam-bg transition-colors hover:bg-baolam-primary-hover"
+                  ? "inline-flex items-center justify-center border border-ink/20 px-6 py-3 text-xs font-bold uppercase tracking-wider text-ink transition-colors hover:border-baolam-primary hover:text-baolam-primary"
+                  : "inline-flex items-center justify-center bg-baolam-primary px-6 py-3 text-xs font-bold uppercase tracking-wider text-primary-foreground transition-colors hover:bg-baolam-primary-hover"
               }
             >
               {action.label}
@@ -61,8 +61,8 @@ export function ContactSuccess({ title, description, actions }: ContactSuccessPr
               onClick={action.onClick}
               className={
                 action.variant === "secondary"
-                  ? "inline-flex items-center justify-center border border-white/20 px-6 py-3 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-baolam-primary hover:text-baolam-primary"
-                  : "inline-flex items-center justify-center bg-baolam-primary px-6 py-3 text-xs font-bold uppercase tracking-wider text-baolam-bg transition-colors hover:bg-baolam-primary-hover"
+                  ? "inline-flex items-center justify-center border border-ink/20 px-6 py-3 text-xs font-bold uppercase tracking-wider text-ink transition-colors hover:border-baolam-primary hover:text-baolam-primary"
+                  : "inline-flex items-center justify-center bg-baolam-primary px-6 py-3 text-xs font-bold uppercase tracking-wider text-primary-foreground transition-colors hover:bg-baolam-primary-hover"
               }
             >
               {action.label}

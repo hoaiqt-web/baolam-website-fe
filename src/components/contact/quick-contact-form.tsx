@@ -131,7 +131,7 @@ export function QuickContactForm({
         <button
           type="submit"
           disabled={status === "loading"}
-          className="group/submit inline-flex w-full items-center justify-center gap-2 bg-baolam-primary px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-baolam-bg transition-colors hover:bg-baolam-primary-hover disabled:opacity-70"
+          className="group/submit inline-flex w-full items-center justify-center gap-2 bg-baolam-primary px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-primary-foreground transition-colors hover:bg-baolam-primary-hover disabled:opacity-70"
         >
           {status === "loading" ? (
             <>
@@ -143,7 +143,7 @@ export function QuickContactForm({
         </button>
         <a
           href={c("/contact")}
-          className="mt-3 block text-center text-[11px] font-bold uppercase tracking-wider text-baolam-primary hover:text-white md:text-left"
+          className="mt-3 block text-center text-[11px] font-bold uppercase tracking-wider text-baolam-primary hover:text-ink md:text-left"
         >{c("Gửi project brief chi tiết →")}</a>
       </div>
     </form>

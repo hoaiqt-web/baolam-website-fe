@@ -9,8 +9,8 @@ import { SiteFooter } from '@/components/site-footer';
 export default function TermsPage() {
   const c = useCmsBlock("terms.TermsPage");
   return (
-    <main className='min-h-screen w-full overflow-x-clip bg-[#030914] pt-16 font-sans text-white sm:pt-20'>
-      <section className='border-b border-white/10 py-16 lg:py-20'>
+    <main className='min-h-screen w-full overflow-x-clip bg-canvas pt-16 font-sans text-ink sm:pt-20'>
+      <section className='border-b border-ink/10 py-16 lg:py-20'>
         <div className='mx-auto max-w-3xl px-6 lg:px-12'>
           <span className='mb-3 block text-[10px] font-bold uppercase tracking-[0.2em] text-baolam-primary'>{c("Legal")}</span>
           <h1 className='text-3xl font-black leading-[1.15] sm:text-4xl'>{c("Điều khoản sử dụng")}</h1>
@@ -60,7 +60,7 @@ export default function TermsPage() {
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h2 className='text-lg font-bold text-white'>{title}</h2>
+      <h2 className='text-lg font-bold text-ink'>{title}</h2>
       <div className='mt-3 space-y-3 text-sm leading-[1.8] text-baolam-muted'>{children}</div>
     </div>
   );

@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main className='min-h-screen w-full overflow-x-clip bg-[#030914] font-sans text-white'>
+    <main className='min-h-screen w-full overflow-x-clip bg-canvas font-sans text-ink'>
       <Hero />
       <PositioningIntro />
       <FeaturedProjects />
@@ -29,7 +29,7 @@ export default function Home() {
 function Hero() {
   const c = useCmsBlock("home.Hero");
   return (
-    <section className='relative flex min-h-dvh w-full items-end overflow-hidden pt-20'>
+    <section className='theme-media relative flex min-h-dvh w-full items-end overflow-hidden pt-20'>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={c("/hero/c0d0a44c-ab54-4601-9b6e-ac81907b850c.png")}
@@ -73,14 +73,14 @@ function Hero() {
         <div className='mt-8 flex flex-col gap-3 sm:flex-row'>
           <a
             href={c("#projects")}
-            className='inline-flex items-center justify-center gap-2 rounded bg-baolam-primary px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-[#071522] shadow-[0_4px_15px_rgba(0,229,255,0.3)] transition-colors hover:bg-baolam-primary-hover'
+            className='inline-flex items-center justify-center gap-2 rounded bg-baolam-primary px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-primary-foreground shadow-[0_4px_15px_rgba(0,229,255,0.3)] transition-colors hover:bg-baolam-primary-hover'
           >{c("Khám phá dự án →")}</a>
           <ContactModalTrigger
             source='landing-hero'
-            className='inline-flex items-center justify-center gap-2 rounded border border-white/20 px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-white transition-colors hover:border-baolam-primary hover:text-baolam-primary'
+            className='inline-flex items-center justify-center gap-2 rounded border border-ink/20 px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-ink transition-colors hover:border-baolam-primary hover:text-baolam-primary'
           >{c("Trao đổi về dự án của bạn →")}</ContactModalTrigger>
         </div>
-        <p className='mt-8 text-[10px] uppercase tracking-[0.18em] text-white/40'>{c("Hà Nội · TP. Hồ Chí Minh · Toàn quốc")}</p>
+        <p className='mt-8 text-[10px] uppercase tracking-[0.18em] text-subtle-40'>{c("Hà Nội · TP. Hồ Chí Minh · Toàn quốc")}</p>
       </div>
     </section>
   );
@@ -93,7 +93,7 @@ function PositioningIntro() {
   return (
     <section
       id='about'
-      className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'
+      className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'
     >
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
@@ -103,14 +103,14 @@ function PositioningIntro() {
               <p className='max-w-xl text-sm leading-[1.8] text-baolam-muted sm:text-base'>{c("Chúng tôi tiếp cận mỗi dự án từ đặc điểm riêng của khu đất, khí hậu, hệ sinh thái và nhu cầu sử dụng. Bằng việc kết nối thiết kế với năng lực triển khai thực tế, mỗi ý tưởng được phát triển đồng bộ từ bản vẽ đến công trình hoàn thiện.")}</p>
               <a
                 href={c("#about")}
-                className='mt-5 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white'
+                className='mt-5 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-ink'
               >{c("Tìm hiểu về chúng tôi ")}<span>→</span>
               </a>
             </div>
           </div>
         </ScrollReveal>
         <ScrollReveal delay={100}>
-          <div className='relative mt-12 aspect-[21/9] w-full overflow-hidden rounded-2xl border border-white/10'>
+          <div className='relative mt-12 aspect-[21/9] w-full overflow-hidden rounded-2xl border border-ink/10'>
             <PlaceholderVisual cmsBlock="home.PositioningIntro"
               label={c("Không gian cảnh quan có người sử dụng")}
               seed={0}
@@ -176,7 +176,7 @@ function ProjectMeta({
   const c = useCmsBlock("home.ProjectMeta");
   return (
     <div className='mt-3'>
-      <h3 className='text-base font-bold text-white transition-colors duration-300 group-hover:text-baolam-primary sm:text-lg'>
+      <h3 className='text-base font-bold text-ink transition-colors duration-300 group-hover:text-baolam-primary sm:text-lg'>
         {project.name}
       </h3>
       <p className='mt-1 text-xs text-baolam-muted'>
@@ -209,7 +209,7 @@ function ProjectCard({
     >
       <div
         className={cn(
-          'w-full overflow-hidden rounded-2xl border border-white/10 transition-colors duration-500 group-hover:border-baolam-primary/40',
+          'w-full overflow-hidden rounded-2xl border border-ink/10 transition-colors duration-500 group-hover:border-baolam-primary/40',
           aspect,
         )}
       >
@@ -232,7 +232,7 @@ function FeaturedProjects() {
   return (
     <section
       id='projects'
-      className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'
+      className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'
     >
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
@@ -243,7 +243,7 @@ function FeaturedProjects() {
             </div>
             <Link
               href={c("/projects")}
-              className='text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white'
+              className='text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-ink'
             >{c("Xem tất cả dự án →")}</Link>
           </div>
         </ScrollReveal>
@@ -282,9 +282,9 @@ function FeaturedProjects() {
             direction='right'
             className='group flex items-center lg:col-span-7'
           >
-            <div className='w-full rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-colors duration-500 group-hover:border-baolam-primary/40'>
+            <div className='w-full rounded-2xl border border-ink/10 bg-ink/[0.03] p-8 transition-colors duration-500 group-hover:border-baolam-primary/40'>
               <span className='text-4xl font-black text-baolam-primary'>“</span>
-              <p className='mt-2 text-lg font-medium leading-[1.6] text-white/90 sm:text-xl'>{c("Mỗi công trình là một tác phẩm — được phát triển đồng bộ từ ý tưởng thiết kế đến năng lực thi công thực tế.")}</p>
+              <p className='mt-2 text-lg font-medium leading-[1.6] text-ink/90 sm:text-xl'>{c("Mỗi công trình là một tác phẩm — được phát triển đồng bộ từ ý tưởng thiết kế đến năng lực thi công thực tế.")}</p>
             </div>
           </ScrollReveal>
 
@@ -315,7 +315,7 @@ function CaseStudySpotlight() {
   return (
     <section
       id='case-study'
-      className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'
+      className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'
     >
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='grid gap-10 lg:grid-cols-2 lg:gap-16'>
@@ -349,7 +349,7 @@ function CaseStudySpotlight() {
                   ['[XX]%', 'Tỷ lệ cây bản địa'],
                 ]).map(([value, label]) => (
                   <div key={label}>
-                    <p className='text-lg font-black text-white'>{value}</p>
+                    <p className='text-lg font-black text-ink'>{value}</p>
                     <p className='mt-0.5 text-[10px] leading-tight text-baolam-muted'>
                       {label}
                     </p>
@@ -359,7 +359,7 @@ function CaseStudySpotlight() {
             </div>
             <a
               href={c("#case-study")}
-              className='inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white'
+              className='inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-ink'
             >{c("Khám phá toàn bộ dự án →")}</a>
           </ScrollReveal>
 
@@ -367,7 +367,7 @@ function CaseStudySpotlight() {
             <div className='flex flex-col gap-3'>
               {c(CASE_STUDY_STAGES).map((stage, i) => (
                 <div key={stage} className='flex items-center gap-3'>
-                  <div className='aspect-[16/9] w-full overflow-hidden rounded-xl border border-white/10'>
+                  <div className='aspect-[16/9] w-full overflow-hidden rounded-xl border border-ink/10'>
                     <PlaceholderVisual cmsBlock="home.CaseStudySpotlight"
                       label={stage}
                       tag=''
@@ -436,7 +436,7 @@ function ProcessRail() {
   return (
     <section
       id='process'
-      className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'
+      className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'
     >
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
@@ -451,7 +451,7 @@ function ProcessRail() {
                 <span className='text-xs font-black text-baolam-primary'>
                   {step.n}
                 </span>
-                <h3 className='mt-2 text-sm font-bold uppercase tracking-wide text-white'>
+                <h3 className='mt-2 text-sm font-bold uppercase tracking-wide text-ink'>
                   {step.title}
                 </h3>
                 <p className='mt-2 text-xs leading-[1.7] text-baolam-muted'>
@@ -492,7 +492,7 @@ function Differentiators() {
   return (
     <section
       id='why'
-      className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'
+      className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'
     >
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
@@ -503,10 +503,10 @@ function Differentiators() {
         <div className='mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2'>
           {c(DIFFERENTIATORS).map((item, i) => (
             <ScrollReveal key={item.title} delay={i * 70}>
-              <div className='rounded-2xl border border-white/10 bg-white/[0.03] p-6'>
+              <div className='rounded-2xl border border-ink/10 bg-ink/[0.03] p-6'>
                 <span className='text-xs font-black text-baolam-primary'>{c("0")}{i + 1}
                 </span>
-                <h3 className='mt-2 text-base font-bold text-white'>
+                <h3 className='mt-2 text-base font-bold text-ink'>
                   {item.title}
                 </h3>
                 <p className='mt-2 text-sm leading-[1.7] text-baolam-muted'>
@@ -533,7 +533,7 @@ const STATS = [
 function StatsBar() {
   const c = useCmsBlock("home.StatsBar");
   return (
-    <section className='border-t border-white/10 bg-[#030914] py-14'>
+    <section className='border-t border-ink/10 bg-canvas py-14'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='flex items-center justify-center'>
           <div className='grid grid-cols-2 items-center gap-x-16 gap-y-8 sm:grid-cols-4'>
@@ -561,7 +561,7 @@ function ClientsAndTestimonial() {
   return (
     <section
       id='clients'
-      className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'
+      className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'
     >
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
@@ -574,7 +574,7 @@ function ClientsAndTestimonial() {
         <ScrollReveal delay={100}>
           <blockquote className='mt-16 max-w-3xl'>
             <span className='text-4xl font-black text-baolam-primary'>“</span>
-            <p className='text-lg font-medium leading-[1.7] text-white/90 sm:text-xl'>{c("[Trích dẫn phản hồi khách hàng — ví dụ: đội ngũ đã kiểm soát tốt sự thống nhất giữa ý tưởng thiết kế, ngân sách và chất lượng triển khai tại công trường.]")}</p>
+            <p className='text-lg font-medium leading-[1.7] text-ink/90 sm:text-xl'>{c("[Trích dẫn phản hồi khách hàng — ví dụ: đội ngũ đã kiểm soát tốt sự thống nhất giữa ý tưởng thiết kế, ngân sách và chất lượng triển khai tại công trường.]")}</p>
             <footer className='mt-4 text-xs text-baolam-muted'>{c("— [Tên khách hàng], [Chức vụ · Công ty · Dự án]")}</footer>
           </blockquote>
         </ScrollReveal>

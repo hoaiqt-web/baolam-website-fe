@@ -89,7 +89,7 @@ function ProjectCard({ project, index, cmsBlock }: { project: SignatureProject; 
     >
       <div
         className={cn(
-          "relative w-full overflow-hidden rounded-2xl border border-white/10 transition-colors duration-500 group-hover:border-baolam-primary/40",
+          "theme-media relative w-full overflow-hidden rounded-2xl border border-ink/10 transition-colors duration-500 group-hover:border-baolam-primary/40",
           layout.aspect
         )}
       >
@@ -102,7 +102,7 @@ function ProjectCard({ project, index, cmsBlock }: { project: SignatureProject; 
             background: "linear-gradient(180deg, transparent 35%, rgba(2,11,22,0.88) 100%)",
           }}
         />
-        <span className="absolute left-4 top-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/60">
+        <span className="absolute left-4 top-4 text-[10px] font-black uppercase tracking-[0.2em] text-ink/60">
           {String(index + 1).padStart(2, "0")}
         </span>
         <div className="absolute inset-x-0 bottom-0 translate-y-3 p-5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
@@ -114,7 +114,7 @@ function ProjectCard({ project, index, cmsBlock }: { project: SignatureProject; 
         </div>
       </div>
       <div className="mt-3">
-        <h3 className="text-base font-bold text-white transition-colors duration-300 group-hover:text-baolam-primary sm:text-lg">
+        <h3 className="text-base font-bold text-ink transition-colors duration-300 group-hover:text-baolam-primary sm:text-lg">
           {project.title}
         </h3>
         <p className="mt-1 text-xs text-baolam-muted">{meta}</p>

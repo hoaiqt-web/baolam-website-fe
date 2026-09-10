@@ -16,7 +16,7 @@ export default async function ContactPage() {
   const settings = await getSiteSettings();
 
   return (
-    <main className="min-h-screen w-full overflow-x-clip bg-[#030914] font-sans text-white">
+    <main className="min-h-screen w-full overflow-x-clip bg-canvas font-sans text-ink">
       <ContactHero />
       <ContactInformation settings={settings} />
       <ProjectBriefForm />

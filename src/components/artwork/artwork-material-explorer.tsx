@@ -26,7 +26,7 @@ export function ArtworkMaterialExplorer({ materials, cmsBlock }: { materials: Ar
                 "rounded-full border px-3.5 py-2 text-xs font-bold uppercase tracking-wide transition-colors lg:w-full lg:rounded-none lg:border-0 lg:px-0 lg:py-4 lg:text-left lg:text-sm",
                 isActive
                   ? "border-baolam-primary bg-baolam-primary/10 text-baolam-primary"
-                  : "border-white/15 text-white/50 hover:text-white lg:border-0"
+                  : "border-ink/15 text-subtle-50 hover:text-ink lg:border-0"
               )}
             >
               {material.title}
@@ -36,7 +36,7 @@ export function ArtworkMaterialExplorer({ materials, cmsBlock }: { materials: Ar
       </div>
 
       <div>
-        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/10">
+        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-ink/10">
           <PlaceholderVisual cmsBlock={cmsBlock} label={current.title} tag="Material & Craft" seed={active + 1} className="h-full w-full" />
         </div>
         <p className="mt-5 max-w-xl text-sm leading-[1.8] text-baolam-muted sm:text-base">{current.description}</p>
