@@ -110,7 +110,7 @@ export function ProjectBriefForm() {
 
   if (status === "success") {
     return (
-      <section id="project-brief" className="scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28">
+      <section id="project-brief" className="scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28">
         <div className="mx-auto max-w-3xl px-6 lg:px-12">
           <ContactSuccess
             title={c("Project brief received")}
@@ -128,7 +128,7 @@ export function ProjectBriefForm() {
   }
 
   return (
-    <section id="project-brief" className="scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28">
+    <section id="project-brief" className="scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[35%_65%] lg:gap-16">
           <div className="lg:sticky lg:top-24 lg:self-start">
@@ -229,7 +229,7 @@ export function ProjectBriefForm() {
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="group/submit inline-flex w-full items-center justify-center gap-2 bg-baolam-primary px-8 py-4 text-xs font-bold uppercase tracking-wider text-baolam-bg transition-colors hover:bg-baolam-primary-hover disabled:opacity-70 sm:w-auto"
+                  className="group/submit inline-flex w-full items-center justify-center gap-2 bg-baolam-primary px-8 py-4 text-xs font-bold uppercase tracking-wider text-primary-foreground transition-colors hover:bg-baolam-primary-hover disabled:opacity-70 sm:w-auto"
                 >
                   {status === "loading" ? (
                     <>

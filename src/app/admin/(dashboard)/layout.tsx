@@ -10,7 +10,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const unreadContacts = await countUnreadContactRequests();
 
   return (
-    <div className="min-h-screen bg-baolam-bg text-white">
+    <div className="theme-admin dark min-h-screen bg-baolam-bg text-white">
       <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-baolam-border bg-[#06111e] lg:flex lg:flex-col">
         <Link href="/admin" className="flex h-20 items-center gap-3 border-b border-baolam-border px-6">
           <span className="grid size-10 place-items-center border-2 border-baolam-primary font-black text-baolam-primary">BL</span>

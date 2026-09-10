@@ -36,9 +36,9 @@ export function ContactFilePicker({ files, onChange, error }: ContactFilePickerP
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        className="mt-1.5 flex w-full flex-col items-center justify-center gap-1.5 border border-dashed border-white/20 px-4 py-6 text-center transition-colors hover:border-baolam-primary/60"
+        className="mt-1.5 flex w-full flex-col items-center justify-center gap-1.5 border border-dashed border-ink/20 px-4 py-6 text-center transition-colors hover:border-baolam-primary/60"
       >
-        <span className="flex items-center gap-2 text-sm font-bold text-white">
+        <span className="flex items-center gap-2 text-sm font-bold text-ink">
           <Paperclip className="size-4 text-baolam-primary" />
           Đính kèm project brief
         </span>
@@ -65,9 +65,9 @@ export function ContactFilePicker({ files, onChange, error }: ContactFilePickerP
           {files.map((file, index) => (
             <li
               key={`${file.name}-${index}`}
-              className="flex items-center justify-between gap-3 border border-white/10 bg-white/[0.03] px-3 py-2 text-xs"
+              className="flex items-center justify-between gap-3 border border-ink/10 bg-ink/[0.03] px-3 py-2 text-xs"
             >
-              <span className="min-w-0 flex-1 truncate text-white">{file.name}</span>
+              <span className="min-w-0 flex-1 truncate text-ink">{file.name}</span>
               <span className="shrink-0 text-baolam-muted">{formatFileSize(file.size)}</span>
               <button
                 type="button"

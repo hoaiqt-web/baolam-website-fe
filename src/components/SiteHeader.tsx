@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
+import { ThemeToggle } from '@/components/theme-toggle';
 import MobileNav from '@/components/MobileNav';
 import { ContactModalTrigger } from '@/components/contact/contact-modal-trigger';
 
@@ -36,7 +37,7 @@ export default function SiteHeader() {
   return (
     <>
       <nav
-        className={`fixed z-50 w-full border-b transition-[background-color,box-shadow,border-color] duration-500 ${scrolled ? 'border-baolam-border bg-[rgba(7,21,34,0.94)] shadow-[0_12px_40px_rgba(0,0,0,0.22)] backdrop-blur-xl' : 'border-white/10 bg-[rgba(7,21,34,0.72)] backdrop-blur-md'}`}
+        className={`fixed z-50 w-full border-b transition-[background-color,box-shadow,border-color] duration-500 ${scrolled ? 'border-baolam-border bg-baolam-bg/95 shadow-[var(--header-shadow)] backdrop-blur-xl' : 'border-ink/10 bg-[var(--header-idle)] backdrop-blur-md'}`}
       >
         <div className='mx-auto flex h-16 w-full items-center justify-between px-4 sm:h-20 sm:px-6 xl:px-12'>
           <Link href='/' className='flex shrink-0 items-center gap-3 sm:gap-4'>
@@ -49,8 +50,8 @@ export default function SiteHeader() {
               className='size-12 w-auto object-contain'
             />
             <div className='flex flex-col leading-none'>
-              <span className='text-base font-black tracking-widest text-white sm:text-xl'>{c("BAOLAM")}</span>
-              <span className='mt-0.5 text-[0.55rem] font-bold tracking-[0.2em] text-white/80 sm:text-[0.65rem]'>{c("ART & LANDSCAPE")}</span>
+              <span className='text-base font-black tracking-widest text-ink sm:text-xl'>{c("BAOLAM")}</span>
+              <span className='mt-0.5 text-[0.55rem] font-bold tracking-[0.2em] text-ink/80 sm:text-[0.65rem]'>{c("ART & LANDSCAPE")}</span>
             </div>
           </Link>
           <div className='hidden items-center gap-4 text-[0.7rem] font-bold tracking-wider lg:flex xl:gap-6 xl:text-[0.75rem]'>
@@ -64,11 +65,14 @@ export default function SiteHeader() {
               </Link>
             ))}
           </div>
+          <div className='flex items-center gap-2 sm:gap-3'>
+          <ThemeToggle />
           <ContactModalTrigger
             source='header'
-            className='hidden bg-baolam-primary px-4 py-2.5 text-sm font-bold text-baolam-bg transition-colors hover:bg-baolam-primary-hover md:block xl:px-6 xl:py-3'
+            className='hidden bg-baolam-primary px-4 py-2.5 text-sm font-bold text-primary-foreground transition-colors hover:bg-baolam-primary-hover md:block xl:px-6 xl:py-3'
           >{c("LIÊN HỆ TƯ VẤN →")}</ContactModalTrigger>
           <MobileNav links={c(NAV_LINKS)} />
+          </div>
         </div>
       </nav>
       <Script

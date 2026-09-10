@@ -20,7 +20,7 @@ export default function FactoryPage() {
   const featuredProjects = c(SIGNATURE_PROJECTS).slice(0, 4);
 
   return (
-    <main className='min-h-screen w-full overflow-x-clip bg-[#030914] pt-16 font-sans text-white sm:pt-20'>
+    <main className='min-h-screen w-full overflow-x-clip bg-canvas pt-16 font-sans text-ink sm:pt-20'>
       <Hero />
       <FactoryOverview />
       <StatsBar />
@@ -74,7 +74,7 @@ function FlowChips({ steps }: { steps: readonly string[] }) {
     <div className='flex flex-wrap items-center gap-x-2 gap-y-4'>
       {steps.map((step, i) => (
         <div key={step} className='flex items-center gap-2'>
-          <span className='rounded-full border border-baolam-border px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white/80'>
+          <span className='rounded-full border border-baolam-border px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-ink/80'>
             {step}
           </span>
           {i < steps.length - 1 && <span className='text-baolam-primary/60'>→</span>}
@@ -89,7 +89,7 @@ function FlowChips({ steps }: { steps: readonly string[] }) {
 function Hero() {
   const c = useCmsBlock("factory.Hero");
   return (
-    <section className='relative flex min-h-[85dvh] w-full items-end overflow-hidden'>
+    <section className='theme-media relative flex min-h-[85dvh] w-full items-end overflow-hidden'>
       <PlaceholderVisual cmsBlock="factory.Hero" label={c("Manufacturing")} tag={c("Nhà máy Bảo Lâm")} seed={2} className='absolute inset-0' />
       <div
         className='absolute inset-0'
@@ -106,11 +106,11 @@ function Hero() {
         <div className='mt-8 flex flex-col gap-3 sm:flex-row'>
           <a
             href={c("#overview")}
-            className='inline-flex items-center justify-center gap-2 rounded bg-baolam-primary px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-[#071522] shadow-[0_4px_15px_rgba(0,229,255,0.3)] transition-colors hover:bg-baolam-primary-hover'
+            className='inline-flex items-center justify-center gap-2 rounded bg-baolam-primary px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-primary-foreground shadow-[0_4px_15px_rgba(0,229,255,0.3)] transition-colors hover:bg-baolam-primary-hover'
           >{c("Khám phá nhà máy ↓")}</a>
           <ContactModalTrigger
             source='factory-hero'
-            className='inline-flex items-center justify-center gap-2 rounded border border-white/20 px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-white transition-colors hover:border-baolam-primary hover:text-baolam-primary'
+            className='inline-flex items-center justify-center gap-2 rounded border border-ink/20 px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-ink transition-colors hover:border-baolam-primary hover:text-baolam-primary'
           >{c("Trao đổi về sản xuất →")}</ContactModalTrigger>
         </div>
       </div>
@@ -123,7 +123,7 @@ function Hero() {
 function FactoryOverview() {
   const c = useCmsBlock("factory.FactoryOverview");
   return (
-    <section id='overview' className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section id='overview' className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='grid grid-cols-1 gap-10 lg:grid-cols-[45%_55%] lg:gap-16'>
           <ScrollReveal direction='left'>
@@ -132,7 +132,7 @@ function FactoryOverview() {
           </ScrollReveal>
           <ScrollReveal direction='right' delay={80}>
             <p className='max-w-xl text-sm leading-[1.8] text-baolam-muted sm:text-base'>{c("Nhà máy Bảo Lâm được tổ chức để phục vụ các sản phẩm cảnh quan, artwork và cấu kiện kiến trúc có tính đặc thù. Thiết kế, kỹ thuật và sản xuất phối hợp trong cùng một quy trình nhằm kiểm soát khả năng chế tạo, chất lượng hoàn thiện và tiến độ giao hàng.")}</p>
-            <div className='mt-8 aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/10'>
+            <div className='mt-8 aspect-[16/9] w-full overflow-hidden rounded-2xl border border-ink/10'>
               <PlaceholderVisual cmsBlock="factory.FactoryOverview" label={c("Mặt bằng nhà máy")} tag={c("Flycam")} seed={3} className='h-full w-full' />
             </div>
           </ScrollReveal>
@@ -154,7 +154,7 @@ const STATS = [
 function StatsBar() {
   const c = useCmsBlock("factory.StatsBar");
   return (
-    <section className='border-t border-white/10 bg-[#030914] py-14'>
+    <section className='border-t border-ink/10 bg-canvas py-14'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='flex items-center justify-center'>
           <div className='grid grid-cols-2 items-center gap-x-16 gap-y-8 sm:grid-cols-4'>
@@ -186,7 +186,7 @@ const DELIVERY_STAGES = [
 function IntegratedDelivery() {
   const c = useCmsBlock("factory.IntegratedDelivery");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Integrated Delivery")}</SectionEyebrow>
@@ -209,7 +209,7 @@ function IntegratedDelivery() {
 function FactoryZones() {
   const c = useCmsBlock("factory.FactoryZones");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Factory Zones")}</SectionEyebrow>
@@ -230,7 +230,7 @@ function FactoryZones() {
 function ProductGroups() {
   const c = useCmsBlock("factory.ProductGroups");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("What We Make")}</SectionEyebrow>
@@ -265,7 +265,7 @@ const FABRICATION_TECHNIQUES = [
 function MaterialAndCraft() {
   const c = useCmsBlock("factory.MaterialAndCraft");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Material & Craft")}</SectionEyebrow>
@@ -340,7 +340,7 @@ const EQUIPMENT_GROUPS = [
 function Equipment() {
   const c = useCmsBlock("factory.Equipment");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Máy móc & thiết bị")}</SectionEyebrow>
@@ -350,15 +350,15 @@ function Equipment() {
         <div className='mt-12 grid grid-cols-1 gap-5 lg:grid-cols-2'>
           {c(EQUIPMENT_GROUPS).map((item, i) => (
             <ScrollReveal key={item.n} delay={i * 60}>
-              <div className='overflow-hidden rounded-2xl border border-white/10'>
+              <div className='overflow-hidden rounded-2xl border border-ink/10'>
                 <div className='aspect-[16/9] w-full'>
                   <PlaceholderVisual cmsBlock="factory.Equipment" label={item.tag} seed={i + 4} className='h-full w-full' />
                 </div>
-                <div className='border-t border-white/10 bg-white/[0.03] p-6'>
+                <div className='border-t border-ink/10 bg-ink/[0.03] p-6'>
                   <span className='text-xs font-black text-baolam-primary'>
                     {item.n}{c(" / ")}{item.tag}
                   </span>
-                  <h3 className='mt-2 text-base font-bold text-white'>{item.title}</h3>
+                  <h3 className='mt-2 text-base font-bold text-ink'>{item.title}</h3>
                   <p className='mt-2 text-sm leading-[1.7] text-baolam-muted'>{item.body}</p>
                   <ul className='mt-4 flex flex-wrap gap-2'>
                     {item.specs.map((spec) => (
@@ -428,7 +428,7 @@ const PRODUCTION_STEPS = [
 function ProductionProcess() {
   const c = useCmsBlock("factory.ProductionProcess");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Production Process")}</SectionEyebrow>
@@ -438,9 +438,9 @@ function ProductionProcess() {
         <div className='mt-12 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4'>
           {c(PRODUCTION_STEPS).map((step, i) => (
             <ScrollReveal key={step.n} delay={i * 50}>
-              <div className='h-full rounded-2xl border border-white/10 bg-white/[0.03] p-6'>
+              <div className='h-full rounded-2xl border border-ink/10 bg-ink/[0.03] p-6'>
                 <span className='text-xs font-black text-baolam-primary'>{step.n}</span>
-                <h3 className='mt-2 text-sm font-bold uppercase tracking-wide text-white'>{step.title}</h3>
+                <h3 className='mt-2 text-sm font-bold uppercase tracking-wide text-ink'>{step.title}</h3>
                 <ul className='mt-4 space-y-2'>
                   {step.items.map((item) => (
                     <li key={item} className='flex items-start gap-2 text-xs leading-[1.6] text-baolam-muted'>
@@ -465,7 +465,7 @@ const PROTOTYPE_STAGES = ['Sketch', 'Mô hình nhỏ', 'Prototype 1:1', 'Sản p
 function PrototypeMockup() {
   const c = useCmsBlock("factory.PrototypeMockup");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='grid gap-10 lg:grid-cols-2 lg:gap-16'>
           <ScrollReveal direction='left'>
@@ -478,10 +478,10 @@ function PrototypeMockup() {
             <div className='grid grid-cols-2 gap-3'>
               {c(PROTOTYPE_STAGES).map((stage, i) => (
                 <div key={stage} className='flex flex-col gap-2'>
-                  <div className='aspect-square w-full overflow-hidden rounded-lg border border-white/10'>
+                  <div className='aspect-square w-full overflow-hidden rounded-lg border border-ink/10'>
                     <PlaceholderVisual cmsBlock="factory.PrototypeMockup" label={stage} tag='' seed={i + 5} className='h-full w-full' />
                   </div>
-                  <span className='text-center text-[10px] font-bold uppercase tracking-wider text-white/40'>
+                  <span className='text-center text-[10px] font-bold uppercase tracking-wider text-subtle-40'>
                     {i + 1}{c(". ")}{stage}
                   </span>
                 </div>
@@ -517,7 +517,7 @@ const QC_EVIDENCE = [
 function QualityControl() {
   const c = useCmsBlock("factory.QualityControl");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Quality Control")}</SectionEyebrow>
@@ -527,7 +527,7 @@ function QualityControl() {
         <div className='mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
           {c(QC_CHECKPOINTS).map((checkpoint, i) => (
             <ScrollReveal key={checkpoint.title} delay={i * 50}>
-              <div className='rounded-2xl border border-white/10 bg-white/[0.03] p-5'>
+              <div className='rounded-2xl border border-ink/10 bg-ink/[0.03] p-5'>
                 <h3 className='text-sm font-bold uppercase tracking-wide text-baolam-primary'>{checkpoint.title}</h3>
                 <p className='mt-2 text-sm leading-[1.6] text-baolam-muted'>{checkpoint.body}</p>
               </div>
@@ -572,7 +572,7 @@ const SAFETY_PRACTICES = [
 function PeopleAndSafety() {
   const c = useCmsBlock("factory.PeopleAndSafety");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("People & Safety")}</SectionEyebrow>
@@ -617,7 +617,7 @@ const LOGISTICS_VISUAL_STAGES = ['Lắp thử tại nhà máy', 'Đóng gói', '
 function FactoryToSite() {
   const c = useCmsBlock("factory.FactoryToSite");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("From Factory to Site")}</SectionEyebrow>
@@ -634,10 +634,10 @@ function FactoryToSite() {
           <div className='mt-12 grid grid-cols-2 gap-3 sm:grid-cols-5'>
             {c(LOGISTICS_VISUAL_STAGES).map((stage, i) => (
               <div key={stage} className='flex flex-col gap-2'>
-                <div className='aspect-square w-full overflow-hidden rounded-lg border border-white/10'>
+                <div className='aspect-square w-full overflow-hidden rounded-lg border border-ink/10'>
                   <PlaceholderVisual cmsBlock="factory.FactoryToSite" label={stage} tag='' seed={i + 6} className='h-full w-full' />
                 </div>
-                <span className='text-center text-[10px] font-bold uppercase tracking-wider text-white/40'>
+                <span className='text-center text-[10px] font-bold uppercase tracking-wider text-subtle-40'>
                   {i + 1}{c(". ")}{stage}
                 </span>
               </div>
@@ -654,7 +654,7 @@ function FactoryToSite() {
 function FeaturedProjects({ projects }: { projects: typeof SIGNATURE_PROJECTS }) {
   const c = useCmsBlock("factory.FeaturedProjects");
   return (
-    <section className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Factory-built Projects")}</SectionEyebrow>
@@ -667,12 +667,12 @@ function FeaturedProjects({ projects }: { projects: typeof SIGNATURE_PROJECTS })
             const scope = [project.category, project.scopeLabel].filter(Boolean).join(' · ');
             return (
               <ScrollReveal key={project.id} delay={i * 60}>
-                <div className='overflow-hidden rounded-2xl border border-white/10'>
+                <div className='overflow-hidden rounded-2xl border border-ink/10'>
                   <div className='aspect-[4/3] w-full'>
                     <PlaceholderVisual cmsBlock="factory.FeaturedProjects" imageKey={project.title} label={project.category} seed={i + 7} className='h-full w-full' />
                   </div>
-                  <div className='border-t border-white/10 bg-white/[0.03] p-6'>
-                    <h3 className='text-lg font-bold text-white'>{project.title}</h3>
+                  <div className='border-t border-ink/10 bg-ink/[0.03] p-6'>
+                    <h3 className='text-lg font-bold text-ink'>{project.title}</h3>
                     <p className='mt-1 text-xs text-baolam-muted'>{meta}</p>
                     {scope && (
                       <span className='mt-3 inline-block w-fit rounded-full border border-baolam-border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-baolam-primary'>

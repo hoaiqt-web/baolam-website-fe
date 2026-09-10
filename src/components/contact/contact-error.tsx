@@ -20,7 +20,7 @@ export function ContactError({
       <button
         type="button"
         onClick={onRetry}
-        className="mt-7 inline-flex items-center justify-center bg-baolam-primary px-6 py-3 text-xs font-bold uppercase tracking-wider text-baolam-bg transition-colors hover:bg-baolam-primary-hover"
+        className="mt-7 inline-flex items-center justify-center bg-baolam-primary px-6 py-3 text-xs font-bold uppercase tracking-wider text-primary-foreground transition-colors hover:bg-baolam-primary-hover"
       >
         Thử lại
       </button>

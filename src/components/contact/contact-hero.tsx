@@ -10,7 +10,7 @@ export function ContactHero() {
       <div
         className="absolute inset-0"
         style={{
-          background: "linear-gradient(to bottom, rgba(3,9,20,0.4) 0%, rgba(3,9,20,0.6) 55%, rgba(3,9,20,0.97) 100%)",
+          background: "var(--contact-hero-overlay)",
         }}
       />
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 lg:px-12 lg:pb-24">
@@ -22,7 +22,7 @@ export function ContactHero() {
           </div>
           <a
             href={c("#project-brief")}
-            className="mt-10 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white"
+            className="mt-10 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-ink"
           >{c("Chia sẻ về dự án ↓")}</a>
         </ScrollReveal>
       </div>

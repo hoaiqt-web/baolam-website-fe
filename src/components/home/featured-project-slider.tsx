@@ -68,21 +68,21 @@ export function FeaturedProjectSlider({ projects }: { projects: FeaturedProject[
 
   return <div className="relative min-w-0 flex-1">
     <div className="absolute -top-10 right-0 z-30 flex gap-1.5">
-      <button type="button" onClick={() => move(-1)} aria-label="Dự án trước" className="grid size-7 place-items-center rounded-full border border-white/20 bg-[#030914] text-white transition hover:border-baolam-primary hover:text-baolam-primary"><ChevronLeft className="size-3.5"/></button>
-      <button type="button" onClick={() => move(1)} aria-label="Dự án tiếp theo" className="grid size-7 place-items-center rounded-full border border-white/20 bg-[#030914] text-white transition hover:border-baolam-primary hover:text-baolam-primary"><ChevronRight className="size-3.5"/></button>
+      <button type="button" onClick={() => move(-1)} aria-label="Dự án trước" className="grid size-7 place-items-center rounded-full border border-ink/20 bg-canvas text-ink transition hover:border-baolam-primary hover:text-baolam-primary"><ChevronLeft className="size-3.5"/></button>
+      <button type="button" onClick={() => move(1)} aria-label="Dự án tiếp theo" className="grid size-7 place-items-center rounded-full border border-ink/20 bg-canvas text-ink transition hover:border-baolam-primary hover:text-baolam-primary"><ChevronRight className="size-3.5"/></button>
     </div>
     <div ref={viewportRef} onMouseEnter={() => { pausedRef.current = true; }} onMouseLeave={() => { pausedRef.current = false; }} onFocus={() => { pausedRef.current = true; }} onBlur={() => { pausedRef.current = false; }} onPointerDown={pauseTemporarily} className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <div className="flex w-max gap-3 pr-3 lg:gap-4 lg:pr-4">
         {repeatedProjects.map((project, index) => {
           const isCanonicalSet = index >= projects.length && index < projects.length * 2;
-          return <Link href={`/projects/${project.slug}`} key={`${project.id}-${index}`} aria-hidden={!isCanonicalSet} tabIndex={isCanonicalSet ? undefined : -1} className="group flex h-[200px] w-[calc(100vw-3rem)] shrink-0 cursor-pointer flex-col overflow-hidden rounded-lg border border-white/20 bg-gradient-to-b from-[#071324] to-[#040D19] transition hover:border-baolam-primary/50 hover:shadow-[0_4px_20px_rgba(0,229,255,0.15)] sm:w-[42vw] lg:h-[150px] lg:w-[280px] xl:w-[320px]">
+          return <Link href={`/projects/${project.slug}`} key={`${project.id}-${index}`} aria-hidden={!isCanonicalSet} tabIndex={isCanonicalSet ? undefined : -1} className="group flex h-[200px] w-[calc(100vw-3rem)] shrink-0 cursor-pointer flex-col overflow-hidden rounded-lg border border-ink/20 bg-gradient-to-b from-baolam-surface to-baolam-surface-secondary transition hover:border-baolam-primary/50 hover:shadow-[0_4px_20px_rgba(0,229,255,0.15)] sm:w-[42vw] lg:h-[150px] lg:w-[280px] xl:w-[320px]">
             <div className="relative h-[65%] w-full shrink-0 overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={project.thumbnail} alt={project.title} className="size-full object-cover transition-transform duration-700 group-hover:scale-105"/>
-              <span className="absolute bottom-0 left-0 rounded-tr-md bg-baolam-primary px-2 py-1 text-[8px] font-bold uppercase tracking-wider text-baolam-bg">{project.category}</span>
+              <span className="absolute bottom-0 left-0 rounded-tr-md bg-baolam-primary px-2 py-1 text-[8px] font-bold uppercase tracking-wider text-primary-foreground">{project.category}</span>
             </div>
             <div className="flex flex-1 flex-col justify-center px-3 py-2">
-              <h3 className="line-clamp-1 text-[11px] font-bold text-white transition-colors group-hover:text-baolam-primary">{project.title}</h3>
+              <h3 className="line-clamp-1 text-[11px] font-bold text-ink transition-colors group-hover:text-baolam-primary">{project.title}</h3>
               <div className="mt-1 flex items-center gap-1 text-[9px] text-baolam-muted"><MapPin className="size-3 text-baolam-primary"/><span className="truncate">{project.location || "Bảo Lâm"}</span></div>
             </div>
           </Link>;

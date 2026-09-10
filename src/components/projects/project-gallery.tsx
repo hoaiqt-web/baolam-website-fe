@@ -25,7 +25,7 @@ export function ProjectGallery({ images, heading, variant }: { images: GalleryIm
       {images.map((image, index) => <figure key={`${image.url}-${index}`} className={variant === "grid" ? "" : index % 3 === 0 ? "md:col-span-7" : "md:col-span-5"}>
         <button type="button" onClick={() => setActiveIndex(index)} className="group relative block w-full cursor-zoom-in overflow-hidden text-left" aria-label={`Xem ảnh ${index + 1} ở kích thước lớn`}>
           <Image src={image.url} alt={image.alt || `${heading || "Dự án"} ${index + 1}`} width={1200} height={900} sizes="(min-width: 768px) 60vw, 100vw" unoptimized={isProjectMediaUrl(image.url)} className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-[1.02] group-hover:brightness-75"/>
-          <span className="pointer-events-none absolute bottom-4 right-4 grid size-11 place-items-center rounded-full bg-black/65 opacity-0 backdrop-blur transition group-hover:opacity-100 group-focus-visible:opacity-100"><ZoomIn className="size-5"/></span>
+          <span className="pointer-events-none absolute bottom-4 right-4 grid size-11 place-items-center rounded-full text-white bg-black/65 opacity-0 backdrop-blur transition group-hover:opacity-100 group-focus-visible:opacity-100"><ZoomIn className="size-5"/></span>
         </button>
         {image.caption && <figcaption className="mt-2 text-xs text-baolam-muted">{image.caption}</figcaption>}
       </figure>)}

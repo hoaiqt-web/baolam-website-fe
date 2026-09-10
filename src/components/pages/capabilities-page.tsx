@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 
 export default function CapabilitiesPage() {
   return (
-    <main className='min-h-screen w-full overflow-x-clip bg-[#030914] pt-16 font-sans text-white sm:pt-20'>
+    <main className='min-h-screen w-full overflow-x-clip bg-canvas pt-16 font-sans text-ink sm:pt-20'>
       <Hero />
       <CapabilityOverview />
       <DesignBuildChain />
@@ -79,8 +79,8 @@ const HERO_STAGES = [
 function Hero() {
   const c = useCmsBlock("capabilities.Hero");
   return (
-    <section className='relative w-full overflow-hidden border-b border-white/10'>
-      <div className='relative aspect-[4/5] w-full sm:aspect-[16/9] lg:aspect-[21/9]'>
+    <section className='relative w-full overflow-hidden border-b border-ink/10'>
+      <div className='theme-media relative aspect-[4/5] w-full sm:aspect-[16/9] lg:aspect-[21/9]'>
         <PlaceholderVisual cmsBlock="capabilities.Hero" label={c("Capabilities")} tag={c("Design & Build")} seed={1} className='absolute inset-0' />
         <div
           className='absolute inset-0'
@@ -99,26 +99,26 @@ function Hero() {
             <div className='mt-8 flex flex-col gap-3 sm:flex-row'>
               <a
                 href={c("#overview")}
-                className='inline-flex items-center justify-center gap-2 rounded bg-baolam-primary px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-[#071522] shadow-[0_4px_15px_rgba(0,229,255,0.3)] transition-colors hover:bg-baolam-primary-hover'
+                className='inline-flex items-center justify-center gap-2 rounded bg-baolam-primary px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-primary-foreground shadow-[0_4px_15px_rgba(0,229,255,0.3)] transition-colors hover:bg-baolam-primary-hover'
               >{c("Khám phá năng lực ↓")}</a>
               <ContactModalTrigger
                 source='capabilities-hero'
-                className='inline-flex items-center justify-center gap-2 rounded border border-white/20 px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-white transition-colors hover:border-baolam-primary hover:text-baolam-primary'
+                className='inline-flex items-center justify-center gap-2 rounded border border-ink/20 px-6 py-3 text-[11px] font-bold uppercase tracking-wider text-ink transition-colors hover:border-baolam-primary hover:text-baolam-primary'
               >{c("Trao đổi về dự án →")}</ContactModalTrigger>
             </div>
           </div>
         </div>
       </div>
 
-      <div className='border-t border-white/10 bg-[#030914]'>
+      <div className='border-t border-ink/10 bg-canvas'>
         <div className='mx-auto max-w-7xl px-6 py-6 lg:px-12'>
           <div className='grid grid-cols-2 gap-3 sm:grid-cols-5'>
             {c(HERO_STAGES).map((stage, i) => (
               <div key={stage} className='flex flex-col gap-2'>
-                <div className='aspect-[4/3] w-full overflow-hidden rounded-lg border border-white/10'>
+                <div className='aspect-[4/3] w-full overflow-hidden rounded-lg border border-ink/10'>
                   <PlaceholderVisual cmsBlock="capabilities.Hero" label={stage} tag='' seed={i + 2} className='h-full w-full' />
                 </div>
-                <span className='text-[10px] font-bold uppercase tracking-wider text-white/40'>
+                <span className='text-[10px] font-bold uppercase tracking-wider text-subtle-40'>
                   {String(i + 1).padStart(2, '0')}{c(" · ")}{stage}
                 </span>
               </div>
@@ -135,7 +135,7 @@ function Hero() {
 function CapabilityOverview() {
   const c = useCmsBlock("capabilities.CapabilityOverview");
   return (
-    <section id='overview' className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section id='overview' className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <div className='grid gap-8 lg:grid-cols-2 lg:gap-16'>
@@ -233,7 +233,7 @@ const PROCESS_STEPS = [
 function DesignBuildChain() {
   const c = useCmsBlock("capabilities.DesignBuildChain");
   return (
-    <section id='process' className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section id='process' className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Chuỗi năng lực Design & Build")}</SectionEyebrow>
@@ -243,9 +243,9 @@ function DesignBuildChain() {
         <div className='mt-12 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3'>
           {c(PROCESS_STEPS).map((step, i) => (
             <ScrollReveal key={step.n} delay={i * 60}>
-              <div className='h-full rounded-2xl border border-white/10 bg-white/[0.03] p-6'>
+              <div className='h-full rounded-2xl border border-ink/10 bg-ink/[0.03] p-6'>
                 <span className='text-xs font-black text-baolam-primary'>{step.n}</span>
-                <h3 className='mt-2 text-sm font-bold uppercase tracking-wide text-white'>
+                <h3 className='mt-2 text-sm font-bold uppercase tracking-wide text-ink'>
                   {step.title}
                 </h3>
                 <ul className='mt-4 space-y-2'>
@@ -263,7 +263,7 @@ function DesignBuildChain() {
 
         <ScrollReveal delay={120}>
           <div className='mt-14 border-t border-baolam-border pt-8 text-center'>
-            <p className='mx-auto max-w-2xl text-lg font-medium leading-[1.6] text-white/90 sm:text-xl'>{c("Thiết kế được kiểm chứng bởi khả năng triển khai.")}<br />{c("Thi công được dẫn dắt bởi ý tưởng thiết kế.")}</p>
+            <p className='mx-auto max-w-2xl text-lg font-medium leading-[1.6] text-ink/90 sm:text-xl'>{c("Thiết kế được kiểm chứng bởi khả năng triển khai.")}<br />{c("Thi công được dẫn dắt bởi ý tưởng thiết kế.")}</p>
           </div>
         </ScrollReveal>
       </div>
@@ -291,7 +291,7 @@ const DESIGN_SCOPE = [
 function DesignCapability() {
   const c = useCmsBlock("capabilities.DesignCapability");
   return (
-    <section id='design' className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section id='design' className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='grid gap-10 lg:grid-cols-2 lg:gap-16'>
           <ScrollReveal direction='left' className='space-y-7 lg:sticky lg:top-24 lg:self-start'>
@@ -321,7 +321,7 @@ function DesignCapability() {
                 <div
                   key={label}
                   className={cn(
-                    'aspect-[4/3] overflow-hidden rounded-xl border border-white/10',
+                    'aspect-[4/3] overflow-hidden rounded-xl border border-ink/10',
                     i === 0 && 'col-span-2 aspect-[8/5]'
                   )}
                 >
@@ -357,7 +357,7 @@ const ARTWORK_STAGES = ['Ý tưởng', 'Sketch', 'Mô hình', 'Gia công', 'Lắ
 function ArtworkCapability() {
   const c = useCmsBlock("capabilities.ArtworkCapability");
   return (
-    <section id='artwork' className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section id='artwork' className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Landscape Artwork")}</SectionEyebrow>
@@ -380,10 +380,10 @@ function ArtworkCapability() {
             <div className='mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6'>
               {c(ARTWORK_STAGES).map((stage, i) => (
                 <div key={stage} className='flex flex-col gap-2'>
-                  <div className='aspect-square w-full overflow-hidden rounded-lg border border-white/10'>
+                  <div className='aspect-square w-full overflow-hidden rounded-lg border border-ink/10'>
                     <PlaceholderVisual cmsBlock="capabilities.ArtworkCapability" label={stage} tag='' seed={i + 3} className='h-full w-full' />
                   </div>
-                  <span className='text-center text-[10px] font-bold uppercase tracking-wider text-white/40'>
+                  <span className='text-center text-[10px] font-bold uppercase tracking-wider text-subtle-40'>
                     {i + 1}{c(". ")}{stage}
                   </span>
                 </div>
@@ -395,7 +395,7 @@ function ArtworkCapability() {
         <ScrollReveal delay={180}>
           <Link
             href={c("/artwork")}
-            className='mt-10 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white'
+            className='mt-10 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-ink'
           >{c("Khám phá artwork cảnh quan →")}</Link>
         </ScrollReveal>
       </div>
@@ -422,7 +422,7 @@ const TECHNICAL_CAPS = [
 function TechnicalCapability() {
   const c = useCmsBlock("capabilities.TechnicalCapability");
   return (
-    <section id='technical' className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section id='technical' className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <div className='grid gap-10 lg:grid-cols-2 lg:gap-16'>
           <ScrollReveal direction='left'>
@@ -469,7 +469,7 @@ const FACTORY_VISUALS = [
 function FactoryCapability() {
   const c = useCmsBlock("capabilities.FactoryCapability");
   return (
-    <section id='factory' className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section id='factory' className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Manufacturing")}</SectionEyebrow>
@@ -485,7 +485,7 @@ function FactoryCapability() {
             ['Công suất', '[XX] tấn/năm'],
           ]).map(([label, value]) => (
             <ScrollReveal key={label}>
-              <div className='rounded-xl border border-white/10 bg-white/[0.03] p-5'>
+              <div className='rounded-xl border border-ink/10 bg-ink/[0.03] p-5'>
                 <p className='text-lg font-black text-baolam-primary'>{value}</p>
                 <p className='mt-1 text-[10px] uppercase tracking-wider text-baolam-muted'>
                   {label}
@@ -500,8 +500,8 @@ function FactoryCapability() {
             <h3 className='text-xs font-bold uppercase tracking-wider text-baolam-primary'>{c("Máy móc và năng lực gia công chính")}</h3>
             <div className='mt-4 grid grid-cols-1 gap-5 lg:grid-cols-2'>
               {c(FACTORY_INFO).map((item) => (
-                <div key={item.id} className='rounded-2xl border border-white/10 bg-white/[0.03] p-6'>
-                  <h4 className='text-base font-bold text-white'>{item.title}</h4>
+                <div key={item.id} className='rounded-2xl border border-ink/10 bg-ink/[0.03] p-6'>
+                  <h4 className='text-base font-bold text-ink'>{item.title}</h4>
                   <p className='mt-2 text-sm leading-[1.7] text-baolam-muted'>
                     {item.description}
                   </p>
@@ -533,7 +533,7 @@ function FactoryCapability() {
         <ScrollReveal delay={180}>
           <div className='mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6'>
             {c(FACTORY_VISUALS).map((label, i) => (
-              <div key={label} className='aspect-square overflow-hidden rounded-lg border border-white/10'>
+              <div key={label} className='aspect-square overflow-hidden rounded-lg border border-ink/10'>
                 <PlaceholderVisual cmsBlock="capabilities.FactoryCapability" label={label} tag='' seed={i + 4} className='h-full w-full' />
               </div>
             ))}
@@ -543,7 +543,7 @@ function FactoryCapability() {
         <ScrollReveal delay={220}>
           <Link
             href={c("/factory")}
-            className='mt-10 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white'
+            className='mt-10 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-ink'
           >{c("Khám phá nhà máy →")}</Link>
         </ScrollReveal>
       </div>
@@ -598,7 +598,7 @@ const CONSTRUCTION_GROUPS = [
 function ConstructionCapability() {
   const c = useCmsBlock("capabilities.ConstructionCapability");
   return (
-    <section id='construction' className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section id='construction' className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Landscape Construction")}</SectionEyebrow>
@@ -609,8 +609,8 @@ function ConstructionCapability() {
         <div className='mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2'>
           {c(CONSTRUCTION_GROUPS).map((group, i) => (
             <ScrollReveal key={group.title} delay={i * 60}>
-              <div className='h-full rounded-2xl border border-white/10 bg-white/[0.03] p-6'>
-                <h3 className='text-sm font-bold uppercase tracking-wide text-white'>
+              <div className='h-full rounded-2xl border border-ink/10 bg-ink/[0.03] p-6'>
+                <h3 className='text-sm font-bold uppercase tracking-wide text-ink'>
                   {group.title}
                 </h3>
                 <div className='mt-4'>
@@ -652,7 +652,7 @@ const QUALITY_CHECKPOINTS = [
 function QualityControl() {
   const c = useCmsBlock("capabilities.QualityControl");
   return (
-    <section id='quality' className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section id='quality' className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <SectionEyebrow>{c("Quality Control")}</SectionEyebrow>
@@ -663,7 +663,7 @@ function QualityControl() {
           <div className='mt-12 flex flex-wrap items-center gap-x-2 gap-y-4'>
             {c(QUALITY_STAGES).map((stage, i) => (
               <div key={stage} className='flex items-center gap-2'>
-                <span className='rounded-full border border-baolam-border px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white/80'>
+                <span className='rounded-full border border-baolam-border px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-ink/80'>
                   {stage}
                 </span>
                 {i < c(QUALITY_STAGES).length - 1 && (
@@ -687,7 +687,7 @@ function QualityControl() {
             <div className='grid grid-cols-2 gap-3'>
               {c(['Kiểm tra tại nhà máy', 'Nghiệm thu hiện trường', 'Mẫu và vật liệu', 'Hồ sơ bàn giao']).map(
                 (label, i) => (
-                  <div key={label} className='aspect-[4/3] overflow-hidden rounded-xl border border-white/10'>
+                  <div key={label} className='aspect-[4/3] overflow-hidden rounded-xl border border-ink/10'>
                     <PlaceholderVisual cmsBlock="capabilities.QualityControl" label={label} tag={c("QC")} seed={i + 5} className='h-full w-full' />
                   </div>
                 )
@@ -726,7 +726,7 @@ const STATS = [
 function TeamAndStats() {
   const c = useCmsBlock("capabilities.TeamAndStats");
   return (
-    <section id='team' className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section id='team' className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <h2 className='max-w-xl text-3xl font-black leading-[1.15] sm:text-4xl lg:text-5xl'>{c("Một đội ngũ đa chuyên môn.")}<br />{c("Một mục tiêu chung.")}</h2>
@@ -743,16 +743,16 @@ function TeamAndStats() {
           </ScrollReveal>
 
           <ScrollReveal direction='right' delay={120}>
-            <div className='flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-8'>
-              <div className='rounded-lg border border-baolam-border px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white'>{c("Design")}</div>
+            <div className='flex flex-col items-center gap-3 rounded-2xl border border-ink/10 bg-ink/[0.03] p-8'>
+              <div className='rounded-lg border border-baolam-border px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-ink'>{c("Design")}</div>
               <span className='text-baolam-primary'>{c("↕")}</span>
               <div className='flex items-center gap-3'>
-                <div className='rounded-lg border border-baolam-border px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white'>{c("Engineering")}</div>
+                <div className='rounded-lg border border-baolam-border px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-ink'>{c("Engineering")}</div>
                 <span className='text-baolam-primary'>{c("↔")}</span>
-                <div className='rounded-lg border border-baolam-border px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white'>{c("Factory")}</div>
+                <div className='rounded-lg border border-baolam-border px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-ink'>{c("Factory")}</div>
               </div>
               <span className='text-baolam-primary'>{c("↕")}</span>
-              <div className='rounded-lg border border-baolam-border px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white'>{c("Construction")}</div>
+              <div className='rounded-lg border border-baolam-border px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-ink'>{c("Construction")}</div>
             </div>
           </ScrollReveal>
         </div>
@@ -817,14 +817,14 @@ const PROOF_PROJECTS = [
 function ProofProjects() {
   const c = useCmsBlock("capabilities.ProofProjects");
   return (
-    <section id='proof' className='scroll-mt-20 border-t border-white/10 bg-[#030914] py-20 lg:py-28'>
+    <section id='proof' className='scroll-mt-20 border-t border-ink/10 bg-canvas py-20 lg:py-28'>
       <div className='mx-auto max-w-7xl px-6 lg:px-12'>
         <ScrollReveal>
           <div className='mb-10 flex flex-col justify-between gap-4 lg:flex-row lg:items-end'>
             <h2 className='max-w-xl text-3xl font-black leading-[1.15] sm:text-4xl'>{c("Năng lực được chứng minh")}<br />{c("bằng công trình thực tế.")}</h2>
             <Link
               href={c("/projects")}
-              className='text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-white'
+              className='text-xs font-bold uppercase tracking-wider text-baolam-primary hover:text-ink'
             >{c("Xem tất cả dự án →")}</Link>
           </div>
         </ScrollReveal>
@@ -832,29 +832,29 @@ function ProofProjects() {
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-3'>
           {c(PROOF_PROJECTS).map((project, i) => (
             <ScrollReveal key={project.id} delay={i * 80}>
-              <div className='flex h-full flex-col overflow-hidden rounded-2xl border border-white/10'>
+              <div className='flex h-full flex-col overflow-hidden rounded-2xl border border-ink/10'>
                 <div className='aspect-[4/3] w-full'>
                   <PlaceholderVisual cmsBlock="capabilities.ProofProjects" label={project.tag} seed={i + 6} className='h-full w-full' />
                 </div>
-                <div className='flex flex-1 flex-col gap-3 border-t border-white/10 bg-white/[0.03] p-6'>
+                <div className='flex flex-1 flex-col gap-3 border-t border-ink/10 bg-ink/[0.03] p-6'>
                   <span className='w-fit rounded-full border border-baolam-border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-baolam-primary'>
                     {project.tag}
                   </span>
-                  <h3 className='text-lg font-bold text-white'>{project.name}</h3>
+                  <h3 className='text-lg font-bold text-ink'>{project.name}</h3>
                   <p className='text-xs text-baolam-muted'>
                     {project.location}{c(" · ")}{project.scale}
                   </p>
                   <dl className='mt-2 space-y-3 text-xs leading-[1.6] text-baolam-muted'>
                     <div>
-                      <dt className='font-bold uppercase tracking-wider text-white/60'>{c("Phạm vi Bảo Lâm thực hiện")}</dt>
+                      <dt className='font-bold uppercase tracking-wider text-ink/60'>{c("Phạm vi Bảo Lâm thực hiện")}</dt>
                       <dd className='mt-1'>{project.scope}</dd>
                     </div>
                     <div>
-                      <dt className='font-bold uppercase tracking-wider text-white/60'>{c("Thách thức chính")}</dt>
+                      <dt className='font-bold uppercase tracking-wider text-ink/60'>{c("Thách thức chính")}</dt>
                       <dd className='mt-1'>{project.challenge}</dd>
                     </div>
                     <div>
-                      <dt className='font-bold uppercase tracking-wider text-white/60'>{c("Kết quả")}</dt>
+                      <dt className='font-bold uppercase tracking-wider text-ink/60'>{c("Kết quả")}</dt>
                       <dd className='mt-1'>{project.result}</dd>
                     </div>
                   </dl>

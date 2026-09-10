@@ -19,7 +19,7 @@ export default async function ProjectPreviewPage({ params }: { params: Promise<{
   if (!project) notFound();
 
   return <>
-    <div className="fixed inset-x-0 top-0 z-[100] flex min-h-12 flex-wrap items-center justify-between gap-3 border-b border-baolam-primary/30 bg-[#030914]/95 px-4 py-2 text-white shadow-xl backdrop-blur">
+    <div className="fixed inset-x-0 top-0 z-[100] flex min-h-12 flex-wrap items-center justify-between gap-3 border-b border-baolam-primary/30 bg-canvas/95 px-4 py-2 text-ink shadow-xl backdrop-blur">
       <div className="flex items-center gap-3">
         <span className="rounded bg-baolam-primary px-2 py-1 text-[10px] font-black tracking-widest text-baolam-bg">PREVIEW</span>
         <span className="text-sm text-baolam-muted">{project.status === "published" ? "Bản đang chỉnh sửa" : "Chưa xuất bản"}</span>
